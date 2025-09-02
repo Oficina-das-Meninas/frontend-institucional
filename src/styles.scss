@@ -1,5 +1,15 @@
 @use '@angular/material' as mat;
+@use "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+  @include mat.menu-overrides((
+    container-color: pink,
+    container-shape: 30px,
+    item-leading-spacing: 1rem,
+    item-trailing-spacing: 1rem,
+  ));
+}
 
 html {
   @include mat.theme((
@@ -24,3 +34,5 @@ body {
 }
 
 html, body { height: 100%; }
+
+

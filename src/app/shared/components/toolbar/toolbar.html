@@ -1,10 +1,14 @@
-<nav class="w-fit bg-black py-2 px-8 rounded-[30px] flex items-center justify-between text-gray-300 gap-16">
+<nav
+  class="w-fit bg-black py-2 px-8 rounded-[30px] flex items-center justify-between text-[#726F78] gap-16 position-relative"
+>
   <section class="left">
-    <img
-      class="size-10"
-      src="./logo_preenchimento_branco.png"
-      alt=""
-    />
+    <a href="">
+      <img
+        class="size-10"
+        src="./logo_preenchimento_branco.png"
+        alt=""
+      />
+    </a>
   </section>
   <section class="center">
     <div>
@@ -14,20 +18,18 @@
         <li><a href="/">Transparência</a></li>
         <li>
           <span
-            class="cursor-pointer"
+            class="cursor-pointer pb-2"
             [matMenuTriggerFor]="belowMenu"
           >
-            Below
+            Como ajudar?
           </span>
           <mat-menu
             #belowMenu="matMenu"
             yPosition="below"
           >
-            <ul>
-              <button mat-menu-item>Doe sua nota fiscal</button>
-              <button mat-menu-item>Doe seu imposto de renda</button>
-              <button mat-menu-item>Seja um voluntário</button>
-            </ul>
+            <button mat-menu-item>Doe sua nota fiscal</button>
+            <button mat-menu-item>Doe seu imposto de renda</button>
+            <button mat-menu-item>Seja um voluntário</button>
           </mat-menu>
         </li>
 
