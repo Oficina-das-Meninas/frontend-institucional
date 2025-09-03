@@ -4,10 +4,15 @@
 
 :root {
   @include mat.menu-overrides((
-    container-color: pink,
-    container-shape: 30px,
+    container-color: var(--color-gray-100),
+    container-shape: var(--radius-4xl),
+    item-label-text-color: #726F78,
+    item-label-text-weight: 500,
     item-leading-spacing: 1rem,
     item-trailing-spacing: 1rem,
+  ));
+  @include mat.button-overrides((
+      filled-horizontal-padding: calc(var(--spacing) * 3),
   ));
 }
 

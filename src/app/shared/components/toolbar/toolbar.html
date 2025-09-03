@@ -1,47 +1,36 @@
-<div class="fixed top-12 left-0 right-0 z-50 flex justify-center">
+<header class="fixed top-12 left-0 right-0 z-50 flex justify-center">
   <nav
-    class="w-fit bg-gray-100 py-2 px-3 rounded-[30px] flex items-center justify-between text-[#726F78] gap-16 text-sm shadow-md shadow-gray-400"
+    class="w-fit bg-gray-100 py-2 px-4 rounded-4xl flex items-center justify-between text-[#726F78] gap-18 text-sm shadow-md shadow-gray-400 font-medium"
   >
-    <section class="left">
-      <a href="">
-        <img
-          class="size-10"
-          src="./logo_preenchimento_branco.png"
-          alt=""
-        />
+    <!-- Esquerda -->
+    <div>
+      <a routerLink="/">
+        <!-- Alterar logo para svg, assim que possivel -->
+        <img class="size-10" src="./logo_preenchimento_branco.png" alt="" />
       </a>
-    </section>
+    </div>
 
-    <section class="center">
-      <div>
-        <ul class="flex gap-10">
-          <li><a href="/">Sobre a oficina</a></li>
-          <li><a href="/">Eventos</a></li>
-          <li><a href="/">Transparência</a></li>
-          <li>
-            <span
-              class="cursor-pointer pb-2"
-              [matMenuTriggerFor]="belowMenu"
-            >
-              Como ajudar?
-            </span>
-            <mat-menu
-              #belowMenu="matMenu"
-              yPosition="below"
-            >
-              <button mat-menu-item>Doe sua nota fiscal</button>
-              <button mat-menu-item>Doe seu imposto de renda</button>
-              <button mat-menu-item>Seja um voluntário</button>
-            </mat-menu>
-          </li>
+    <!-- Centro -->
+    <div>
+      <ul class="flex gap-10">
+        <li><a routerLink="/">Sobre a oficina</a></li>
+        <li><a routerLink="/">Eventos</a></li>
+        <li><a routerLink="/">Transparência</a></li>
+        <li>
+          <span class="cursor-pointer pb-2" [matMenuTriggerFor]="helpOptions">Como ajudar?</span>
+          <mat-menu #helpOptions="matMenu" yPosition="below" class="text-sm">
+            <a routerLink="/" mat-menu-item>Doe sua nota fiscal</a>
+            <a routerLink="/" mat-menu-item>Doe seu imposto de renda</a>
+            <a routerLink="/" mat-menu-item>Seja um voluntário</a>
+          </mat-menu>
+        </li>
+        <li><a routerLink="/">Seja um padrinho</a></li>
+      </ul>
+    </div>
 
-          <li><a href="/">Seja um padrinho</a></li>
-        </ul>
-      </div>
-    </section>
-
-    <section class="right">
-      <button matButton="filled">Acessar conta</button>
-    </section>
+    <!-- Direita -->
+    <div>
+      <a routerLink="/" matButton="filled">Acessar conta</a>
+    </div>
   </nav>
-</div>
+</header>
