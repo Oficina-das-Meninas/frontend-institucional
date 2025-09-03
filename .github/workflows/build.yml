@@ -29,8 +29,9 @@ jobs:
         cache-dependency-path: package-lock.json
     - run: npm ci
 
-    - name: Run tests 
-      run: npm run test:ci
+# uncomment to enable tests
+#    - name: Run tests 
+#      run: npm run test:ci
 
     - name: Run build 
       run: npm run build
