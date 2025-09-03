@@ -45,7 +45,8 @@ jobs:
       uses: actions/upload-artifact@v4
       with:
         name: frontend-dist
-        path: dist/
+        path: dist/angular-app/
+
 
   deploy:
     runs-on: ubuntu-latest
@@ -57,6 +58,7 @@ jobs:
       with:
         name: frontend-dist
         path: dist
+
 
     - name: Configurar SSH
       run: |
