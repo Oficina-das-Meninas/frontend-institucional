@@ -34,9 +34,9 @@ jobs:
     - name: Build Angular
       run: |
         if [[ "${{ github.event.inputs.ENVIRONMENT }}" == "development" ]]; then
-          BASE_HREF="/${{ vars.SERVER_DIR_DEV }}"
+          BASE_HREF="/${{ vars.VM_DIR_DEV }}"
         else
-          BASE_HREF="/${{ vars.SERVER_DIR_PRD }}"
+          BASE_HREF="/${{ vars.VM_DIR_PRD }}"
         fi
 
         npm run build -- --base-href $BASE_HREF --output-hashing=all --configuration=${{ github.event.inputs.ENVIRONMENT }}
