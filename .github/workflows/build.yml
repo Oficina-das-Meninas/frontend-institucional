@@ -45,7 +45,7 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: frontend-dist
-          path: dist/angular-app/
+          path: dist/angular-app/browser/
 
 
   deploy:
@@ -58,7 +58,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: frontend-dist
-          path: dist/angular-app
+          path: dist/angular-app/browser
 
       # 2. Configura acesso SSH (com a chave armazenada no secret)
       - name: Configurar SSH
@@ -70,7 +70,7 @@ jobs:
 
       # 3. Apenas para debug (lista arquivos do build)
       - name: Debug arquivos do build
-        run: ls -R dist/angular-app/
+        run: ls -R dist/angular-app/browser/
 
       # 4. Copia os arquivos do build para a VM
       - name: Enviar arquivos para VM
@@ -85,7 +85,7 @@ jobs:
           VM_HOST="${{ vars.VM_HOST }}"
 
           echo "📤 Enviando arquivos para $VM_USER@$VM_HOST:$DEST_DIR ..."
-          rsync -avz --delete dist/angular-app/ $VM_USER@$VM_HOST:$DEST_DIR/
+          rsync -avz --delete dist/angular-app/browser/ $VM_USER@$VM_HOST:$DEST_DIR/
 
       # 5. Inicia o servidor provisório com `serve` dentro da VM
       - name: Iniciar servidor provisório com serve
@@ -113,6 +113,6 @@ jobs:
             # Matar instâncias antigas do serve (se houver)
             pkill -f "serve -s $DEST_DIR" || true
 
-            # Subir em background com logs no arquivo serve.log
-            nohup serve --single $DEST_DIR -l $PORT > ~/serve.log 2>&1 &
+            # Subir em background servindo a pasta correta (browser/)
+            nohup serve -s $DEST_DIR -l $PORT > ~/serve.log 2>&1 &
           EOF
