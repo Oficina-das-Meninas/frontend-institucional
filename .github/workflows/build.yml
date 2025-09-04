@@ -114,5 +114,5 @@ jobs:
             pkill -f "serve -s $DEST_DIR" || true
 
             # Subir em background com logs no arquivo serve.log
-            nohup serve -s $DEST_DIR -l $PORT > ~/serve.log 2>&1 &
+            nohup serve --single $DEST_DIR -l $PORT > ~/serve.log 2>&1 &
           EOF
