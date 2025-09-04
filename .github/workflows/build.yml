@@ -70,13 +70,15 @@ jobs:
     - name: Debug arquivos do build
       run: ls -R dist/
 
+    - name: Debug diretório atual
+      run: pwd
+
     - name: Enviar arquivos para VM
       run: |
-        if [[ "${{ github.event.inputs.ENVIRONMENT }}" == "development" ]]; then
-          DEST_DIR=${{ vars.VM_DIR_DEV }}
-        else
-          DEST_DIR=${{ vars.VM_DIR_PRD }}
-        fi
+        DEST_DIR=$(echo "${{ vars.VM_DIR_DEV }}" | tr -d '\r')
+        VM_USER=$(echo "${{ vars.VM_USER }}" | tr -d '\r')
+        VM_HOST=$(echo "${{ vars.VM_HOST }}" | tr -d '\r')
 
-        echo "📤 Enviando arquivos para ${{ vars.VM_USER }}@${{ vars.VM_HOST }}:$DEST_DIR ..."
-        rsync -avz --delete dist/ ${{ vars.VM_USER }}@${{ vars.VM_HOST }}:$DEST_DIR
+        echo "📤 Enviando arquivos para $VM_USER@$VM_HOST:$DEST_DIR ..."
+        rsync -avz --delete dist/ $VM_USER@$VM_HOST:$DEST_DIR
+
