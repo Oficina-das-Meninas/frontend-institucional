@@ -107,7 +107,7 @@ jobs:
             # Instalar serve se não existir
             if ! command -v serve &> /dev/null; then
               echo "📦 Instalando serve..."
-              npm install -g serve
+              sudo npm install -g serve
             fi
 
             # Matar instâncias antigas do serve (se houver)
