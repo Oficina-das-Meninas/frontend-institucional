@@ -55,6 +55,10 @@ html, body { height: 100%; }
   transition-duration: 200ms;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
 }
-.link-hover:hover { color: #111827; /* gray-900 */ }
 
+.link-hover:hover { color: var(--mat-sys-primary) !important; }
 
+.mat-mdc-menu-item:hover {
+  background-color: transparent !important;
+  color: var(--mat-sys-primary) !important;
+}
