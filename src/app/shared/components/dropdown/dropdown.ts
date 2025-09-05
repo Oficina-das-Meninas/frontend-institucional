@@ -2,8 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { MatIcon } from '@angular/material/icon';
 
-let nextId = 0;
-
 @Component({
   selector: 'app-dropdown',
   standalone: true,
