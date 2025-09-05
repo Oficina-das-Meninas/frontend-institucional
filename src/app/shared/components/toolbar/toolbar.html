@@ -1,20 +1,30 @@
 <mat-drawer-container #drawerContainer class="min-h-screen">
-  <mat-drawer #drawer mode="over" class="" (closed)="onDrawerClosed()">I'm a drawer</mat-drawer>
-  <mat-drawer-content></mat-drawer-content>
+  <mat-drawer #drawer mode="over" class="" (closed)="onDrawerClosed()">
+    <img class="size-30 object-contain ml-3 mt-3" src="./logo_preenchimento_branco.png" alt="" />
+    <ul class="flex flex-col gap-8 mt-10 ml-6 text-lg font-medium text-[#726F78]">
+      <li><a routerLink="/" class="">Sobre a oficina</a></li>
+      <li><a routerLink="/" class="">Eventos</a></li>
+      <li><a routerLink="/" class="">Transparência</a></li>
+      <li><a routerLink="/" class="">Doe sua nota fiscal</a></li>
+      <li><a routerLink="/" class="">Doe seu imposto de renda</a></li>
+      <li><a routerLink="/" class="">Seja um voluntário</a></li>
+      <li><a routerLink="/" class="">Seja um padrinho</a></li>
+    </ul>
+  </mat-drawer>
 </mat-drawer-container>
 
 <header class="fixed top-8 md:top-12 left-0 right-0 z-50 flex justify-center">
   <nav
-    class="w-fit bg-gray-100 py-2 px-4 rounded-4xl flex items-center justify-between text-[#726F78] gap-12 md:gap-18 text-sm md:shadow-md md:shadow-gray-400 font-medium"
+    class="w-fit bg-gray-100 py-1 px-5 md:py-2 md:px-4 rounded-4xl flex items-center justify-between text-[#726F78] gap-14 md:gap-18 text-sm md:shadow-md md:shadow-gray-400 font-medium"
   >
-    <div class="md:hidden block">
-      <button matButton="elevated" (click)="toggleDrawer(drawer)">Toggle drawer</button>
+    <div class="md:hidden flex items-center w-1/3">
+      <mat-icon class="cursor-pointer" (click)="toggleDrawer(drawer)">menu</mat-icon>
     </div>
 
-    <div>
+    <div class="">
       <a routerLink="/">
         <!-- Alterar logo para svg, assim que possivel -->
-        <img class="size-10" src="./logo_preenchimento_branco.png" alt="" />
+        <img class="md:size-10 size-14 object-contain" src="./logo_preenchimento_branco.png" alt="" />
       </a>
     </div>
 
@@ -36,7 +46,7 @@
     </div>
 
     <div>
-      <a routerLink="/" matButton="filled" class="text-center">Acessar conta</a>
+      <a routerLink="/" matButton="filled" class="text-center">Acessar Conta</a>
     </div>
   </nav>
 </header>
