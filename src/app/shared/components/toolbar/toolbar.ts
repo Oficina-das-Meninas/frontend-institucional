@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -18,8 +18,6 @@ import { RouterLink } from '@angular/router';
     MatMenuModule,
     RouterLink,
     MatSidenavModule,
-    MatButtonModule,
-    MatSidenavModule,
     MatFormFieldModule,
     MatSelectModule,
   ],
@@ -28,4 +26,19 @@ import { RouterLink } from '@angular/router';
 })
 export class Toolbar {
   showFiller = false;
+
+  @ViewChild('drawerContainer', { static: false, read: ElementRef }) drawerContainerRef?: ElementRef;
+
+  toggleDrawer(drawer: any): void {
+    if (!drawer.opened && this.drawerContainerRef && this.drawerContainerRef.nativeElement) {
+      this.drawerContainerRef.nativeElement.style.setProperty('z-index', '51', 'important');
+    }
+    drawer.toggle();
+  }
+
+  onDrawerClosed(): void {
+    if (this.drawerContainerRef && this.drawerContainerRef.nativeElement) {
+      this.drawerContainerRef.nativeElement.style.removeProperty('z-index');
+    }
+  }
 }

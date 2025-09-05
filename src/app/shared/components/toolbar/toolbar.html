@@ -1,5 +1,5 @@
-<mat-drawer-container class="min-h-screen">
-  <mat-drawer #drawer mode="over" class="">I'm a drawer</mat-drawer>
+<mat-drawer-container #drawerContainer class="min-h-screen">
+  <mat-drawer #drawer mode="over" class="" (closed)="onDrawerClosed()">I'm a drawer</mat-drawer>
   <mat-drawer-content></mat-drawer-content>
 </mat-drawer-container>
 
@@ -7,7 +7,9 @@
   <nav
     class="w-fit bg-gray-100 py-2 px-4 rounded-4xl flex items-center justify-between text-[#726F78] gap-12 md:gap-18 text-sm md:shadow-md md:shadow-gray-400 font-medium"
   >
-    <div class="md:hidden block"><button matButton="elevated" (click)="drawer.toggle()">Toggle drawer</button></div>
+    <div class="md:hidden block">
+      <button matButton="elevated" (click)="toggleDrawer(drawer)">Toggle drawer</button>
+    </div>
 
     <div>
       <a routerLink="/">
