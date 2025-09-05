@@ -1,0 +1,46 @@
+.ep-root {
+  width: 100%;
+}
+
+.ep-header {
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+  border-radius: 12px;
+}
+
+.ep-header:hover { color: var(--color-gray-900) }
+.ep-header:disabled { opacity: .5; cursor: not-allowed; }
+
+.ep-spacer { flex: 1 1 auto; }
+
+.ep-indicator {
+  display: inline-block;
+  transition: transform 200ms ease;
+  transform: rotate(180deg);
+}
+.ep-indicator.ep-indicator-open { transform: rotate(0deg); }
+
+.ep-content-wrapper {
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 220ms ease;
+}
+
+.ep-content {
+  padding: .5rem 1rem 1rem 1rem;
+  opacity: 0;
+  transform: translateY(-6px);
+  transition: opacity 200ms ease, transform 200ms ease;
+}
+
+.ep-open .ep-content-wrapper { max-height: 1000px; }
+.ep-open .ep-content { opacity: 1; transform: translateY(0); }
+
+/* closing handled by reverse of transitions above */
+
+.ep-root { border: 0; box-shadow: none; background: transparent; }
