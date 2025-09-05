@@ -1,52 +1,63 @@
 <mat-drawer-container #drawerContainer class="min-h-screen">
   <mat-drawer #drawer mode="over" class="" (closed)="onDrawerClosed()">
-    <img class="size-30 object-contain ml-3 mt-3" src="./logo_preenchimento_branco.png" alt="" />
-    <ul class="flex flex-col gap-8 mt-10 ml-6 text-lg font-medium text-[#726F78]">
-      <li><a routerLink="/" class="">Sobre a oficina</a></li>
-      <li><a routerLink="/" class="">Eventos</a></li>
-      <li><a routerLink="/" class="">Transparência</a></li>
-      <li><a routerLink="/" class="">Doe sua nota fiscal</a></li>
-      <li><a routerLink="/" class="">Doe seu imposto de renda</a></li>
-      <li><a routerLink="/" class="">Seja um voluntário</a></li>
-      <li><a routerLink="/" class="">Seja um padrinho</a></li>
-    </ul>
+    <div class="p-4 bg-white min-h-screen w-80">
+      <img class="size-30 object-contain ml-3 mt-3" src="./logo_preenchimento_branco.png" alt="Logo" />
+      <ul class="flex flex-col gap-8 mt-10 ml-6 text-lg font-medium text-[#726F78]">
+        <li><a routerLink="/" class="link-hover">Sobre a oficina</a></li>
+        <li><a routerLink="/" class="link-hover">Eventos</a></li>
+        <li><a routerLink="/" class="link-hover">Transparência</a></li>
+        <li>
+          <app-dropdown>
+            <span ep-title>Como ajudar?</span>
+            <div class="flex flex-col gap-4 mt-2">
+              <a routerLink="/" class="link-hover">Doe sua nota fiscal</a>
+              <a routerLink="/" class="link-hover">Doe seu imposto de renda</a>
+              <a routerLink="/" class="link-hover">Seja um voluntário</a>
+            </div>
+          </app-dropdown>
+        </li>
+        <li><a routerLink="/" class="link-hover">Seja um padrinho</a></li>
+      </ul>
+    </div>
   </mat-drawer>
 </mat-drawer-container>
 
 <header class="fixed top-8 md:top-12 left-0 right-0 z-50 flex justify-center">
   <nav
-    class="w-fit bg-gray-100 py-1 px-5 md:py-2 md:px-4 rounded-4xl flex items-center justify-between text-[#726F78] gap-14 md:gap-18 text-sm md:shadow-md md:shadow-gray-400 font-medium"
+    class="w-[80%] bg-gray-100 ml-6 mr-6 py-1 px-4 md:py-2 md:px-4 rounded-4xl grid grid-cols-3 md:flex items-center md:justify-between text-[#726F78] gap-4 md:gap-18 text-sm shadow-md shadow-gray-400 font-medium min-w-60 md:min-w-fit md:w-fit"
   >
-    <div class="md:hidden flex items-center w-1/3">
-      <mat-icon class="cursor-pointer" (click)="toggleDrawer(drawer)">menu</mat-icon>
+    <div class="md:hidden flex items-center justify-start">
+      <mat-icon class="cursor-pointer" (click)="toggleDrawer()">menu</mat-icon>
     </div>
 
-    <div class="">
+    <div class="flex justify-center md:order-none">
       <a routerLink="/">
-        <!-- Alterar logo para svg, assim que possivel -->
-        <img class="md:size-10 size-14 object-contain" src="./logo_preenchimento_branco.png" alt="" />
+        <img class="md:size-10 size-14 object-contain max-w-14" src="./logo_preenchimento_branco.png" alt="" />
+      </a>
+    </div>
+
+    <div class="flex justify-end md:justify-start md:order-last">
+      <a routerLink="/" matButton="filled" class="text-center">
+        <span class="md:hidden">Entrar</span>
+        <span class="hidden md:inline">Acessar conta</span>
       </a>
     </div>
 
     <div class="hidden md:block">
-      <ul class="flex gap-10 text-center">
-        <li><a routerLink="/">Sobre a oficina</a></li>
-        <li><a routerLink="/">Eventos</a></li>
-        <li><a routerLink="/">Transparência</a></li>
+      <ul class="flex gap-10 text-center items-center">
+        <li><a routerLink="/" class="link-hover">Sobre a oficina</a></li>
+        <li><a routerLink="/" class="link-hover">Eventos</a></li>
+        <li><a routerLink="/" class="link-hover">Transparência</a></li>
         <li>
-          <span class="cursor-pointer pb-2" [matMenuTriggerFor]="helpOptions">Como ajudar?</span>
+          <span class="cursor-pointer pb-2 link-hover" [matMenuTriggerFor]="helpOptions">Como ajudar?</span>
           <mat-menu #helpOptions="matMenu" yPosition="below" class="text-sm">
             <a routerLink="/" mat-menu-item>Doe sua nota fiscal</a>
             <a routerLink="/" mat-menu-item>Doe seu imposto de renda</a>
             <a routerLink="/" mat-menu-item>Seja um voluntário</a>
           </mat-menu>
         </li>
-        <li><a routerLink="/">Seja um padrinho</a></li>
+        <li><a routerLink="/" class="link-hover">Seja um padrinho</a></li>
       </ul>
-    </div>
-
-    <div>
-      <a routerLink="/" matButton="filled" class="text-center">Acessar Conta</a>
     </div>
   </nav>
 </header>
