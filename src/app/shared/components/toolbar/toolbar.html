@@ -1,8 +1,14 @@
-<header class="fixed top-12 left-0 right-0 z-50 flex justify-center">
+<mat-drawer-container class="min-h-screen">
+  <mat-drawer #drawer mode="over" [ngClass]="drawer.opened ? '!z-[51]' : ''">I'm a drawer</mat-drawer>
+  <mat-drawer-content></mat-drawer-content>
+</mat-drawer-container>
+
+<header class="fixed top-8 md:top-12 left-0 right-0 z-50 flex justify-center">
   <nav
-    class="w-fit bg-gray-100 py-2 px-4 rounded-4xl flex items-center justify-between text-[#726F78] gap-18 text-sm shadow-md shadow-gray-400 font-medium"
+    class="w-fit bg-gray-100 py-2 px-4 rounded-4xl flex items-center justify-between text-[#726F78] gap-12 md:gap-18 text-sm md:shadow-md md:shadow-gray-400 font-medium"
   >
-    <!-- Esquerda -->
+    <div class="md:hidden block"><button matButton="elevated" (click)="drawer.toggle()">Toggle drawer</button></div>
+
     <div>
       <a routerLink="/">
         <!-- Alterar logo para svg, assim que possivel -->
@@ -10,9 +16,8 @@
       </a>
     </div>
 
-    <!-- Centro -->
-    <div>
-      <ul class="flex gap-10">
+    <div class="hidden md:block">
+      <ul class="flex gap-10 text-center">
         <li><a routerLink="/">Sobre a oficina</a></li>
         <li><a routerLink="/">Eventos</a></li>
         <li><a routerLink="/">Transparência</a></li>
@@ -28,9 +33,8 @@
       </ul>
     </div>
 
-    <!-- Direita -->
     <div>
-      <a routerLink="/" matButton="filled">Acessar conta</a>
+      <a routerLink="/" matButton="filled" class="text-center">Acessar conta</a>
     </div>
   </nav>
 </header>

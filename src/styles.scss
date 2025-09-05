@@ -14,6 +14,15 @@
   @include mat.button-overrides((
       filled-horizontal-padding: calc(var(--spacing) * 3),
   ));
+
+
+  @include mat.sidenav-overrides((
+    container-shape: var(--radius-4xl),
+    container-background-color: white,
+    content-background-color: transparent,
+    container-width: 80%
+  ));
+
 }
 
 html {
