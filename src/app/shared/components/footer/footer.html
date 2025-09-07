@@ -1,21 +1,19 @@
 <footer class="w-full bg-gray-100 z-10 text-xs">
   <div class="flex justify-evenly">
     <div class="flex flex-col gap-4 items-center py-10">
-      <img src="./logo_oficina_das_meninas.svg" alt="" class="size-16" />
+      <app-logo cssClass="size-16" />
 
-      <section class="text-[#BA005C] flex gap-8">
-        <div>
-          <app-instagram-icon />
-        </div>
-
-        <div>
-          <app-facebook-icon />
-        </div>
-
-        <div>
-          <app-youtube-icon />
-        </div>
-      </section>
+      <ul class="text-[#BA005C] flex gap-8">
+        <li>
+          <a routerLink="/" class="link-hover"><app-instagram-icon /></a>
+        </li>
+        <li>
+          <a routerLink="/" class="link-hover"><app-facebook-icon /></a>
+        </li>
+        <li>
+          <a routerLink="/" class="link-hover"><app-youtube-icon /></a>
+        </li>
+      </ul>
 
       <p class="max-w-[318px] text-center">
         O Centro Cultural e Assistencial Oficina das Meninas atende meninas de 6 a 17 anos em situação de
@@ -49,27 +47,27 @@
       <h2 class="font-bold font-size text-sm">Sobre a oficina</h2>
 
       <ul class="flex flex-col gap-2">
-        <li>História</li>
-        <li>Eventos</li>
-        <li>Parceiros</li>
-        <li>Transparência</li>
+        <li><a routerLink="/" class="link-hover">Sobre</a></li>
+        <li><a routerLink="/" class="link-hover">Eventos</a></li>
+        <li><a routerLink="/" class="link-hover">Parceiros</a></li>
+        <li><a routerLink="/" class="link-hover">Transparência</a></li>
       </ul>
     </div>
     <div class="py-10 flex flex-col gap-4">
       <h2 class="font-bold font-size text-sm">Conta</h2>
 
       <ul class="flex flex-col gap-2">
-        <li>Acessar conta</li>
-        <li>Criar uma conta</li>
+        <li><a routerLink="/" class="link-hover">Acessar conta</a></li>
+        <li><a routerLink="/" class="link-hover">Criar uma conta</a></li>
       </ul>
     </div>
     <div class="py-10 flex flex-col gap-4">
       <h2 class="font-bold font-size text-sm">Ajuda</h2>
 
       <ul class="flex flex-col gap-2">
-        <li>Como doar sua nota fiscal</li>
-        <li>Como doar seu imposto de renda</li>
-        <li>Como se tornar um voluntário</li>
+        <li><a routerLink="/" class="link-hover">Como doar sua nota fiscal</a></li>
+        <li><a routerLink="/" class="link-hover">Como doar seu imposto de renda</a></li>
+        <li><a routerLink="/" class="link-hover">Como se tornar um voluntário</a></li>
       </ul>
     </div>
   </div>

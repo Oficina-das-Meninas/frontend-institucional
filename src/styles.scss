@@ -31,6 +31,7 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
+html, body { height: 100%; }
 
 .material-symbols-rounded {
   font-variation-settings:
@@ -40,5 +41,10 @@ body {
   'opsz' 24;
 }
 
+.link-hover {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
 
-html, body { height: 100%; }
+.link-hover:hover { color: var(--mat-sys-primary) !important; }
