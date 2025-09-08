@@ -1,74 +1,13 @@
 <footer class="w-full bg-gray-100 z-10 lg:text-xs text-sm">
   <div class="flex flex-col lg:flex-row justify-evenly p-10 gap-8 lg:gap-0">
-    <div class="flex flex-col gap-4 items-center">
-      <app-logo cssClass="size-20 lg:size-16" />
+    <app-organization-info [socialLinks]="socialLinks" />
 
-      <ul class="text-[#BA005C] flex gap-8">
-        <li>
-          <a routerLink="/" class="link-hover"><app-instagram-icon /></a>
-        </li>
-        <li>
-          <a routerLink="/" class="link-hover"><app-facebook-icon /></a>
-        </li>
-        <li>
-          <a routerLink="/" class="link-hover"><app-youtube-icon /></a>
-        </li>
-      </ul>
+    <app-contact-info />
 
-      <p class="max-w-[318px] text-center">
-        O Centro Cultural e Assistencial Oficina das Meninas atende meninas de 6 a 17 anos em situação de
-        vulnerabilidade.
-      </p>
-    </div>
+    <app-navigation-section title="Sobre a oficina" [links]="aboutLinks" />
 
-    <div class="max-w-[344px] flex flex-col gap-4">
-      <h2 class="font-bold font-size text-sm">Contato</h2>
+    <app-navigation-section title="Conta" [links]="accountLinks" />
 
-      <section class="flex flex-col gap-2">
-        <div class="flex gap-1">
-          <mat-icon class="min-w-fit" fontSet="material-symbols-rounded" color="#BA005C">location_on</mat-icon>
-          <p>R. Padre Manoel da Nobrega, 552 – Parque Alvorada, Araraquara – SP</p>
-        </div>
-        <div class="flex gap-1">
-          <mat-icon class="min-w-fit" fontSet="material-symbols-rounded" color="#BA005C">mail</mat-icon>
-          <p>administrativo@oficinadasmeninas.org.br</p>
-        </div>
-        <div class="flex gap-1">
-          <mat-icon class="min-w-fit" fontSet="material-symbols-rounded" color="#BA005C">phone</mat-icon>
-          <p>(16) 3322-6232</p>
-        </div>
-        <div class="flex gap-1">
-          <mat-icon class="min-w-fit" fontSet="material-symbols-rounded" color="#BA005C">schedule</mat-icon>
-          <p>Segunda a sexta, das 7h às 16h30</p>
-        </div>
-      </section>
-    </div>
-    <div class="flex flex-col gap-4">
-      <h2 class="font-bold font-size text-sm">Sobre a oficina</h2>
-
-      <ul class="flex flex-col gap-2">
-        <li><a routerLink="/" class="link-hover">Sobre</a></li>
-        <li><a routerLink="/" class="link-hover">Eventos</a></li>
-        <li><a routerLink="/" class="link-hover">Parceiros</a></li>
-        <li><a routerLink="/" class="link-hover">Transparência</a></li>
-      </ul>
-    </div>
-    <div class="flex flex-col gap-4">
-      <h2 class="font-bold font-size text-sm">Conta</h2>
-
-      <ul class="flex flex-col gap-2">
-        <li><a routerLink="/" class="link-hover">Acessar conta</a></li>
-        <li><a routerLink="/" class="link-hover">Criar uma conta</a></li>
-      </ul>
-    </div>
-    <div class="flex flex-col gap-4">
-      <h2 class="font-bold font-size text-sm">Ajuda</h2>
-
-      <ul class="flex flex-col gap-2">
-        <li><a routerLink="/" class="link-hover">Como doar sua nota fiscal</a></li>
-        <li><a routerLink="/" class="link-hover">Como doar seu imposto de renda</a></li>
-        <li><a routerLink="/" class="link-hover">Como se tornar um voluntário</a></li>
-      </ul>
-    </div>
+    <app-navigation-section title="Ajuda" [links]="helpLinks" />
   </div>
 </footer>
