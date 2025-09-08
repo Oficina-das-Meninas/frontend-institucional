@@ -1,15 +1,12 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, Input } from '@angular/core';
-
 import { register } from 'swiper/element/bundle';
 
 register();
 
 @Component({
   selector: 'app-carousel',
-  standalone: true,
   imports: [],
   templateUrl: './carousel.html',
-  styleUrls: ['./carousel.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class CarouselComponent {
