@@ -1,5 +1,29 @@
 @use '@angular/material' as mat;
+@use "tailwindcss";
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+  @include mat.menu-overrides((
+    container-color: var(--color-gray-100),
+    container-shape: var(--radius-4xl),
+    item-label-text-color: #726F78,
+    item-label-text-weight: 500,
+    item-leading-spacing: 1rem,
+    item-trailing-spacing: 1rem,
+  ));
+  @include mat.button-overrides((
+      filled-horizontal-padding: calc(var(--spacing) * 3),
+  ));
+
+  @include mat.sidenav-overrides((
+    container-shape: var(--radius-4xl),
+    container-background-color: white,
+    scrim-color: rgba(0, 0, 0, 0.452),
+    content-background-color: transparent,
+    container-width: 80%
+  ));
+
+}
 
 html {
   @include mat.theme((
@@ -24,3 +48,17 @@ body {
 }
 
 html, body { height: 100%; }
+
+
+.link-hover {
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
+  transition-duration: 200ms;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.link-hover:hover { color: var(--mat-sys-primary) !important; }
+
+.mat-mdc-menu-item:hover {
+  background-color: transparent !important;
+  color: var(--mat-sys-primary) !important;
+}
