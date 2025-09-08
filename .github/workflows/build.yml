@@ -81,4 +81,3 @@ jobs:
 
         echo "📤 Enviando arquivos para $VM_USER@$VM_HOST:$DEST_DIR ..."
         rsync -avz --delete dist/ $VM_USER@$VM_HOST:$DEST_DIR
-
