@@ -20,32 +20,32 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout do repositório
-      uses: actions/checkout@v4
+      # 1. Baixa o código do repositório
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
 
-    - name: Configurar Node.js (LTS)
-      uses: actions/setup-node@v4
-      with:
-        node-version: 'lts/*'
+      # 2. Configura Node.js LTS
+      - name: Configurar Node.js (LTS)
+        uses: actions/setup-node@v4
+        with:
+          node-version: 'lts/*'
 
-    - name: Instalar dependências
-      run: npm ci
+      # 3. Instala as dependências
+      - name: Instalar dependências
+        run: npm ci
 
-    - name: Build Angular
-      run: |
-        if [[ "${{ github.event.inputs.ENVIRONMENT }}" == "development" ]]; then
-          BASE_HREF="/${{ vars.SERVER_DIR_DEV }}"
-        else
-          BASE_HREF="/${{ vars.SERVER_DIR_PRD }}"
-        fi
+      # 4. Build do Angular (usando configuration conforme input)
+      - name: Build Angular
+        run: |
+          echo "🏗️ Buildando para ${{ github.event.inputs.ENVIRONMENT }}..."
+          npm run build --configuration=${{ github.event.inputs.ENVIRONMENT }}
 
-        npm run build -- --base-href $BASE_HREF --output-hashing=all --configuration=${{ github.event.inputs.ENVIRONMENT }}
-
-    - name: Upload build como artefato
-      uses: actions/upload-artifact@v4
-      with:
-        name: frontend-dist
-        path: dist/angular-app/
+      # 5. Publica o build como artefato para ser usado no job deploy
+      - name: Upload build como artefato
+        uses: actions/upload-artifact@v4
+        with:
+          name: frontend-dist
+          path: dist/angular-app/browser/
 
 
   deploy:
@@ -53,31 +53,66 @@ jobs:
     needs: build
 
     steps:
-    - name: Baixar artefato da build
-      uses: actions/download-artifact@v4
-      with:
-        name: frontend-dist
-        path: dist
+      # 1. Baixa o artefato gerado no job build
+      - name: Baixar artefato da build
+        uses: actions/download-artifact@v4
+        with:
+          name: frontend-dist
+          path: dist/angular-app/browser
 
+      # 2. Configura acesso SSH (com a chave armazenada no secret)
+      - name: Configurar SSH
+        run: |
+          mkdir -p ~/.ssh
+          echo "${{ secrets.VM_SSH_KEY }}" | tr -d '\r' > ~/.ssh/id_rsa
+          chmod 600 ~/.ssh/id_rsa
+          ssh-keyscan -H ${{ vars.VM_HOST }} >> ~/.ssh/known_hosts
 
-    - name: Configurar SSH
-      run: |
-        mkdir -p ~/.ssh
-        echo "${{ secrets.VM_SSH_KEY }}" > ~/.ssh/id_rsa
-        chmod 600 ~/.ssh/id_rsa
-        ssh-keyscan -H ${{ vars.VM_HOST }} >> ~/.ssh/known_hosts
+      # 3. Apenas para debug (lista arquivos do build)
+      - name: Debug arquivos do build
+        run: ls -R dist/angular-app/browser/
 
-    - name: Debug arquivos do build
-      run: ls -R dist/
+      # 4. Copia os arquivos do build para a VM
+      - name: Enviar arquivos para VM
+        run: |
+          if [[ "${{ github.event.inputs.ENVIRONMENT }}" == "development" ]]; then
+            DEST_DIR="${{ vars.VM_DIR_DEV }}"
+          else
+            DEST_DIR="${{ vars.VM_DIR_PRD }}"
+          fi
 
-    - name: Debug diretório atual
-      run: pwd
+          VM_USER="${{ vars.VM_USER }}"
+          VM_HOST="${{ vars.VM_HOST }}"
 
-    - name: Enviar arquivos para VM
-      run: |
-        DEST_DIR=$(echo "${{ vars.VM_DIR_DEV }}" | tr -d '\r')
-        VM_USER=$(echo "${{ vars.VM_USER }}" | tr -d '\r')
-        VM_HOST=$(echo "${{ vars.VM_HOST }}" | tr -d '\r')
+          echo "📤 Enviando arquivos para $VM_USER@$VM_HOST:$DEST_DIR ..."
+          rsync -avz --delete dist/angular-app/browser/ $VM_USER@$VM_HOST:$DEST_DIR/
 
-        echo "📤 Enviando arquivos para $VM_USER@$VM_HOST:$DEST_DIR ..."
-        rsync -avz --delete dist/ $VM_USER@$VM_HOST:$DEST_DIR
+      # 5. Inicia o servidor provisório com `serve` dentro da VM
+      - name: Iniciar servidor provisório com serve
+        run: |
+          if [[ "${{ github.event.inputs.ENVIRONMENT }}" == "development" ]]; then
+            DEST_DIR="${{ vars.VM_DIR_DEV }}"
+            PORT=4200
+          else
+            DEST_DIR="${{ vars.VM_DIR_PRD }}"
+            PORT=4300
+          fi
+
+          VM_USER="${{ vars.VM_USER }}"
+          VM_HOST="${{ vars.VM_HOST }}"
+
+          echo "🚀 Iniciando servidor provisório na VM em $VM_HOST:$PORT ..."
+
+          ssh $VM_USER@$VM_HOST << EOF
+            # Instalar serve se não existir
+            if ! command -v serve &> /dev/null; then
+              echo "📦 Instalando serve..."
+              sudo npm install -g serve
+            fi
+
+            # Matar instâncias antigas do serve (se houver)
+            pkill -f "serve -s $DEST_DIR" || true
+
+            # Subir em background servindo a pasta correta (browser/)
+            nohup serve -s $DEST_DIR -l $PORT > ~/serve.log 2>&1 &
+          EOF
