@@ -1,0 +1,124 @@
+<section
+  class="w-full h-screen bg-[url(/papel_caderno.png)] bg-cover bg-no-repeat"
+>
+  <img
+    src="/estrela2.svg"
+    alt="Estrelinha"
+    class="absolute left-20 size-40 brightness-125 -rotate-30 hover:animate-spin hover:brightness-200"
+  />
+  <img
+    src="/estrela2.svg"
+    alt="Estrelinha"
+    class="absolute top-20 size-36 brightness-125 hover:animate-spin hover:brightness-200"
+  />
+
+  <div class="text-center pt-50">
+    <h1 class="font-bold text-8xl text-zinc-500 send-flowers drop-shadow-md">
+      Oficina das Meninas
+    </h1>
+    <p class="text-2xl sniglet text-zinc-500 drop-shadow-md">
+      AMOR E ACOLHIMENTO
+    </p>
+  </div>
+  <!-- <img src="/papel-cortado3.svg" alt="Papelzinho cortado" class="-scale-x-100"> -->
+</section>
+
+<section class="bg-[#B9B885] w-full px-4 md:px-40 py-14 space-y-12">
+  <div class="flex flex-col md:flex-row items-center gap-5 md:gap-20x'">
+    <div class="w-full md:w-1/2 space-y-5">
+      <h2 class="text-3xl md:text-5xl font-bold">
+        Centro Cultural e Assistencial
+      </h2>
+      <p class="text-base md:text-xl font-medium">
+        Fundada em 2002 por Adélia Bellodi Privato, a ONG nasceu do sonho de
+        oferecer acolhimento e oportunidades a meninas de 6 a 17 anos em
+        situação de vulnerabilidade social.
+      </p>
+      <button matButton="filled">Conheça nossa história</button>
+    </div>
+    <div class="w-full md:w-1/2">
+      <img
+        src="./meninas_reunidas.webp"
+        alt="Meninas reunidas"
+        class="w-full rounded-3xl shadow-lg"
+      />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 justify-center">
+    <app-flower-stat
+      [value]="70"
+      label="Meninas assistidas"
+      flowerColor="#BC7C7C"
+      valueColor="#B9B885"
+      class="h-full"
+    />
+
+    <app-flower-stat
+      [value]="3"
+      label="Parceiros"
+      flowerColor="#F6EFBD"
+      valueColor="#B9B885"
+      class="h-full"
+    />
+
+    <app-flower-stat
+      [value]="today - yearOfFoundation"
+      label="Anos de ONG"
+      flowerColor="#5EA1C6"
+      valueColor="#B9B885"
+      class="h-full"
+    />
+  </div>
+</section>
+
+<section class="w-full bg-[#737373]">
+  <div class="text-white text-center px-4 md:px-75 py-14 space-y-3">
+    <h2 class="font-bold text-3xl md:text-5xl">Eventos</h2>
+    <p class="text-left sm:text-center">
+      Promovemos atividades culturais e esportivas que fortalecem a comunidade e
+      apoiam o desenvolvimento das meninas.
+    </p>
+    <button matButton="filled" class="blue">Ver eventos</button>
+  </div>
+</section>
+
+<section class="w-full bg-zinc-100 px-4 md:px-25 py-14">
+  <div class="flex-col text-center space-y-3">
+    <h2 class="font-bold text-3xl md:text-5xl">Ajude a instituição</h2>
+    <p class="text-left sm:text-center">
+      Contribuir com a Oficina das Meninas nunca foi tão simples.
+    </p>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8 mt-4">
+    <app-support-card
+      image="/padrinho_icon.png"
+      title="Seja um padrinho"
+      description="Apoio mensal que garante cuidado, acompanhamento e oportunidades para as meninas."
+      buttonText="Tornar-se padrinho"
+    />
+
+    <app-support-card
+      image="/pig_icon.png"
+      title="Faça uma doação"
+      description="Contribuição única para manter nossos projetos e atividades em funcionamento."
+      buttonText="Fazer doação"
+    />
+
+    <app-support-card
+      image="/nf_icon.webp"
+      title="Doe sua nota fiscal"
+      description="Sem custo, você ajuda a fortalecer a instituição e nossos programas."
+      buttonText="Doar nota fiscal"
+    />
+  </div>
+</section>
+
+<section class="w-full bg-white px-4 md:px-25 py-14">
+  <h2 class="font-bold text-3xl md:text-5xl text-center">Parceiros</h2>
+  <div class="flex flex-col sm:flex-row justify-center gap-25 mt-4">
+    <img src="/mesa_brasil.png" alt="Mesa Brasil" />
+    <img src="/passarinho.png" alt="Mesa Brasil" />
+    <img src="/pref_araraquara.png" alt="Mesa Brasil" />
+  </div>
+</section>
