@@ -33,6 +33,13 @@ html {
     ),
     density: 0,
   ));
+
+}
+
+:root {
+  @include mat.icon-overrides((
+    color: #BA005C,
+  ));
 }
 
 body {
@@ -49,6 +56,13 @@ body {
 
 html, body { height: 100%; }
 
+.material-symbols-rounded {
+  font-variation-settings:
+  'FILL' 0,
+  'wght' 700,
+  'GRAD' 0,
+  'opsz' 24;
+}
 
 .link-hover {
   transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
