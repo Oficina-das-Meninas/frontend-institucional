@@ -1,0 +1,13 @@
+<footer class="w-full bg-gray-100 z-10 text-xs">
+  <div class="flex flex-col lg:flex-row justify-evenly p-5 sm:p-10 gap-8">
+    <app-organization-info [socialLinks]="socialLinks" />
+
+    <app-contact-info />
+
+    <app-navigation-section title="Sobre a oficina" [links]="aboutLinks" />
+
+    <app-navigation-section title="Conta" [links]="accountLinks" />
+
+    <app-navigation-section title="Ajuda" [links]="helpLinks" />
+  </div>
+</footer>
