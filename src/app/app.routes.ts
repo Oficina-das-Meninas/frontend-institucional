@@ -1,11 +1,17 @@
 import { Routes } from '@angular/router';
 
 export const routes: Routes = [
-  { path: '', redirectTo: 'inicio', pathMatch: 'full' },
   {
-    path: 'inicio',
+    path: '',
     loadComponent: () =>
-      import('./domain/home/containers/home/home').then((m) => m.Home),
+      import('./shared/components/layout/layout').then((m) => m.Layout),
+    children: [
+      {
+        path: '',
+        loadComponent: () =>
+          import('./domain/home/containers/home/home').then((m) => m.Home),
+      },
+    ],
   },
-  { path: '**', redirectTo: '/' },
+  { path: '**', redirectTo: '' },
 ];

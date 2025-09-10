@@ -1,8 +1,14 @@
-<mat-drawer-container #drawerContainer class="min-h-screen">
-  <mat-drawer #drawer mode="over" class="" (closed)="onDrawerClosed()">
-    <div class="p-4 bg-white min-h-screen w-80">
-      <img class="size-30 object-contain ml-3 mt-3" src="./logo_preenchimento_branco.png" alt="Logo" />
-      <ul class="flex flex-col gap-8 mt-10 ml-6 text-lg font-medium text-[#726F78]">
+<mat-drawer-container #drawerContainer>
+  <mat-drawer #drawer mode="over" (closed)="onDrawerClosed()">
+    <div class="p-4 bg-white min-h-screen">
+      <img
+        class="size-30 object-contain ml-3 mt-3"
+        src="./logo_preenchimento_branco.png"
+        alt="Logo"
+      />
+      <ul
+        class="flex flex-col gap-8 mt-10 ml-6 text-lg font-medium text-[#726F78]"
+      >
         <li><a routerLink="/" class="link-hover">Sobre a oficina</a></li>
         <li><a routerLink="/" class="link-hover">Eventos</a></li>
         <li><a routerLink="/" class="link-hover">Transparência</a></li>
@@ -24,32 +30,46 @@
 
 <header class="fixed top-8 md:top-12 left-0 right-0 z-50 flex justify-center">
   <nav
-    class="w-[90%] bg-gray-100 ml-3 mr-3 py-1 px-4 md:py-2 md:px-4 rounded-4xl grid grid-cols-3 md:flex items-center md:justify-between text-[#726F78] gap-4 md:gap-18 text-sm shadow-md shadow-gray-400 font-medium min-w-60 md:min-w-fit md:w-fit"
+    class="glassy mx-3 py-1 px-4 md:py-2 md:px-4 rounded-4xl
+    grid grid-cols-3 lg:flex items-center lg:justify-between gap-4 lg:gap-18
+    text-sm font-medium
+    w-[90%] min-w-60 lg:min-w-fit lg:w-fit"
   >
-    <div class="md:hidden flex items-center justify-start">
+    <div class="lg:hidden flex items-center justify-start">
       <mat-icon class="cursor-pointer" (click)="toggleDrawer()">menu</mat-icon>
     </div>
 
-    <div class="flex justify-center md:order-none">
+    <div class="flex justify-center lg:order-none">
       <a routerLink="/">
-        <img class="md:size-10 size-14 object-contain max-w-14" src="./logo_preenchimento_branco.png" alt="" />
+        <img
+          class="lg:size-10 size-14 object-contain max-w-14"
+          src="./logo_preenchimento_branco.png"
+          alt="Logo"
+        />
       </a>
     </div>
 
-    <div class="flex justify-end md:justify-start md:order-last">
+    <div class="flex justify-end lg:justify-start lg:order-last">
       <a routerLink="/" matButton="filled" class="text-center">
-        <span class="md:hidden">Entrar</span>
-        <span class="hidden md:inline">Acessar conta</span>
+        <span class="lg:hidden">Entrar</span>
+        <span class="hidden lg:inline">Acessar conta</span>
       </a>
     </div>
 
-    <div class="hidden md:block">
+    <div class="hidden lg:block">
       <ul class="flex gap-10 text-center items-center">
         <li><a routerLink="/" class="link-hover">Sobre a oficina</a></li>
         <li><a routerLink="/" class="link-hover">Eventos</a></li>
         <li><a routerLink="/" class="link-hover">Transparência</a></li>
         <li>
-          <span class="cursor-pointer pb-2 link-hover" [matMenuTriggerFor]="helpOptions">Como ajudar?</span>
+          <span
+            class="cursor-pointer link-hover flex items-center"
+            [matMenuTriggerFor]="helpOptions"
+            >
+            Como ajudar?
+            <mat-icon>arrow_drop_down</mat-icon>
+            </span
+          >
           <mat-menu #helpOptions="matMenu" yPosition="below" class="text-sm">
             <a routerLink="/" mat-menu-item>Doe sua nota fiscal</a>
             <a routerLink="/" mat-menu-item>Doe seu imposto de renda</a>

@@ -5,7 +5,7 @@ import { OrganizationInfoComponent } from './organization-info/organization-info
 
 export interface SocialLink {
   icon: 'instagram' | 'facebook' | 'youtube';
-  route: string;
+  link: string;
   label: string;
 }
 
@@ -18,12 +18,13 @@ export interface SocialLink {
 })
 export class Footer {
   socialLinks: SocialLink[] = [
-    { icon: 'instagram', route: '/', label: 'Instagram' },
-    { icon: 'facebook', route: '/', label: 'Facebook' },
-    { icon: 'youtube', route: '/', label: 'YouTube' },
+    { icon: 'instagram', link: 'https://www.instagram.com/oficinadasmeninasoficial/', label: 'Instagram' },
+    { icon: 'facebook', link: 'https://www.facebook.com/OficinaDasMeninas', label: 'Facebook' },
+    { icon: 'youtube', link: 'https://www.youtube.com/channel/UCXYFKD-9GGVaMeV5SZvh0tg', label: 'YouTube' },
   ];
+
   aboutLinks: NavigationLink[] = [
-    { label: 'Sobre', route: '/' },
+    { label: 'História', route: '/' },
     { label: 'Eventos', route: '/' },
     { label: 'Parceiros', route: '/' },
     { label: 'Transparência', route: '/' },
@@ -35,8 +36,8 @@ export class Footer {
   ];
 
   helpLinks: NavigationLink[] = [
-    { label: 'Como doar sua nota fiscal', route: '/' },
-    { label: 'Como doar seu imposto de renda', route: '/' },
-    { label: 'Como se tornar um voluntário', route: '/' },
+    { label: 'Doe nota fiscal', route: '/' },
+    { label: 'Doe seu imposto de renda', route: '/' },
+    { label: 'Seja um voluntário', route: '/' },
   ];
 }

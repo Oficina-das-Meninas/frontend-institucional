@@ -2,7 +2,7 @@
   <h2 class="font-bold font-size text-sm">{{ title }}</h2>
 
   <ul class="flex flex-col gap-2">
-    @for (link of links; track link.route) {
+    @for (link of links; track $index) {
     <li>
       <a [routerLink]="link.route" class="link-hover">{{ link.label }}</a>
     </li>

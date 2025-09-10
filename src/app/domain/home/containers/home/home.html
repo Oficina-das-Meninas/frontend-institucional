@@ -23,13 +23,13 @@
   <!-- <img src="/papel-cortado3.svg" alt="Papelzinho cortado" class="-scale-x-100"> -->
 </section>
 
-<section class="bg-[#B9B885] w-full px-4 md:px-40 py-14 space-y-12">
-  <div class="flex flex-col md:flex-row items-center gap-5 md:gap-20x'">
+<section class="bg-[#B9B885] w-full px-4 lg:px-40 py-14 space-y-12">
+  <div class="flex flex-col md:flex-row items-center gap-5">
     <div class="w-full md:w-1/2 space-y-5">
-      <h2 class="text-3xl md:text-5xl font-bold">
+      <h2 class="text-3xl lg:text-5xl font-bold">
         Centro Cultural e Assistencial
       </h2>
-      <p class="text-base md:text-xl font-medium">
+      <p class="text-base lg:text-xl font-medium">
         Fundada em 2002 por Adélia Bellodi Privato, a ONG nasceu do sonho de
         oferecer acolhimento e oportunidades a meninas de 6 a 17 anos em
         situação de vulnerabilidade social.
@@ -73,17 +73,21 @@
 </section>
 
 <section class="w-full bg-[#737373]">
-  <div class="text-white text-center px-4 md:px-75 py-14 space-y-3">
+  <div class="text-white text-center px-4 lg:px-75 py-14 space-y-3">
     <h2 class="font-bold text-3xl md:text-5xl">Eventos</h2>
-    <p class="text-left sm:text-center">
+    <p>
       Promovemos atividades culturais e esportivas que fortalecem a comunidade e
       apoiam o desenvolvimento das meninas.
     </p>
-    <button matButton="filled" class="blue">Ver eventos</button>
+    <button matButton="filled">Ver eventos</button>
   </div>
+
+  <app-carousel
+    [slides]="['./imagem1.webp', './imagem2.webp', './imagem3.webp']"
+  />
 </section>
 
-<section class="w-full bg-zinc-100 px-4 md:px-25 py-14">
+<section class="w-full bg-zinc-100 px-4 lg:px-25 py-14">
   <div class="flex-col text-center space-y-3">
     <h2 class="font-bold text-3xl md:text-5xl">Ajude a instituição</h2>
     <p class="text-left sm:text-center">
