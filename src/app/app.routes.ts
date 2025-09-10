@@ -3,13 +3,16 @@ import { Routes } from '@angular/router';
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () =>
-      import('./shared/components/layout/layout').then((m) => m.Layout),
+    loadComponent: () => import('./shared/components/layout/layout').then(m => m.Layout),
     children: [
       {
         path: '',
+        loadComponent: () => import('./domain/home/containers/home/home').then(m => m.Home),
+      },
+      {
+        path: 'doar-nota-fiscal-paulista',
         loadComponent: () =>
-          import('./domain/home/containers/home/home').then((m) => m.Home),
+          import('./domain/home/containers/invoice-donation/invoice-donation').then(m => m.InvoiceDonation),
       },
     ],
   },
