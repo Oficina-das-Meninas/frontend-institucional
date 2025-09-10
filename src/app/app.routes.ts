@@ -10,7 +10,7 @@ export const routes: Routes = [
         loadComponent: () => import('./domain/home/containers/home/home').then(m => m.Home),
       },
       {
-        path: 'doar-nota-fiscal-paulista',
+        path: 'doar-nota-fiscal',
         loadComponent: () =>
           import('./domain/home/containers/invoice-donation/invoice-donation').then(m => m.InvoiceDonation),
       },
