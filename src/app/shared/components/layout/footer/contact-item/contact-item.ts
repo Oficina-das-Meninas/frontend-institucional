@@ -11,4 +11,5 @@ import { MatIconModule } from '@angular/material/icon';
 export class ContactItemComponent {
   @Input() icon: string = '';
   @Input() text: string = '';
+  @Input() link: string = '';
 }
