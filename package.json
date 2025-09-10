@@ -6,7 +6,8 @@
     "start": "ng serve",
     "build": "ng build",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:ci": "ng test --no-watch --no-progress --browsers=ChromeHeadless"
   },
   "private": true,
   "dependencies": {
@@ -21,8 +22,6 @@
     "@tailwindcss/postcss": "^4.1.13",
     "postcss": "^8.5.6",
     "rxjs": "~7.8.0",
-    "swiper": "^11.2.10",
-    "tailwindcss": "^4.1.13",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },

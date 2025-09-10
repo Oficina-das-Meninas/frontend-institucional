@@ -1,10 +1,8 @@
 @use "tailwindcss";
 @use '@angular/material' as mat;
-@use "tailwindcss";
-@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
-
-@import 'swiper/scss';
-@import 'swiper/scss/navigation';
+@use 'swiper/scss';
+@use 'swiper/scss/navigation';
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Send+Flowers&family=Sniglet:wght@400;800&display=swap');
 
 :root {
   @include mat.menu-overrides((
@@ -18,7 +16,6 @@
   @include mat.button-overrides((
       filled-horizontal-padding: calc(var(--spacing) * 3),
   ));
-
   @include mat.sidenav-overrides((
     container-shape: var(--radius-4xl),
     container-background-color: white,
@@ -39,12 +36,6 @@ html {
 
 }
 
-:root {
-  @include mat.icon-overrides((
-    color: #BA005C,
-  ));
-}
-
 body {
   color-scheme: light;
   background-color: var(--mat-sys-surface);
@@ -58,6 +49,17 @@ body {
 }
 
 html, body { height: 100%; }
+
+.glassy {
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1);
+  background-color: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: 1rem;
+  color: #000;
+}
 
 .material-symbols-rounded {
   font-variation-settings:
@@ -78,4 +80,13 @@ html, body { height: 100%; }
 .mat-mdc-menu-item:hover {
   background-color: transparent !important;
   color: var(--mat-sys-primary) !important;
+}
+
+.mat-drawer-backdrop {
+  min-height: 100dvh !important;
+  position: fixed !important;
+}
+
+.mat-drawer-over {
+  position: fixed !important;
 }
