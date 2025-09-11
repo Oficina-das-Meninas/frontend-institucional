@@ -14,7 +14,7 @@ export const routes: Routes = [
       {
         path: 'sobre',
         loadComponent: () =>
-          import('./domain/home/containers/history/history').then(m => m.History),
+          import('./domain/home/containers/about/about').then(m => m.About),
 
       },
     ],

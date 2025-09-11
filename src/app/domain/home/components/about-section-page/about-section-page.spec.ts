@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { HistorySectionPage } from './history-section-page';
+import { AboutSectionPage } from './about-section-page';
 
-describe('HistorySectionPage', () => {
-  let component: HistorySectionPage;
-  let fixture: ComponentFixture<HistorySectionPage>;
+describe('AboutSectionPage', () => {
+  let component: AboutSectionPage;
+  let fixture: ComponentFixture<AboutSectionPage>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [HistorySectionPage]
+      imports: [ AboutSectionPage ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(HistorySectionPage);
+    fixture = TestBed.createComponent(AboutSectionPage);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
