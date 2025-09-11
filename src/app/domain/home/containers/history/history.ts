@@ -2,10 +2,11 @@ import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
+import { HistorySectionPage } from "../../components/history-section-page/history-section-page";
 
 @Component({
   selector: 'app-history',
-  imports: [MatButtonModule, MatCardModule, CommonModule],
+  imports: [MatButtonModule, MatCardModule, CommonModule, HistorySectionPage],
   templateUrl: './history.html',
   styleUrl: './history.scss',
 })

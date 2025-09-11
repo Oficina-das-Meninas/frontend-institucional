@@ -17,23 +17,5 @@
   [class.mt-20]="i === 0"
   [class.mb-20]="i === sections.length - 1"
 >
-  <div 
-    class="flex flex-col items-center justify-center gap-25 md:gap-12 lg:gap-16 2xl:gap-50 max-w-6xl mx-auto"
-    [class.md:flex-row]="section.imagePosition === 'image-right'"
-    [class.md:flex-row-reverse]="section.imagePosition === 'image-left'"
-  >
-    <div class="flex-1 max-w-md space-y-5 text-center md:text-left">
-      <p class="lg:text-xl font-medium">
-        {{ section.text }}
-      </p>
-    </div>
-    
-    <div class="flex-1 max-w-sm md:max-w-md lg:max-w-lg">
-      <img
-        [src]="section.imagePath"
-        alt="Imagem da seção"
-        class="w-full rounded-3xl shadow-xl"
-      />
-    </div>
-  </div>
+  <app-history-section-page [section]="section"></app-history-section-page>
 </section>
