@@ -11,6 +11,12 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./domain/home/containers/home/home').then((m) => m.Home),
       },
+      {
+        path: 'sobre',
+        loadComponent: () =>
+          import('./domain/home/containers/history/history').then(m => m.History),
+
+      },
     ],
   },
   { path: '**', redirectTo: '' },
