@@ -9,29 +9,40 @@
   <section class="flex flex-col lg:flex-row 2xl:gap-20 gap-10 justify-center items-center w-full">
     <div>
       <div
-        class="blue-note-bg p-4 lg:p-8 rounded-lg max-w-xs lg:min-w-[413px] lg:min-h-[413px] flex flex-col justify-center items-center text-center"
-      >
+        class="blue-note-bg p-4 lg:p-8 rounded-lg max-w-xs lg:min-w-[413px] lg:min-h-[413px] flex flex-col justify-center items-center text-center">
         <div class="-rotate-5 p-8 m-5">
           <h2 class="text-white text-2xl lg:text-[2.5rem] font-bold mb-4">Como doar?</h2>
           <p class="text-white mb-6 font-bold lg:text-lg text-sm">
             Aprenda a fazer a doação automática da sua Nota Fiscal Paulista para a Oficina das Meninas.
           </p>
-          <a matButton="filled" href="https://www.youtube.com/watch?v=N4WpyQnxa9E" target="_blank" class="w-fit">Assistir ao vídeo</a>
+          <a matButton="filled" href="https://www.youtube.com/watch?v=N4WpyQnxa9E" target="_blank" class="w-fit">
+            Assistir ao vídeo
+          </a>
         </div>
       </div>
     </div>
 
     <div class="lg:w-[560px] w-full h-full flex justify-center items-center p-3">
-      <div class="w-full lg:max-w-[560px] max-w-[400px] aspect-video rounded-4xl overflow-hidden">
+      <div class="w-full lg:max-w-[560px] max-w-[400px] aspect-video rounded-4xl overflow-hidden relative">
         <iframe
           src="https://www.youtube.com/embed/N4WpyQnxa9E?si=2Ipfzcjdu7Zmcu_y"
           title="Como doar sua nota fiscal paulista para a Oficina das Meninas"
           frameborder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; web-share"
           referrerpolicy="strict-origin-when-cross-origin"
           allowfullscreen
-          class="w-full h-full"
-        ></iframe>
+          (load)="onIframeLoad()"
+          class="w-full h-full relative z-10"></iframe>
+
+        @if ( isVideoLoading) {
+        <div class="absolute inset-0 flex justify-center items-center z-0">
+          <div
+            role="status"
+            class="flex items-center justify-center h-full w-full bg-gray-100 rounded-4xl animate-pulse dark:bg-gray-700">
+            <span class="sr-only">Loading...</span>
+          </div>
+        </div>
+        }
       </div>
     </div>
   </section>
