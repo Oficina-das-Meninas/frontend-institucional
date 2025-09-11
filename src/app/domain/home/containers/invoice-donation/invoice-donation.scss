@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+
+.cardboard-bg {
+  background-image: url('/papel_pardo.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  flex: 1;
+}
+
+.blue-note-bg {
+  background-image: url('/nota_azul.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}
