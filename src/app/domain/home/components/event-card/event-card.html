@@ -1,0 +1,13 @@
+<div class="relative max-w-sm w-sm max-h-[18rem] aspect-[4/3] overflow-hidden rounded-lg bg-white shadow">
+  <div>
+    <img [src]="imageUrl" class="w-full object-cover" alt="" />
+  </div>
+  <div class="absolute inset-0 z-10 bg-gradient-to-t from-black"></div>
+  <div class="absolute inset-x-0 bottom-0 z-20 p-4">
+    <p class="mb-1 text-sm text-gray-400">
+      <time>{{ formattedDate }}</time>
+    </p>
+    <h3 class="text-xl font-medium text-white">{{ title }}</h3>
+    <p class="mt-1 text-white">{{ description }}</p>
+  </div>
+</div>
