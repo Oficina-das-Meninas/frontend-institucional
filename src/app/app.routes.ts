@@ -20,6 +20,11 @@ export const routes: Routes = [
           import('./domain/home/containers/about/about').then(m => m.About),
 
       },
+      {
+        path: 'seja-um-padrinho',
+        loadComponent: () =>
+          import('./domain/donation-plans/containers/donation-plans/donation-plans').then((m) => m.DonationPlans),
+      },
     ],
   },
   { path: '**', redirectTo: '' },
