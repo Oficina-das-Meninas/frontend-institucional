@@ -23,6 +23,13 @@
     content-background-color: transparent,
     container-width: 80%
   ));
+
+}
+
+/* resolve conflito da borda do componente
+    mat-form-field appearance="outline" */
+.mdc-notched-outline__notch{
+  border-right: none;
 }
 
 html {

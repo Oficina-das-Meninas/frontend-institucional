@@ -39,5 +39,6 @@ export class Footer {
     { label: 'Doe nota fiscal', route: '/' },
     { label: 'Doe seu imposto de renda', route: '/' },
     { label: 'Seja um voluntário', route: '/' },
+    { label: 'Seja um padrinho', route: '/seja-um-padrinho' }
   ];
 }
