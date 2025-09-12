@@ -24,7 +24,7 @@ export class Footer {
   ];
 
   aboutLinks: NavigationLink[] = [
-    { label: 'História', route: '/' },
+    { label: 'História', route: '/sobre' },
     { label: 'Eventos', route: '/' },
     { label: 'Parceiros', route: '/' },
     { label: 'Transparência', route: '/' },
