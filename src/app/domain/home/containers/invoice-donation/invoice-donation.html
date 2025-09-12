@@ -35,12 +35,8 @@
           class="w-full h-full relative z-10"></iframe>
 
         @if ( isVideoLoading) {
-        <div class="absolute inset-0 flex justify-center items-center z-0">
-          <div
-            role="status"
-            class="flex items-center justify-center h-full w-full bg-gray-100 rounded-4xl animate-pulse dark:bg-gray-700">
-            <span class="sr-only">Loading...</span>
-          </div>
+        <div class="absolute inset-0 flex justify-center items-center z-20 bg-gray-100 rounded-4xl">
+          <mat-spinner diameter="50" color="primary"></mat-spinner>
         </div>
         }
       </div>
