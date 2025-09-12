@@ -60,16 +60,6 @@ html, body { height: 100%; }
   color: #000;
 }
 
-.glassy {
-  box-shadow:
-    0 4px 6px -1px rgb(0 0 0 / 0.1),
-    0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
-  background-color: rgba(255, 255, 255, 0.2) !important;
-  backdrop-filter: blur(8px) !important;
-  border: 1px solid rgba(255, 255, 255, 0.3) !important;
-  color: #000 !important;
-}
-
 .material-symbols-rounded {
   font-variation-settings:
   'FILL' 0,
