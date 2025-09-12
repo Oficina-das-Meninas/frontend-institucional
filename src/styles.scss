@@ -8,7 +8,6 @@
   @include mat.menu-overrides((
     container-color: var(--color-gray-100),
     container-shape: var(--radius-4xl),
-    item-label-text-color: #726F78,
     item-label-text-weight: 500,
     item-leading-spacing: 1rem,
     item-trailing-spacing: 1rem,
@@ -59,6 +58,16 @@ html, body { height: 100%; }
   border: 1px solid rgba(255, 255, 255, 0.3);
   border-radius: 1rem;
   color: #000;
+}
+
+.glassy {
+  box-shadow:
+    0 4px 6px -1px rgb(0 0 0 / 0.1),
+    0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+  background-color: rgba(255, 255, 255, 0.2) !important;
+  backdrop-filter: blur(8px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.3) !important;
+  color: #000 !important;
 }
 
 .material-symbols-rounded {

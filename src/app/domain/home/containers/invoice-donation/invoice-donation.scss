@@ -1,0 +1,19 @@
+:host {
+  display: flex;
+  flex: 1;
+}
+
+.cardboard-bg {
+  background-color: #b3936a;
+  opacity: 1;
+  background-image: radial-gradient(#9a7d58 2px, #b3936a 2px);
+  background-size: 40px 40px;
+  flex: 1;
+}
+
+.blue-note-bg {
+  background-image: url('/nota_azul.png');
+  background-size: contain;
+  background-position: center;
+  background-repeat: no-repeat;
+}

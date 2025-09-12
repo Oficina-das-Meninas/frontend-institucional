@@ -1,5 +1,4 @@
-import { MediaMatcher } from '@angular/cdk/layout';
-import { Component, inject, signal } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { Footer } from './footer/footer';
 import { Toolbar } from './toolbar/toolbar';
@@ -11,5 +10,5 @@ import { Toolbar } from './toolbar/toolbar';
   styleUrl: './layout.scss',
 })
 export class Layout {
-  
+
 }
