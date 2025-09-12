@@ -14,8 +14,8 @@ registerLocaleData(localePt);
   ]
 })
 export class EventCard {
-  @Input() title: string = 'Título do Evento';
-  @Input() description: string = 'Descrição do Evento';
-  @Input() imageUrl: string = 'https://picsum.photos/400';
-  @Input() date: Date = new Date();
+  @Input() title!: string;
+  @Input() description!: string;
+  @Input() imageUrl!: string;
+  @Input() date!: Date;
 }
