@@ -14,6 +14,17 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./domain/home/containers/invoice-donation/invoice-donation').then(m => m.InvoiceDonation),
       },
+      {
+        path: 'sobre',
+        loadComponent: () =>
+          import('./domain/home/containers/about/about').then(m => m.About),
+
+      },
+      {
+        path: 'seja-um-padrinho',
+        loadComponent: () =>
+          import('./domain/donation-plans/containers/donation-plans/donation-plans').then((m) => m.DonationPlans),
+      },
     ],
   },
   { path: '**', redirectTo: '' },
