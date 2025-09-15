@@ -86,33 +86,3 @@ jobs:
 
           echo "📤 Enviando arquivos para $VM_USER@$VM_HOST:$DEST_DIR ..."
           rsync -avz --delete dist/angular-app/browser/ $VM_USER@$VM_HOST:$DEST_DIR/
-
-      # 5. Inicia o servidor provisório com `serve` dentro da VM
-      - name: Iniciar servidor provisório com serve
-        run: |
-          if [[ "${{ github.event.inputs.ENVIRONMENT }}" == "development" ]]; then
-            DEST_DIR="${{ vars.VM_DIR_DEV }}"
-            PORT=4200
-          else
-            DEST_DIR="${{ vars.VM_DIR_PRD }}"
-            PORT=4300
-          fi
-
-          VM_USER="${{ vars.VM_USER }}"
-          VM_HOST="${{ vars.VM_HOST }}"
-
-          echo "🚀 Iniciando servidor provisório na VM em $VM_HOST:$PORT ..."
-
-          ssh $VM_USER@$VM_HOST << EOF
-            # Instalar serve se não existir
-            if ! command -v serve &> /dev/null; then
-              echo "📦 Instalando serve..."
-              sudo npm install -g serve
-            fi
-
-            # Matar instâncias antigas do serve (se houver)
-            pkill -f "serve -s $DEST_DIR" || true
-
-            # Subir em background servindo a pasta correta (browser/)
-            nohup serve -s $DEST_DIR -l $PORT > ~/serve.log 2>&1 &
-          EOF
