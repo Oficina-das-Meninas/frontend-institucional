@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, ViewChild, WritableSignal } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -38,12 +38,20 @@ export class Toolbar {
         this.drawerContainerRef.nativeElement.style.setProperty('z-index', '51', 'important');
       }
       this.drawer.toggle();
+
+      if (this.drawer.opened) {
+        document.body.classList.add('overflow-hidden');
+      } else {
+        document.body.classList.remove('overflow-hidden');
+      }
     }
   }
 
   onDrawerClosed(): void {
     if (this.drawerContainerRef && this.drawerContainerRef.nativeElement) {
       this.drawerContainerRef.nativeElement.style.removeProperty('z-index');
+
+      document.body.classList.remove('overflow-hidden');
     }
   }
 }

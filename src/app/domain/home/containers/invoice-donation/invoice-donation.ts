@@ -1,21 +1,16 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 @Component({
   selector: 'app-invoice-donation',
-  imports: [MatButtonModule, CommonModule],
+  imports: [MatButtonModule, CommonModule, MatProgressSpinnerModule],
   templateUrl: './invoice-donation.html',
   styleUrl: './invoice-donation.scss',
 })
-export class InvoiceDonation implements OnInit {
+export class InvoiceDonation {
   isVideoLoading = true;
-
-  ngOnInit() {
-    setTimeout(() => {
-      this.isVideoLoading = false;
-    }, 3000);
-  }
 
   onIframeLoad() {
     this.isVideoLoading = false;
