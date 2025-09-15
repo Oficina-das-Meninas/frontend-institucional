@@ -1,6 +1,6 @@
-<mat-drawer-container #drawerContainer class="min-h-screen">
-  <mat-drawer #drawer mode="over" class="" (closed)="onDrawerClosed()">
-    <div class="p-4 bg-white min-h-screen w-80">
+<mat-drawer-container #drawerContainer>
+  <mat-drawer #drawer mode="over" (closed)="onDrawerClosed()">
+    <div class="p-4 bg-white">
       <img class="size-30 object-contain ml-3 mt-3" src="./logo_preenchimento_branco.png" alt="Logo" />
       <ul class="flex flex-col gap-8 mt-10 ml-6 text-lg font-medium text-[#726F78]">
         <li><a routerLink="/" class="link-hover">Sobre a oficina</a></li>
