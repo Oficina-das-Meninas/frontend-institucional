@@ -1,0 +1,13 @@
+<div class="size-full bg-white shadow-sm p-5 space-y-3 rounded-2xl text-center">
+  <img [src]="image" [alt]="title" class="h-38 mx-auto" />
+  <h3 class="font-bold text-2xl">{{ title }}</h3>
+  <p>
+    {{ description }}
+  </p>
+  <button matButton [routerLink]="link">
+    <div class="flex items-center gap-2">
+      {{ buttonText }}
+      <mat-icon>arrow_forward</mat-icon>
+    </div>
+  </button>
+</div>

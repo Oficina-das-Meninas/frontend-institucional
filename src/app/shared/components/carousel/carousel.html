@@ -1,25 +1,25 @@
 <swiper-container
-    slides-per-view="2"
-    centered-slides="true"
-    space-between="30"
-    grab-cursor="true"
-    mousewheel="true"
-    keyboard="true"
-    autoplay-delay="2500"
-    autoplay-disable-on-interaction="false"
-    autoplay-pause-on-mouse-enter="true"
-
-    class="w-full pt-10 pb-10"
+  [attr.slides-per-view]="slidesPerView"
+  [attr.autoplay-delay]="autoplayDelay"
+  [attr.space-between]="spaceBetween"
+  centered-slides="true"
+  grab-cursor="true"
+  mousewheel="true"
+  keyboard="true"
+  autoplay-disable-on-interaction="false"
+  autoplay-pause-on-mouse-enter="true"
+  centered-slides="true"
+  class="w-full"
 >
-  @for (slide of slides; track slide.id) {
-  <swiper-slide class="bg-center bg-cover">
-    <div class="bg-white p-2 rounded-xl shadow-lg border-4 border-white">
-      <img
-    [src]="slide.img"
-    class="w-full min-w-[10rem] h-[12rem] object-cover rounded-md"
-    alt="Imagem do carrossel"
-      />
-    </div>
-  </swiper-slide>
+  @for (slide of slides; track $index) {
+    <swiper-slide class="flex justify-center items-center">
+      <div [class]="slideClass">
+        <img
+          [src]="slide"
+          [class]="imgClass"
+          alt="Imagem do carrossel"
+        />
+      </div>
+    </swiper-slide>
   }
 </swiper-container>
