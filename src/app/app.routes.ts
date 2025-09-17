@@ -16,5 +16,9 @@ export const routes: Routes = [
       },
     ],
   },
+  {
+    path: 'faca-sua-doacao',
+    loadComponent: () => import('./domain/donation/containers/make-your-donation/make-your-donation').then(m => m.MakeYourDonation),
+  },
   { path: '**', redirectTo: '' },
 ];
