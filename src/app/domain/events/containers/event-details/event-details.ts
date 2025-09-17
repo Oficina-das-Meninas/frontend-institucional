@@ -46,16 +46,25 @@ export class EventDetails implements OnInit {
     const headerElement = this.elementRef.nativeElement.querySelector('.event-header');
 
     if (headerElement) {
-      const backgroundStyle = `
+      const newBackgroundStyle = `
         radial-gradient(circle, transparent 20%, ${primaryColor} 20%, ${primaryColor} 80%, transparent 80%, transparent),
         radial-gradient(circle, transparent 20%, ${primaryColor} 20%, ${primaryColor} 80%, transparent 80%, transparent) 67.5px 67.5px,
         linear-gradient(${secondaryColor} 5.4px, transparent 5.4px) 0 -2.7px,
         linear-gradient(90deg, ${secondaryColor} 5.4px, ${primaryColor} 5.4px) -2.7px 0
       `;
 
-      this.renderer.setStyle(headerElement, 'background-color', primaryColor);
-      this.renderer.setStyle(headerElement, 'background', backgroundStyle);
-      this.renderer.setStyle(headerElement, 'background-size', '135px 135px, 135px 135px, 67.5px 67.5px, 67.5px 67.5px');
+      this.renderer.setStyle(headerElement, '--new-background-color', primaryColor);
+      this.renderer.setStyle(headerElement, '--new-background', newBackgroundStyle);
+      this.renderer.setStyle(headerElement, '--new-background-size', '135px 135px, 135px 135px, 67.5px 67.5px, 67.5px 67.5px');
+
+      const style = headerElement.style;
+      style.setProperty('--new-background-color', primaryColor);
+      style.setProperty('--new-background', newBackgroundStyle);
+      style.setProperty('--new-background-size', '135px 135px, 135px 135px, 67.5px 67.5px, 67.5px 67.5px');
+
+      setTimeout(() => {
+        this.renderer.addClass(headerElement, 'color-extracted');
+      }, 50);
     }
   }
 }
