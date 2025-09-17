@@ -1,12 +1,4 @@
 .event-header {
-  background-color: #141414;
-  opacity: 1;
-  background: radial-gradient(circle, transparent 20%, #141414 20%, #141414 80%, transparent 80%, transparent),
-    radial-gradient(circle, transparent 20%, #141414 20%, #141414 80%, transparent 80%, transparent) 67.5px 67.5px,
-    linear-gradient(#000000 5.4px, transparent 5.4px) 0 -2.7px,
-    linear-gradient(90deg, #000000 5.4px, #141414 5.4px) -2.7px 0;
-  background-size: 135px 135px, 135px 135px, 67.5px 67.5px, 67.5px 67.5px;
-
   position: relative;
   overflow: hidden;
 
