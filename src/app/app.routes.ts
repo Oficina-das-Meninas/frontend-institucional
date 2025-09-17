@@ -25,6 +25,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./domain/donation-plans/containers/donation-plans/donation-plans').then((m) => m.DonationPlans),
       },
+      {
+        path: 'evento/:id',
+        loadComponent: () =>
+          import('./domain/events/containers/event-details/event-details').then((m) => m.EventDetails),
+      }
     ],
   },
   { path: '**', redirectTo: '' },
