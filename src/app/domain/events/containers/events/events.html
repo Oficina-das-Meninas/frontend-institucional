@@ -1,0 +1,51 @@
+<div class="mt-38">
+  <div class="px-4 max-w-2xl mx-auto text-center space-y-4">
+    <h1 class="text-3xl lg:text-5xl font-bold">Eventos</h1>
+    <p class="text-base lg:text-xl leading-relaxed">
+      Aqui você encontra tudo que acontece na nossa oficina: os próximos
+      encontros, o que já passou e as novidades que vêm por aí.
+    </p>
+    <mat-form-field appearance="outline" class="w-full max-w-md">
+      <input matInput placeholder="Busque por eventos..." aria-label="Buscar eventos" />
+      <button
+        mat-icon-button
+        matSuffix
+        matTooltip="Buscar evento"
+        aria-label="Buscar evento"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+  </div>
+  <div
+    class="relative w-full bg-lime-600/70 py-10 px-4 md:px-10 flex flex-col items-center justify-center overflow-hidden"
+  >
+    <img
+      src="/logo_cinza.svg"
+      alt="Flor esquerda"
+      class="absolute left-[-22rem] top-[-18rem] w-[40rem] h-auto opacity-60 pointer-events-none select-none"
+    />
+    <img
+      src="/logo_cinza.svg"
+      alt="Flor direita"
+      class="absolute right-[-22rem] bottom-[-20rem] w-[40rem] h-auto opacity-60 pointer-events-none select-none"
+    />
+    @if (events$ | async; as events) {
+      <app-events-list
+        [events]="events.data"
+        class="grid gap-4 md:gap-8 md:grid-cols-2 lg:grid-cols-3"
+      />
+
+      <app-event-paginator
+        (page)="refresh($event)"
+        [length]="events.totalElements"
+        [pageSize]="pageSize"
+        [pageIndex]="pageIndex"
+        aria-label="Selecione a página de eventos"
+        class="mt-10"
+      />
+    } @else {
+      <mat-spinner diameter="50" color="primary"></mat-spinner>
+    }
+  </div>
+</div>
