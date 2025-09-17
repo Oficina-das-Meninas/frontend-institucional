@@ -17,7 +17,7 @@ export class EventService {
       title: 'Ferroviária',
           description:
             'Após o jogo contra o Botafogo na Fonte Luminosa, a Ferroviária realizou a entrega simbólica de um cheque no valor de R$ 57.636,60',
-          previewImageUrl: './evento-ferroviaria.webp',
+          previewImageUrl: './meninas_reunidas.webp',
           eventDate: new Date('2023-02-11'),
           location: 'Estádio Fonte Luminosa - Araraquara, SP',
           amount: 57636.6,
