@@ -1,15 +1,17 @@
 <mat-drawer-container #drawerContainer>
   <mat-drawer #drawer mode="over" (closed)="onDrawerClosed()">
-    <div class="p-4 bg-white min-h-screen">
-      <img
+    <div class="p-4 bg-white min-h-dvh">
+      <a routerLink="/">
+        <img
         class="size-30 object-contain ml-3 mt-3"
         src="./logo_preenchimento_branco.png"
         alt="Logo"
       />
+      </a>
       <ul
         class="flex flex-col gap-8 mt-10 ml-6 text-lg font-medium text-[#726F78]"
       >
-        <li><a routerLink="/" class="link-hover">Sobre a oficina</a></li>
+        <li><a routerLink="/sobre" class="link-hover">Sobre a oficina</a></li>
         <li><a routerLink="/" class="link-hover">Eventos</a></li>
         <li><a routerLink="/" class="link-hover">Transparência</a></li>
         <li>
@@ -22,7 +24,7 @@
             </div>
           </app-dropdown>
         </li>
-        <li><a routerLink="/" class="link-hover">Seja um padrinho</a></li>
+        <li><a routerLink="/seja-um-padrinho" class="link-hover">Seja um padrinho</a></li>
       </ul>
     </div>
   </mat-drawer>
@@ -58,7 +60,7 @@
 
     <div class="hidden lg:block">
       <ul class="flex gap-10 text-center items-center">
-        <li><a routerLink="/" class="link-hover">Sobre a oficina</a></li>
+        <li><a routerLink="/sobre" class="link-hover">Sobre a oficina</a></li>
         <li><a routerLink="/" class="link-hover">Eventos</a></li>
         <li><a routerLink="/" class="link-hover">Transparência</a></li>
         <li>
@@ -76,7 +78,7 @@
             <a routerLink="/" mat-menu-item>Seja um voluntário</a>
           </mat-menu>
         </li>
-        <li><a routerLink="/" class="link-hover">Seja um padrinho</a></li>
+        <li><a routerLink="/seja-um-padrinho" class="link-hover">Seja um padrinho</a></li>
       </ul>
     </div>
   </nav>

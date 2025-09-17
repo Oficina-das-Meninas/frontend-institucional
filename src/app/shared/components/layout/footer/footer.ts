@@ -24,7 +24,7 @@ export class Footer {
   ];
 
   aboutLinks: NavigationLink[] = [
-    { label: 'História', route: '/' },
+    { label: 'História', route: '/sobre' },
     { label: 'Eventos', route: '/' },
     { label: 'Parceiros', route: '/' },
     { label: 'Transparência', route: '/' },
@@ -39,5 +39,6 @@ export class Footer {
     { label: 'Doe nota fiscal', route: '/doar-nota-fiscal' },
     { label: 'Doe seu imposto de renda', route: '/' },
     { label: 'Seja um voluntário', route: '/' },
+    { label: 'Seja um padrinho', route: '/seja-um-padrinho' }
   ];
 }
