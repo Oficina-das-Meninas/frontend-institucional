@@ -1,14 +1,23 @@
-import { Component, ElementRef, inject, OnInit, Renderer2 } from '@angular/core';
+import { DatePipe, registerLocaleData } from '@angular/common';
+import localePt from '@angular/common/locales/pt';
+import { Component, ElementRef, inject, LOCALE_ID, OnInit, Renderer2 } from '@angular/core';
+import { MatButtonModule } from '@angular/material/button';
 import { ActivatedRoute } from '@angular/router';
 import { ColorExtractorService } from '../../../../shared/services/color-extractor.service';
+import { EventRow } from "../../components/event-row/event-row";
 import { Event } from '../../model/event';
 import { EventService } from '../../services/event-service';
 
+registerLocaleData(localePt);
+
 @Component({
   selector: 'app-event-details',
-  imports: [],
+  imports: [EventRow, MatButtonModule, DatePipe],
   templateUrl: './event-details.html',
   styleUrl: './event-details.scss',
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt-BR' }
+  ]
 })
 export class EventDetails implements OnInit {
   private activatedRoute = inject(ActivatedRoute);

@@ -1,6 +1,24 @@
 <section class="event-header w-full h-70 xl:h-[25rem] flex items-center justify-center relative">
-
   <div class="text-center mt-20 relative z-10">
     <p class="text-3xl lg:text-5xl font-bold text-white text-shadow-lg/20">{{ event.title }}</p>
+  </div>
+</section>
+
+<section class="text-lg w-full flex-col lg:flex-row flex justify-between pl-4 pr-4 lg:pl-20 lg:pr-20 pt-10 pb-10">
+  <app-event-row icon="location_on" [text]="event.location || ''"></app-event-row>
+  <app-event-row icon="calendar_today" [text]="(event.eventDate | date:'longDate') || '' "></app-event-row>
+  <app-event-row icon="access_time" [text]="(event.eventDate | date:'shortTime') || ''"></app-event-row>
+
+  <button matButton="filled" class="!max-w-fit">Quero Participar</button>
+</section>
+
+<section class="w-full flex flex-col lg:flex-row pl-4 pr-4 lg:pl-20 lg:pr-20 pb-10 gap-10">
+  <div class="text-justify leading-relaxed w-full">
+    <img
+      class="w-96 h-96 lg:mr-5 rounded-xl object-cover lg:float-left float-none mx-auto"
+      src="{{ event.previewImageUrl }}"
+      alt="{{ event.title }}" />
+
+    <p class="text-justify hyphens-auto text-lg leading-relaxed lg:p-0 p-10">{{ event.description }}</p>
   </div>
 </section>
