@@ -17,13 +17,12 @@ export const routes: Routes = [
       {
         path: 'doar-nota-fiscal',
         loadComponent: () =>
-          import('./domain/home/containers/invoice-donation/invoice-donation').then(m => m.InvoiceDonation),
+          import('./domain/invoice-donation/containers/invoice-donation/invoice-donation').then(m => m.InvoiceDonation),
       },
       {
         path: 'sobre',
         loadComponent: () =>
-          import('./domain/home/containers/about/about').then(m => m.About),
-
+          import('./domain/about/containers/about/about').then(m => m.About),
       },
       {
         path: 'seja-um-padrinho',
