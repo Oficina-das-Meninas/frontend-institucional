@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  apiUrl: 'http://my-dev-url'
+  apiUrl: 'https://api-dev.apollomusic.com.br/api'
 };
