@@ -9,7 +9,7 @@
   <app-event-row icon="calendar_today" [text]="(event.eventDate | date:'longDate') || '' "></app-event-row>
   <app-event-row icon="access_time" [text]="(event.eventDate | date:'shortTime') || ''"></app-event-row>
 
-  <button matButton="filled" class="!max-w-fit">Quero Participar</button>
+  <a matButton="filled" [href]="event.urlToPlatform" target="_blank" class="!max-w-fit">Quero Participar</a>
 </section>
 
 <section class="w-full flex flex-col lg:flex-row pl-4 pr-4 lg:pl-20 lg:pr-20 pb-10 gap-10">
