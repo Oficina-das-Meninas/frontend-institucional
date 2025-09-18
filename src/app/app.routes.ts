@@ -27,6 +27,10 @@ export const routes: Routes = [
           import('./domain/donation-plans/containers/donation-plans/donation-plans').then((m) => m.DonationPlans),
       },
       {
+        path: 'seja-um-voluntario',
+        loadComponent: () =>
+          import('./domain/volunteer/containers/volunteer/volunteer').then((m) => m.Volunteer),
+      },
         path: 'transparencia',
         loadComponent: () =>
           import('./domain/transparency/containers/transparency/transparency').then((m) => m.Transparency),
