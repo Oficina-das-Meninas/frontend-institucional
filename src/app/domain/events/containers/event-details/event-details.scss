@@ -1,6 +1,8 @@
 .event-header {
   position: relative;
   overflow: hidden;
+  transform: translateY(-100%);
+  transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1);
 
   &::before {
     content: '';
@@ -14,19 +16,19 @@
     background: var(--new-background, transparent);
     background-size: var(--new-background-size, auto);
 
-    transform: translateY(-100%);
     opacity: 0;
-
-    transition: transform 2s cubic-bezier(0.4, 0, 0.2, 1),
-                opacity 0.5s ease;
+    transition: opacity 0.5s ease;
 
     pointer-events: none;
     z-index: 1;
   }
 
-  &.color-extracted::before {
-    opacity: 1;
+  &.color-extracted {
     transform: translateY(0);
+
+    &::before {
+      opacity: 1;
+    }
   }
 
   > * {
