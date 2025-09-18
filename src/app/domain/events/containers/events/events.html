@@ -6,19 +6,26 @@
       encontros, o que já passou e as novidades que vêm por aí.
     </p>
     <mat-form-field appearance="outline" class="w-full max-w-md">
-      <input matInput placeholder="Busque por eventos..." aria-label="Buscar eventos" />
+      <input
+        matInput
+        placeholder="Busque por eventos..."
+        aria-label="Buscar eventos"
+        [(ngModel)]="searchInput"
+        (keydown.enter)="refresh()"
+      />
       <button
         mat-icon-button
         matSuffix
         matTooltip="Buscar evento"
         aria-label="Buscar evento"
+        (click)="refresh()"
       >
         <mat-icon>search</mat-icon>
       </button>
     </mat-form-field>
   </div>
   <div
-    class="relative w-full bg-lime-600/70 py-10 px-4 md:px-10 flex flex-col items-center justify-center overflow-hidden"
+    class="relative w-full min-h-110 bg-lime-600/70 py-10 px-4 md:px-10 flex flex-col items-center justify-center overflow-hidden"
   >
     <img
       src="/logo_cinza.svg"
@@ -31,21 +38,31 @@
       class="absolute right-[-22rem] bottom-[-20rem] w-[40rem] h-auto opacity-60 pointer-events-none select-none"
     />
     @if (events$ | async; as events) {
-      <app-events-list
-        [events]="events.data"
-        class="grid gap-4 md:gap-8 md:grid-cols-2 lg:grid-cols-3"
-      />
+      @if (events.data.length > 0) {
+        <app-events-list
+          [events]="events.data"
+          class="grid gap-4 md:gap-8 md:grid-cols-2 lg:grid-cols-3"
+        />
 
-      <app-event-paginator
-        (page)="refresh($event)"
-        [length]="events.totalElements"
-        [pageSize]="pageSize"
-        [pageIndex]="pageIndex"
-        aria-label="Selecione a página de eventos"
-        class="mt-10"
-      />
+        <app-event-paginator
+          (page)="refresh($event)"
+          [length]="events.totalElements"
+          [pageSize]="pageSize"
+          [pageIndex]="pageIndex"
+          aria-label="Selecione a página de eventos"
+          class="mt-10"
+        />
+      } @else {
+        <div class="flex flex-col items-center gap-4 text-white">
+          <mat-icon>event_busy</mat-icon>
+          <span class="font-medium text-lg">Nenhum evento encontrado</span>
+        </div>
+      }
     } @else {
-      <mat-spinner diameter="50" color="primary"></mat-spinner>
+      <div class="flex flex-col items-center gap-4 text-white">
+        <mat-spinner diameter="50" color="primary"></mat-spinner>
+        <span class="font-medium text-lg">Carregando eventos...</span>
+      </div>
     }
   </div>
 </div>

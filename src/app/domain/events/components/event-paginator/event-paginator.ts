@@ -42,14 +42,14 @@ export class EventPaginator {
 
   nextPage(): void {
     if (this.hasNextPage()) {
-      this.pageIndex + 1;
+      this.pageIndex++;
       this.onPageChange();
     }
   }
 
   previousPage(): void {
     if (this.hasPreviousPage()) {
-      this.pageIndex - 1;
+      this.pageIndex--;
       this.onPageChange();
     }
   }

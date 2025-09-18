@@ -46,7 +46,7 @@ export class EventService {
     //   .get<EventPage>(this.API_URL, {
     //     params: {
     //       page: page,
-    //       size: pageSize,
+    //       pageSize: pageSize,
     //     },
     //   })
     //   .pipe(first());
