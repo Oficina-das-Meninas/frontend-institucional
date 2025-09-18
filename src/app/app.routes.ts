@@ -11,6 +11,10 @@ export const routes: Routes = [
         loadComponent: () => import('./domain/home/containers/home/home').then(m => m.Home),
       },
       {
+        path: 'eventos',
+        loadComponent: () => import('./domain/events/containers/events/events').then(m => m.Events),
+      },
+      {
         path: 'doar-nota-fiscal',
         loadComponent: () =>
           import('./domain/home/containers/invoice-donation/invoice-donation').then(m => m.InvoiceDonation),
