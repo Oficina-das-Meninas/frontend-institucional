@@ -25,6 +25,11 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./domain/donation-plans/containers/donation-plans/donation-plans').then((m) => m.DonationPlans),
       },
+      {
+        path: 'seja-um-voluntario',
+        loadComponent: () =>
+          import('./domain/volunteer/containers/volunteer/volunteer').then((m) => m.Volunteer),
+      },
     ],
   },
   { path: '**', redirectTo: '' },
