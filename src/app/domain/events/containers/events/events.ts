@@ -8,7 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 import { EventPaginator } from '../../components/event-paginator/event-paginator';
 import { EventsList } from '../../components/events-list/events-list';
 import { EventPage } from '../../model/event-page';
@@ -37,7 +37,7 @@ export class Events {
   private eventService = inject(EventService);
 
   pageIndex = 0;
-  pageSize = 10;
+  pageSize = 9;
 
   searchInput = '';
 
@@ -45,17 +45,42 @@ export class Events {
     this.refresh();
   }
 
-  refresh(pageEvent: PageEvent = { length: 0, pageIndex: 0, pageSize: 10 }) {
+  refresh(pageEvent: PageEvent = { length: 0, pageIndex: 0, pageSize: 9 }) {
     this.events$ = this.eventService
       .list(pageEvent.pageIndex, pageEvent.pageSize)
       .pipe(
-        tap(() => {
-          this.pageIndex = pageEvent.pageIndex;
-          this.pageSize = pageEvent.pageSize;
-        }),
-        catchError(() => {
-          return of({ data: [], totalElements: 0, totalPages: 0 });
-        })
+        tap(() => this.updatePagination(pageEvent)),
+        map((eventPage) => this.filterEvents(eventPage)),
+        catchError(() => this.emptyEventPage())
       );
+  }
+
+  private updatePagination(pageEvent: PageEvent) {
+    this.pageIndex = pageEvent.pageIndex;
+    this.pageSize = pageEvent.pageSize;
+  }
+
+  private trimSearchInput() {
+    this.searchInput = this.searchInput.trim();
+  }
+
+  // filtro temporário, até a API suportar busca
+  private filterEvents(eventPage: EventPage): EventPage {
+    this.trimSearchInput();
+    if (this.searchInput !== '') {
+      const filteredData = eventPage.data.filter((event) =>
+        event.title.toLowerCase().includes(this.searchInput.toLowerCase())
+      );
+      return {
+        data: filteredData,
+        totalElements: filteredData.length,
+        totalPages: Math.ceil(filteredData.length / this.pageSize),
+      };
+    }
+    return eventPage;
+  }
+
+  private emptyEventPage() {
+    return of({ data: [], totalElements: 0, totalPages: 0 });
   }
 }
