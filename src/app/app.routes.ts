@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+
 export const routes: Routes = [
   {
     path: '',
@@ -28,6 +29,16 @@ export const routes: Routes = [
         path: 'seja-um-padrinho',
         loadComponent: () =>
           import('./domain/donation-plans/containers/donation-plans/donation-plans').then((m) => m.DonationPlans),
+      },
+      {
+        path: 'seja-um-voluntario',
+        loadComponent: () =>
+          import('./domain/volunteer/containers/volunteer/volunteer').then((m) => m.Volunteer),
+      },
+      {
+        path: 'transparencia',
+        loadComponent: () =>
+          import('./domain/transparency/containers/transparency/transparency').then((m) => m.Transparency),
       },
     ],
   },
