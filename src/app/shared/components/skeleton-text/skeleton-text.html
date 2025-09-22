@@ -1,0 +1,8 @@
+<div class="animate-pulse space-y-2.5" [class]="containerClasses">
+  @for (line of displayLines; track $index) {
+    <div
+      class="h-4 bg-gray-300 rounded"
+      [class]="'w-' + line">
+    </div>
+  }
+</div>

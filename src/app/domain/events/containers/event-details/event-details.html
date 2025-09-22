@@ -23,38 +23,32 @@
     [text]="(event()?.eventDate | date:'shortTime') || ''"></app-event-row>
 
   @if (isLoading()) {
-  <div class="h-10 w-32 bg-gray-300 rounded animate-pulse rounded-full"></div>
+    <app-skeleton-button height="10" width="32"></app-skeleton-button>
   } @else {
-  <a matButton="filled" [href]="event()?.urlToPlatform" target="_blank" class="!max-w-fit">Quero Participar</a>
+    <a matButton="filled" [href]="event()?.urlToPlatform" target="_blank" class="!max-w-fit">Quero Participar</a>
   }
 </section>
 
 <section class="w-full flex flex-col lg:flex-row pl-4 pr-4 lg:pl-20 lg:pr-20 pb-10 gap-10">
   <div class="text-justify leading-relaxed w-full">
     @if (isLoading()) {
-    <div
-      class="flex items-center justify-center lg:w-96 h-96 bg-gray-300 rounded-xl animate-pulse lg:mr-5 lg:float-left float-none mx-auto">
-      <svg
-        class="w-10 h-10 text-gray-200"
-        aria-hidden="true"
-        xmlns="http://www.w3.org/2000/svg"
-        fill="currentColor"
-        viewBox="0 0 20 18">
-        <path
-          d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
-      </svg>
-    </div>
+      <app-skeleton-image
+        width="96"
+        height="96"
+        class="lg:mr-5 lg:float-left float-none mx-auto">
+      </app-skeleton-image>
     } @else {
-    <img
-      class="w-96 h-96 lg:mr-5 rounded-xl object-cover lg:float-left float-none mx-auto"
-      src="{{ event()?.previewImageUrl }}"
-      alt="{{ event()?.title }}" />
-    } @if (isLoading()) {
-      <div class="mt-5 lg:mt-0 space-y-2.5 lg:pl-102 ">
-        @for (item of skeletonArray; track $index) {
-          <div class="h-5 bg-gray-200 rounded-full mb-2.5"></div>
-        }
-      </div>
+      <img
+        class="w-96 h-96 lg:mr-5 rounded-xl object-cover lg:float-left float-none mx-auto"
+        src="{{ event()?.previewImageUrl }}"
+        alt="{{ event()?.title }}" />
+    }
+    @if (isLoading()) {
+      <app-skeleton-text
+        [lines]="10"
+        pattern="full"
+        containerClasses="mt-5 lg:mt-0 lg:pl-102 lg:p-0 p-10">
+      </app-skeleton-text>
     } @else {
       <p class="text-justify hyphens-auto text-lg leading-relaxed lg:p-0 p-10">{{ event()?.description }}</p>
     }
