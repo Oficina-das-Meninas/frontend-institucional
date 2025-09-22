@@ -4,6 +4,7 @@ import { Component, ElementRef, inject, LOCALE_ID, OnInit, Renderer2, signal } f
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute } from '@angular/router';
+import { MarkdownModule } from 'ngx-markdown';
 import { SkeletonButton } from '../../../../shared/components/skeleton-button/skeleton-button';
 import { SkeletonImage } from '../../../../shared/components/skeleton-image/skeleton-image';
 import { SkeletonText } from '../../../../shared/components/skeleton-text/skeleton-text';
@@ -16,10 +17,12 @@ registerLocaleData(localePt);
 
 @Component({
   selector: 'app-event-details',
-  imports: [EventInfo, MatButtonModule, DatePipe, MatProgressSpinnerModule, SkeletonButton, SkeletonImage, SkeletonText],
+  imports: [EventInfo, MatButtonModule, DatePipe, MatProgressSpinnerModule, SkeletonButton, SkeletonImage, SkeletonText, MarkdownModule],
   templateUrl: './event-details.html',
   styleUrl: './event-details.scss',
-  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
+  providers: [
+    { provide: LOCALE_ID, useValue: 'pt-BR' }
+  ],
 })
 export class EventDetails implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
@@ -30,7 +33,6 @@ export class EventDetails implements OnInit {
 
   event = signal<Event | null>(null);
   isLoading = signal(true);
-  skeletonArray = Array(9).fill(0);
 
   eventId = this.activatedRoute.snapshot.paramMap.get('id');
 

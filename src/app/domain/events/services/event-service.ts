@@ -11,38 +11,41 @@ export class EventService {
   private readonly API_URL = `${environment.apiUrl}/events`;
   private httpClient = inject(HttpClient);
 
-  /*
-   {
-      id: '1',
-      title: 'Ferroviária',
-          description:
-            `Dia 11/2/23, após o jogo contra o Botafogo na Fonte Luminosa, a Ferroviária realizou a entrega simbólica de um cheque ao projeto Oficina das meninas. O cheque, no valor de R$57.636,60, corresponde a 10% da renda líquida gerada na partida entre a ferroviária e São Paulo pela segunda rodada do campeonato paulista de 2023.
-
-            Esta é a primeira ação do projeto “Esthrelinha!, que a Ferroviária inaugurou neste ano e visa arrecadar fundos e criar laços com entidades sociais da cidade e microrregião que atuam na resolução de demandas da sociedade. O nome é uma homenagem ao apelido da eterna guerreirinha Esther Martins, que perdeu a vida no final de 2022. A entrega do cheque foi realizada pelos pais da Esther: Maria Aparecida e Jeferson. Fabíola Cristiane de Souza Ramos, Presidente do Projeto “Oficina das meninas”, falou sobre o apoio da Locomotiva. “O apoio da Ferroviária ao Projeto Oficina das meninas é de grande valia, pois graças a essas parcerias que conseguimos promover autonomia e transformação em nossas meninas, formando cidadãs e chefes de família, descontruindo exemplos de violência contra a mulher, que se perpetua pelas gerações, incluindo gravidez precoce.”`,
-          previewImageUrl: './evento-ferroviaria.webp',
-          eventDate: new Date('2023-02-11T19:30:00'),
-          location: 'Estádio Fonte Luminosa - Araraquara, SP',
-          amount: 57636.6,
-          urlToPlatform: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-        };
-   */
-
   async getById(id: string): Promise<Event> {
     const event = {
       id: '1',
       title: 'Ferroviária',
-          description:
-            `Dia 11/2/23, após o jogo contra o Botafogo na Fonte Luminosa, a Ferroviária realizou a entrega simbólica de um cheque ao projeto Oficina das meninas. O cheque, no valor de R$57.636,60, corresponde a 10% da renda líquida gerada na partida entre a ferroviária e São Paulo pela segunda rodada do campeonato paulista de 2023.
+      description: `## Entrega de Cheque ao Projeto Oficina das Meninas
 
-            Esta é a primeira ação do projeto “Esthrelinha!, que a Ferroviária inaugurou neste ano e visa arrecadar fundos e criar laços com entidades sociais da cidade e microrregião que atuam na resolução de demandas da sociedade. O nome é uma homenagem ao apelido da eterna guerreirinha Esther Martins, que perdeu a vida no final de 2022. A entrega do cheque foi realizada pelos pais da Esther: Maria Aparecida e Jeferson. Fabíola Cristiane de Souza Ramos, Presidente do Projeto “Oficina das meninas”, falou sobre o apoio da Locomotiva. “O apoio da Ferroviária ao Projeto Oficina das meninas é de grande valia, pois graças a essas parcerias que conseguimos promover autonomia e transformação em nossas meninas, formando cidadãs e chefes de família, descontruindo exemplos de violência contra a mulher, que se perpetua pelas gerações, incluindo gravidez precoce.”`,
-          previewImageUrl: './evento-ferroviaria.webp',
-          eventDate: new Date('2023-02-11T19:30:00'),
-          location: 'Estádio Fonte Luminosa - Araraquara, SP',
-          amount: 57636.6,
-          urlToPlatform: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-        };
+**Data**: 11/02/2023
+**Local**: Fonte Luminosa, após o jogo contra o Botafogo
 
-    return new Promise((resolve) => {
+### Detalhes da Entrega
+
+A Ferroviária realizou a entrega simbólica de um cheque no valor de **R$57.636,60** ao **Projeto Oficina das Meninas**. Esse valor corresponde a **10% da renda líquida** gerada pela partida entre Ferroviária e São Paulo, válida pela segunda rodada do Campeonato Paulista de 2023.
+
+### Projeto "Esthrelinha"
+
+Esta é a **primeira ação** do projeto **"Esthrelinha!"**, lançado pela Ferroviária em 2023. O objetivo do projeto é arrecadar fundos e criar laços com entidades sociais da cidade e microrregião, que atuam na resolução de demandas sociais. O nome do projeto é uma homenagem à **Esther Martins**, eterna guerreirinha da Ferroviária, que infelizmente perdeu a vida no final de 2022.
+
+### Ato de Entrega
+
+A entrega do cheque foi realizada pelos pais de Esther: **Maria Aparecida** e **Jeferson**.
+
+### Depoimento
+
+**Fabíola Cristiane de Souza Ramos**, Presidente do Projeto **"Oficina das Meninas"**, falou sobre o apoio da Ferroviária:
+
+> “O apoio da Ferroviária ao Projeto Oficina das Meninas é de grande valia, pois, graças a essas parcerias, conseguimos promover autonomia e transformação em nossas meninas, formando cidadãs e chefes de família, desconstruindo exemplos de violência contra a mulher, que se perpetua pelas gerações, incluindo a gravidez precoce.”
+`,
+      previewImageUrl: './evento-ferroviaria.webp',
+      eventDate: new Date('2023-02-11T19:30:00'),
+      location: 'Estádio Fonte Luminosa - Araraquara, SP',
+      amount: 57636.6,
+      urlToPlatform: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+    };
+
+    return new Promise(resolve => {
       setTimeout(() => resolve(event as Event), 1000);
     });
   }
