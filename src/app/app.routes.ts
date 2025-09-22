@@ -30,14 +30,15 @@ export const routes: Routes = [
             './domain/donation-plans/containers/donation-plans/donation-plans'
           ).then((m) => m.DonationPlans),
       },
+      {
+        path: 'faca-sua-doacao',
+        loadComponent: () =>
+          import(
+            './domain/donation/containers/make-your-donation/make-your-donation'
+          ).then((m) => m.MakeYourDonation),
+      },
     ],
   },
-  {
-    path: 'faca-sua-doacao',
-    loadComponent: () =>
-      import(
-        './domain/donation/containers/make-your-donation/make-your-donation'
-      ).then((m) => m.MakeYourDonation),
-  },
+
   { path: '**', redirectTo: '' },
 ];
