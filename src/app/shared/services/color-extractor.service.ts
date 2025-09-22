@@ -4,6 +4,26 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ColorExtractorService {
+  isLightColor(primaryColor: string): boolean {
+  let hex = primaryColor.startsWith('#') ? primaryColor.slice(1) : primaryColor;
+
+  if (hex.length === 3) {
+    hex = hex.split('').map(char => char + char).join('');
+  }
+
+  if (hex.length !== 6) {
+    console.error('Formato de cor hexadecimal inválido.');
+    return false;
+  }
+
+  const r = parseInt(hex.slice(0, 2), 16);
+  const g = parseInt(hex.slice(2, 4), 16);
+  const b = parseInt(hex.slice(4, 6), 16);
+
+  const luminance = (0.2126 * r + 0.7152 * g + 0.0722 * b);
+
+  return luminance > 150;
+}
 
   async extractDominantColor(imageUrl: string): Promise<string> {
     return new Promise((resolve, reject) => {

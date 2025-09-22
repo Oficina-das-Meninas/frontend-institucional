@@ -1,10 +1,11 @@
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
-import { Component, ElementRef, inject, LOCALE_ID, OnInit, Renderer2 } from '@angular/core';
+import { Component, ElementRef, inject, LOCALE_ID, OnInit, Renderer2, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { ActivatedRoute } from '@angular/router';
 import { ColorExtractorService } from '../../../../shared/services/color-extractor.service';
-import { EventRow } from "../../components/event-row/event-row";
+import { EventRow } from '../../components/event-row/event-row';
 import { Event } from '../../model/event';
 import { EventService } from '../../services/event-service';
 
@@ -12,12 +13,10 @@ registerLocaleData(localePt);
 
 @Component({
   selector: 'app-event-details',
-  imports: [EventRow, MatButtonModule, DatePipe],
+  imports: [EventRow, MatButtonModule, DatePipe, MatProgressSpinnerModule],
   templateUrl: './event-details.html',
   styleUrl: './event-details.scss',
-  providers: [
-    { provide: LOCALE_ID, useValue: 'pt-BR' }
-  ]
+  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
 })
 export class EventDetails implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
@@ -26,22 +25,33 @@ export class EventDetails implements OnInit {
   private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
 
-  event: Event = {} as Event;
+  event = signal<Event | null>(null);
+  isLoading = signal(true);
+  skeletonArray = Array(9).fill(0);
 
   eventId = this.activatedRoute.snapshot.paramMap.get('id');
 
-
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     if (this.eventId) {
-      this.event = this.eventService.getById(this.eventId);
-      this.updateHeaderBackground();
+      this.isLoading.set(true);
+      const headerElement = this.elementRef.nativeElement.querySelector('.event-header');
+      if (headerElement) {
+        this.renderer.addClass(headerElement, 'loading');
+      }
+      this.event.set(await this.eventService.getById(this.eventId));
+      await this.updateHeaderBackground();
+      this.isLoading.set(false);
+      if (headerElement) {
+        this.renderer.removeClass(headerElement, 'loading');
+        this.renderer.addClass(headerElement, 'color-extracted');
+      }
     }
   }
 
   private async updateHeaderBackground(): Promise<void> {
-    if (this.event.previewImageUrl) {
+    if (this.event()?.previewImageUrl) {
       try {
-        const dominantColor = await this.colorExtractor.extractDominantColor(this.event.previewImageUrl);
+        const dominantColor = await this.colorExtractor.extractDominantColor(this.event()!.previewImageUrl);
         const darkerColor = this.colorExtractor.getDarkerVariation(dominantColor);
 
         this.applyDynamicBackground(dominantColor, darkerColor);
@@ -54,6 +64,9 @@ export class EventDetails implements OnInit {
   private applyDynamicBackground(primaryColor: string, secondaryColor: string): void {
     const headerElement = this.elementRef.nativeElement.querySelector('.event-header');
 
+    const isLightColor = this.colorExtractor.isLightColor(primaryColor);
+    const textColor = isLightColor ? 'black' : 'white';
+
     if (headerElement) {
       const newBackgroundStyle = `
         radial-gradient(circle, transparent 20%, ${primaryColor} 20%, ${primaryColor} 80%, transparent 80%, transparent),
@@ -64,16 +77,19 @@ export class EventDetails implements OnInit {
 
       this.renderer.setStyle(headerElement, '--new-background-color', primaryColor);
       this.renderer.setStyle(headerElement, '--new-background', newBackgroundStyle);
-      this.renderer.setStyle(headerElement, '--new-background-size', '135px 135px, 135px 135px, 67.5px 67.5px, 67.5px 67.5px');
+      this.renderer.setStyle(
+        headerElement,
+        '--new-background-size',
+        '135px 135px, 135px 135px, 67.5px 67.5px, 67.5px 67.5px'
+      );
 
       const style = headerElement.style;
       style.setProperty('--new-background-color', primaryColor);
       style.setProperty('--new-background', newBackgroundStyle);
       style.setProperty('--new-background-size', '135px 135px, 135px 135px, 67.5px 67.5px, 67.5px 67.5px');
+      style.setProperty('--new-text-color', textColor);
 
-      setTimeout(() => {
-        this.renderer.addClass(headerElement, 'color-extracted');
-      }, 50);
+      this.renderer.setStyle(headerElement, '--new-text-color', textColor);
     }
   }
 }

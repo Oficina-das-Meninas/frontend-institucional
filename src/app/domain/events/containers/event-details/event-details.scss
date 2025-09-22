@@ -26,6 +26,10 @@
   &.color-extracted {
     transform: translateY(0);
 
+    .title {
+      color: var(--new-text-color);
+    }
+
     &::before {
       opacity: 1;
     }

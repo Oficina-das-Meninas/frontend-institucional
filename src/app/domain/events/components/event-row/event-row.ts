@@ -11,4 +11,5 @@ import { MatIcon } from '@angular/material/icon';
 export class EventRow {
   @Input() icon!: string;
   @Input() text!: string;
+  @Input() isLoading: boolean = false;
 }
