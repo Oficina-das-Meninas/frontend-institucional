@@ -8,7 +8,7 @@ import { SkeletonButton } from '../../../../shared/components/skeleton-button/sk
 import { SkeletonImage } from '../../../../shared/components/skeleton-image/skeleton-image';
 import { SkeletonText } from '../../../../shared/components/skeleton-text/skeleton-text';
 import { ColorExtractorService } from '../../../../shared/services/color-extractor.service';
-import { EventRow } from '../../components/event-row/event-row';
+import { EventInfo } from '../../components/event-info/event-info';
 import { Event } from '../../model/event';
 import { EventService } from '../../services/event-service';
 
@@ -16,7 +16,7 @@ registerLocaleData(localePt);
 
 @Component({
   selector: 'app-event-details',
-  imports: [EventRow, MatButtonModule, DatePipe, MatProgressSpinnerModule, SkeletonButton, SkeletonImage, SkeletonText],
+  imports: [EventInfo, MatButtonModule, DatePipe, MatProgressSpinnerModule, SkeletonButton, SkeletonImage, SkeletonText],
   templateUrl: './event-details.html',
   styleUrl: './event-details.scss',
   providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],

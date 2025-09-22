@@ -12,15 +12,15 @@
 
 <section
   class="text-lg w-full flex-col lg:flex-row flex justify-between pl-4 pr-4 lg:pl-20 lg:pr-20 pt-10 pb-10 mb-10 bg-gray-100">
-  <app-event-row [isLoading]="isLoading()" icon="location_on" [text]="event()?.location || ''"></app-event-row>
-  <app-event-row
+  <app-event-info [isLoading]="isLoading()" icon="location_on" [text]="event()?.location || ''"></app-event-info>
+  <app-event-info
     [isLoading]="isLoading()"
     icon="calendar_today"
-    [text]="(event()?.eventDate | date:'longDate') || '' "></app-event-row>
-  <app-event-row
+    [text]="(event()?.eventDate | date:'longDate') || '' "></app-event-info>
+  <app-event-info
     [isLoading]="isLoading()"
     icon="access_time"
-    [text]="(event()?.eventDate | date:'shortTime') || ''"></app-event-row>
+    [text]="(event()?.eventDate | date:'shortTime') || ''"></app-event-info>
 
   @if (isLoading()) {
     <app-skeleton-button height="10" width="32"></app-skeleton-button>

@@ -3,12 +3,12 @@ import { MatIcon } from '@angular/material/icon';
 
 
 @Component({
-  selector: 'app-event-row',
+  selector: 'app-event-info',
   imports: [MatIcon],
-  templateUrl: './event-row.html',
-  styleUrl: './event-row.scss'
+  templateUrl: './event-info.html',
+  styleUrl: './event-info.scss'
 })
-export class EventRow {
+export class EventInfo {
   @Input() icon!: string;
   @Input() text!: string;
   @Input() isLoading: boolean = false;

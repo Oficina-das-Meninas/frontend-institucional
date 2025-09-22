@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EventRow } from './event-row';
+import { EventInfo } from './event-info';
 
-describe('EventRow', () => {
-  let component: EventRow;
-  let fixture: ComponentFixture<EventRow>;
+describe('EventInfo', () => {
+  let component: EventInfo;
+  let fixture: ComponentFixture<EventInfo>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [EventRow]
+      imports: [EventInfo]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(EventRow);
+    fixture = TestBed.createComponent(EventInfo);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
