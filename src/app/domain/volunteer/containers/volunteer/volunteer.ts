@@ -1,3 +1,4 @@
+import { MatDividerModule } from '@angular/material/divider';
 import { TextFieldModule } from '@angular/cdk/text-field';
 import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
@@ -20,7 +21,6 @@ import { FormHelperService } from '../../../../shared/services/form/form-helper-
 @Component({
   selector: 'app-volunteer',
   imports: [
-    CommonModule,
     ReactiveFormsModule,
     FormsModule,
     MatFormFieldModule,
@@ -29,6 +29,7 @@ import { FormHelperService } from '../../../../shared/services/form/form-helper-
     TextFieldModule,
     NgxMaskDirective,
     MatSelectModule,
+    MatDividerModule
   ],
   providers: [provideNgxMask()],
   templateUrl: './volunteer.html',
@@ -43,19 +44,20 @@ export class Volunteer {
   private readonly ongPhoneNumber = '551633226232';
 
   readonly days = [
-    { key: 'sunday', label: 'Domingo' },
     { key: 'monday', label: 'Segunda-feira' },
     { key: 'tuesday', label: 'Terça-feira' },
     { key: 'wednesday', label: 'Quarta-feira' },
     { key: 'thursday', label: 'Quinta-feira' },
     { key: 'friday', label: 'Sexta-feira' },
     { key: 'saturday', label: 'Sábado' },
+    { key: 'sunday', label: 'Domingo' },
   ];
 
   readonly periods = [
-    { value: 'full_day', label: 'Dia inteiro (8h às 18h)' },
-    { value: 'morning', label: 'Manhã (até 12h)' },
-    { value: 'afternoon', label: 'Tarde (após 12h)' },
+    { value: null, label: 'Indisponível' },
+    { value: 'morning', label: 'Manhã' },
+    { value: 'afternoon', label: 'Tarde' },
+    { value: 'full_day', label: 'Dia inteiro' },
   ];
 
   ngOnInit() {
@@ -108,7 +110,7 @@ export class Volunteer {
       : '';
 
     return (
-      `Olá! Tenho interesse em ser um(a) voluntário(a).\n` +
+      `Olá! Tenho interesse em ser voluntário(a).\n` +
       `Meu nome é ${name}.\nMeu CPF é ${cpf}.\n` +
       `Minha proposta de voluntariado é: ${proposal}${availabilityMessage}`
     );
