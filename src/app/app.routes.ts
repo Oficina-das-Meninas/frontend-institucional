@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 
+
 export const routes: Routes = [
   {
     path: '',
@@ -10,6 +11,10 @@ export const routes: Routes = [
         path: '',
         loadComponent: () =>
           import('./domain/home/containers/home/home').then((m) => m.Home),
+      },
+      {
+        path: 'eventos',
+        loadComponent: () => import('./domain/events/containers/events/events').then(m => m.Events),
       },
       {
         path: 'doar-nota-fiscal',
@@ -36,6 +41,16 @@ export const routes: Routes = [
           import(
             './domain/donation/containers/make-your-donation/make-your-donation'
           ).then((m) => m.MakeYourDonation),
+      },
+      {
+        path: 'seja-um-voluntario',
+        loadComponent: () =>
+          import('./domain/volunteer/containers/volunteer/volunteer').then((m) => m.Volunteer),
+      },
+      {
+        path: 'transparencia',
+        loadComponent: () =>
+          import('./domain/transparency/containers/transparency/transparency').then((m) => m.Transparency),
       },
     ],
   },
