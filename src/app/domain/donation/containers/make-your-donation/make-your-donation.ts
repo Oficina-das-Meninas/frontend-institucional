@@ -7,6 +7,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+import { NgxMaskDirective } from 'ngx-mask';
 
 @Component({
   selector: 'app-make-your-donation',
@@ -15,6 +16,7 @@ import { RouterLink } from '@angular/router';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
+    NgxMaskDirective,
     MatButtonModule,
     CommonModule,
     FormsModule,
