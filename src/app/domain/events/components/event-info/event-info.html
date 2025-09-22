@@ -3,9 +3,9 @@
     <div class="w-6 h-6 bg-gray-300 rounded"></div>
     <div class="ml-2 h-4 bg-gray-300 rounded w-32"></div>
   </div>
-} @else {
+} @else if (icon && text) {
   <div class="w-full h-full flex items-center justify-center">
-    <mat-icon class="min-w-fit" fontSet="material-symbols-rounded" class="!text-[var(--mat-sys-primary)]">{{ icon }}</mat-icon>
+    <mat-icon class="min-w-fit" fontSet="material-symbols-rounded" class="!text-[var(--mat-sys-primary)]">{{ icon }}></mat-icon>
     <span class="ml-2">{{ text }}</span>
   </div>
 }

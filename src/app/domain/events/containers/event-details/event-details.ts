@@ -3,6 +3,7 @@ import localePt from '@angular/common/locales/pt';
 import { Component, ElementRef, inject, LOCALE_ID, OnInit, Renderer2, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatTooltip } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { SkeletonButton } from '../../../../shared/components/skeleton-button/skeleton-button';
@@ -17,7 +18,7 @@ registerLocaleData(localePt);
 
 @Component({
   selector: 'app-event-details',
-  imports: [EventInfo, MatButtonModule, DatePipe, MatProgressSpinnerModule, SkeletonButton, SkeletonImage, SkeletonText, MarkdownModule],
+  imports: [EventInfo, MatButtonModule, DatePipe, MatProgressSpinnerModule, SkeletonButton, SkeletonImage, SkeletonText, MarkdownModule, MatTooltip],
   templateUrl: './event-details.html',
   styleUrl: './event-details.scss',
   providers: [
@@ -51,6 +52,11 @@ export class EventDetails implements OnInit {
         this.renderer.addClass(headerElement, 'color-extracted');
       }
     }
+  }
+
+  isEventPast(event: Event): boolean {
+    const now = new Date();
+    return event.eventDate < now;
   }
 
   private async updateHeaderBackground(): Promise<void> {
