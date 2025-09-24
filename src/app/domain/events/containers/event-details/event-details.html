@@ -31,6 +31,12 @@
       <a matButton="filled" [href]="event()?.urlToPlatform" target="_blank" class="!max-w-fit">Quero Participar</a>
     } @else {
       <a matButton="filled" disabled disabledInteractive matTooltip="Evento já realizado" class="!max-w-fit">Quero Participar</a>
+    }
+</section>
+
+<section class="w-full flex flex-col lg:flex-row pl-4 pr-4 lg:pl-20 lg:pr-20 pb-10 gap-10">
+  <div class="text-justify leading-relaxed w-full">
+    @if (isLoading()) {
       <app-skeleton-image
         [imageCss]="
           'h-96 ' +
@@ -45,13 +51,6 @@
           'lg:w-auto'
         "
       />
-    }
-</section>
-
-<section class="w-full flex flex-col lg:flex-row pl-4 pr-4 lg:pl-20 lg:pr-20 pb-10 gap-10">
-  <div class="text-justify leading-relaxed w-full">
-    @if (isLoading()) {
-      <app-skeleton-image imageCss="h-96 lg:mr-5 lg:float-left float-none mx-auto w-full max-w-160 lg:max-w-max lg:aspect-[16/10] lg:w-auto" />
     } @else {
       <img
         class="h-96 object-cover lg:mr-5 rounded-xl lg:float-left float-none mx-auto hover:scale-105 transition-transform duration-300"
