@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
 
@@ -14,8 +14,8 @@ import { NgxMaskDirective } from 'ngx-mask';
   standalone: true,
   imports: [
     MatFormFieldModule,
+    ReactiveFormsModule,
     MatInputModule,
-    MatIconModule,
     NgxMaskDirective,
     MatButtonModule,
     CommonModule,
@@ -29,4 +29,17 @@ import { NgxMaskDirective } from 'ngx-mask';
 })
 export class MakeYourDonation {
   selectedAmount: number | null = null;
+  userAuthenticated = true;
+  form!: FormGroup;
+
+  constructor() {
+    this.form = new FormGroup({
+      name: new FormControl<string>(null!, [Validators.required]),
+      email: new FormControl<string>(null!, [Validators.required, Validators.email]),
+      cpf: new FormControl<string>(null!, [Validators.required]),
+      phone: new FormControl<string>(null!, [Validators.required]),
+      amount: new FormControl<number | null>(null!, [Validators.required, Validators.min(1)]),
+    });
+  }
+
 }
