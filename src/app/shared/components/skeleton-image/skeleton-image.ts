@@ -6,7 +6,5 @@ import { Component, Input } from '@angular/core';
   standalone: true
 })
 export class SkeletonImage {
-  @Input() width: string = '96';
-  @Input() height: string = '96';
-  @Input() additionalClasses: string = '';
+  @Input() imageCss: string = '';
 }

@@ -6,6 +6,5 @@ import { Component, Input } from '@angular/core';
   standalone: true
 })
 export class SkeletonButton {
-  @Input() height: string = '10';
-  @Input() width: string = '32';
+  @Input() cssClass: string = '';
 }
