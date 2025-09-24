@@ -44,19 +44,35 @@ export class EventDetails implements OnInit {
       if (headerElement) {
         this.renderer.addClass(headerElement, 'loading');
       }
-      this.event.set(await this.eventService.getById(this.eventId));
-      await this.updateHeaderBackground();
-      this.isLoading.set(false);
-      if (headerElement) {
-        this.renderer.removeClass(headerElement, 'loading');
-        this.renderer.addClass(headerElement, 'color-extracted');
-      }
+      this.eventService.getById(this.eventId).subscribe({
+        next: async (data) => {
+          this.event.set(data);
+          await this.updateHeaderBackground();
+          this.isLoading.set(false);
+          if (headerElement) {
+            this.renderer.removeClass(headerElement, 'loading');
+            this.renderer.addClass(headerElement, 'color-extracted');
+          }
+        },
+        error: (error) => {
+          console.error('Erro ao carregar o evento:', error);
+          this.event.set(null);
+          this.isLoading.set(false);
+          if (headerElement) {
+            this.renderer.removeClass(headerElement, 'loading');
+          }
+        }
+      });
     }
   }
 
   isEventPast(event: Event): boolean {
+    if (!event || !event.eventDate) {
+      return false;
+    }
     const now = new Date();
-    return event.eventDate < now;
+    const eventDate = new Date(event.eventDate);
+    return eventDate < now;
   }
 
   private async updateHeaderBackground(): Promise<void> {

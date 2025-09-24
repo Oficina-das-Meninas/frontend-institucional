@@ -27,9 +27,9 @@
 
   @if (isLoading()) {
     <app-skeleton-button cssClass="h-10 w-36" />
-  } @else if (!isEventPast(event()!)) {
+  } @else if (event() && !isEventPast(event()!)) {
       <a matButton="filled" [href]="event()?.urlToPlatform" target="_blank" class="!max-w-fit">Quero Participar</a>
-    } @else {
+    } @else if (event()) {
       <a matButton="filled" disabled disabledInteractive matTooltip="Evento já realizado" class="!max-w-fit">Quero Participar</a>
     }
 </section>

@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { delay, first, of } from 'rxjs';
+import { delay, first, Observable, of } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 import { Event } from '../model/event';
 
@@ -11,44 +11,48 @@ export class EventService {
   private readonly API_URL = `${environment.apiUrl}/events`;
   private httpClient = inject(HttpClient);
 
-  async getById(id: string): Promise<Event> {
-    const event = {
-      id: '1',
-      title: 'Ferroviária',
-      description: `## Entrega de Cheque ao Projeto Oficina das Meninas
+  getById(id: string): Observable<Event> {
+  return this.httpClient.get<Event>(`${this.API_URL}/${id}`).pipe(first());
+}
 
-**Data**: 11/02/2023
-**Local**: Fonte Luminosa, após o jogo contra o Botafogo
+//    getById(id: string): Promise<Event> --- IGNORE ---
+//     const event = {
+//       id: '1',
+//       title: 'Ferroviária',
+//       description: `## Entrega de Cheque ao Projeto Oficina das Meninas
 
-### Detalhes da Entrega
+// **Data**: 11/02/2023
+// **Local**: Fonte Luminosa, após o jogo contra o Botafogo
 
-A Ferroviária realizou a entrega simbólica de um cheque no valor de **R$57.636,60** ao **Projeto Oficina das Meninas**. Esse valor corresponde a **10% da renda líquida** gerada pela partida entre Ferroviária e São Paulo, válida pela segunda rodada do Campeonato Paulista de 2023.
+// ### Detalhes da Entrega
 
-### Projeto "Esthrelinha"
+// A Ferroviária realizou a entrega simbólica de um cheque no valor de **R$57.636,60** ao **Projeto Oficina das Meninas**. Esse valor corresponde a **10% da renda líquida** gerada pela partida entre Ferroviária e São Paulo, válida pela segunda rodada do Campeonato Paulista de 2023.
 
-Esta é a **primeira ação** do projeto **"Esthrelinha!"**, lançado pela Ferroviária em 2023. O objetivo do projeto é arrecadar fundos e criar laços com entidades sociais da cidade e microrregião, que atuam na resolução de demandas sociais. O nome do projeto é uma homenagem à **Esther Martins**, eterna guerreirinha da Ferroviária, que infelizmente perdeu a vida no final de 2022.
+// ### Projeto "Esthrelinha"
 
-### Ato de Entrega
+// Esta é a **primeira ação** do projeto **"Esthrelinha!"**, lançado pela Ferroviária em 2023. O objetivo do projeto é arrecadar fundos e criar laços com entidades sociais da cidade e microrregião, que atuam na resolução de demandas sociais. O nome do projeto é uma homenagem à **Esther Martins**, eterna guerreirinha da Ferroviária, que infelizmente perdeu a vida no final de 2022.
 
-A entrega do cheque foi realizada pelos pais de Esther: **Maria Aparecida** e **Jeferson**.
+// ### Ato de Entrega
 
-### Depoimento
+// A entrega do cheque foi realizada pelos pais de Esther: **Maria Aparecida** e **Jeferson**.
 
-**Fabíola Cristiane de Souza Ramos**, Presidente do Projeto **"Oficina das Meninas"**, falou sobre o apoio da Ferroviária:
+// ### Depoimento
 
-> “O apoio da Ferroviária ao Projeto Oficina das Meninas é de grande valia, pois, graças a essas parcerias, conseguimos promover autonomia e transformação em nossas meninas, formando cidadãs e chefes de família, desconstruindo exemplos de violência contra a mulher, que se perpetua pelas gerações, incluindo a gravidez precoce.”
-`,
-      previewImageUrl: './evento-ferroviaria.webp',
-      eventDate: new Date('2023-02-11T19:30:00'),
-      location: 'Estádio Fonte Luminosa - Araraquara, SP',
-      amount: 57636.6,
-      urlToPlatform: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
-    };
+// **Fabíola Cristiane de Souza Ramos**, Presidente do Projeto **"Oficina das Meninas"**, falou sobre o apoio da Ferroviária:
 
-    return new Promise(resolve => {
-      setTimeout(() => resolve(event as Event), 1000);
-    });
-  }
+// > “O apoio da Ferroviária ao Projeto Oficina das Meninas é de grande valia, pois, graças a essas parcerias, conseguimos promover autonomia e transformação em nossas meninas, formando cidadãs e chefes de família, desconstruindo exemplos de violência contra a mulher, que se perpetua pelas gerações, incluindo a gravidez precoce.”
+// `,
+//       previewImageUrl: './evento-ferroviaria.webp',
+//       eventDate: new Date('2023-02-11T19:30:00'),
+//       location: 'Estádio Fonte Luminosa - Araraquara, SP',
+//       amount: 57636.6,
+//       urlToPlatform: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ',
+//     };
+
+//     return new Promise(resolve => {
+//       setTimeout(() => resolve(event as Event), 1000);
+//     });
+//  }
 
   list(page = 0, pageSize = 10) {
     return of({
