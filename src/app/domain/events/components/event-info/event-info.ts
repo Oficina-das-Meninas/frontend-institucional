@@ -12,4 +12,5 @@ export class EventInfo {
   @Input() icon!: string;
   @Input() text!: string;
   @Input() isLoading: boolean = false;
+  @Input() cssClass: string = '';
 }
