@@ -50,6 +50,7 @@ export class EventDetails implements OnInit {
       this.eventService.getById(this.eventId).subscribe({
         next: async (data) => {
           data.previewImageUrl = this.BUCKET_URL + data.previewImageUrl;
+          data.partnersImageUrl = data.partnersImageUrl ? this.BUCKET_URL + data.partnersImageUrl : undefined;
           this.event.set(data);
           await this.updateHeaderBackground();
           this.isLoading.set(false);

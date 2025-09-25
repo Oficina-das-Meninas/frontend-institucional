@@ -59,6 +59,7 @@
         src="{{ event()?.previewImageUrl }}"
         alt="Imagem do evento {{ event()?.title }}" />
     }
+
     @if (isLoading()) {
       <app-skeleton-text [lines]="15" pattern="full" containerClasses="mt-5 lg:mt-0 lg:pl-160 lg:p-0 p-10" />
       <app-skeleton-text [lines]="5" containerClasses="lg:pt-5 lg:mt-0 lg:p-0 p-10 lg:block hidden" />
@@ -67,3 +68,15 @@
     }
   </div>
 </section>
+
+@if (!isLoading() && event()?.partnersImageUrl) {
+  <section class="w-full flex flex-col pl-4 pr-4 lg:pl-20 lg:pr-20 pb-10 pt-8 bg-gray-100">
+    <div class="w-full text-center">
+      <h2 class="text-2xl lg:text-4xl font-bold mb-8 text-gray-800">Parceiros</h2>
+      <img
+        class="w-250 rounded-xl object-contain mx-auto hover:scale-105 transition-transform duration-300 shadow-lg"
+        src="{{ event()?.partnersImageUrl }}"
+        alt="Imagem dos parceiros do evento {{ event()?.title }}" />
+    </div>
+  </section>
+}
