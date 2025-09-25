@@ -1,41 +1,35 @@
-<div class="min-h-screen bg-[#f5f7f8] opacity-100 bg-[length:35px_35px] [background-image:repeating-linear-gradient(0deg,#d9e2eb,#d9e2eb_2px,#f5f7f8_2px,#f5f7f8)]">
+<div
+  class="min-h-screen bg-[#f5f7f8] opacity-100 bg-[length:35px_35px] [background-image:repeating-linear-gradient(0deg,#d9e2eb,#d9e2eb_2px,#f5f7f8_2px,#f5f7f8)]"
+>
+  <div class="flex flex-col justify-between">
+    <div class="py-40">
+      <div class="px-4 max-w-2xl mx-auto text-center space-y-4 mb-14">
+        <h1 class="text-3xl lg:text-5xl font-bold">
+          Transparência
+        </h1>
+        <h2 class="text-base lg:text-xl leading-relaxed">
+          Neste portal, compartilhamos de forma transparente informações sobre
+          nossos <span class="font-bold">recursos, documentos e equipe</span>.
+        </h2>
+      </div>
 
-    <div class="flex flex-col justify-between">
-
-        <main class="py-40">
-            <div class="flex flex-col justify-center items-center pb-20 px-[5%] md:px-[15%] xl:px-[25%]">
-                <h1 class="text-3xl md:text-4xl font-bold text-center">
-                    Transparência
-                </h1>
-                <h2 class="text-sm md:text-lg font-medium text-center">
-                    Neste portal, compartilhamos de forma transparente informações 
-                    sobre nossos <span class="font-bold">recursos, documentos e equipe</span>.
-                </h2>
+      <div class="px-[2%] md:px-[5%] xl:px-[10%]">
+        @if (accordionContent$ | async; as content) {
+          @for (item of content; track $index) {
+            <div class="py-2">
+              <app-transparency-accordion [content]="item" />
             </div>
-
-            <div class="px-[2%] md:px-[5%] xl:px-[10%]">
-                @if (accordionContent$ | async; as content) {
-
-                    @for (item of content; track $index) {
-                        <div class="py-2">
-                            <app-transparency-accordion [content]="item" />
-                        </div>
-                    }
-
-                } 
-                @else {
-                    <div class="py-2 animate-pulse">
-                        <div class="h-[64px] bg-gray-300 rounded-xl my-2"></div>
-                        <div class="h-[64px] bg-gray-300 rounded-xl my-2"></div>
-                        <div class="h-[64px] bg-gray-300 rounded-xl my-2"></div>
-                        <div class="h-[64px] bg-gray-300 rounded-xl my-2"></div>
-                        <div class="h-[64px] bg-gray-300 rounded-xl my-2"></div>
-                    </div>
-                }
-            </div>
-        </main>
-
+          }
+        } @else {
+          <div class="py-2 animate-pulse">
+            <div class="h-16 bg-gray-300 rounded-xl my-2"></div>
+            <div class="h-16 bg-gray-300 rounded-xl my-2"></div>
+            <div class="h-16 bg-gray-300 rounded-xl my-2"></div>
+            <div class="h-16 bg-gray-300 rounded-xl my-2"></div>
+            <div class="h-16 bg-gray-300 rounded-xl my-2"></div>
+          </div>
+        }
+      </div>
     </div>
-
+  </div>
 </div>
-
