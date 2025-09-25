@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { MatBadgeModule } from '@angular/material/badge';
 import { MatButtonModule } from '@angular/material/button';
 import {
   MAT_DATE_LOCALE,
@@ -22,7 +21,6 @@ import { DateRange } from '../../models/date-range';
     MatButtonModule,
     MatTooltipModule,
     MatDatepickerModule,
-    MatBadgeModule
   ],
   providers: [
     provideNativeDateAdapter(),
