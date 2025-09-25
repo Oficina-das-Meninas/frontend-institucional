@@ -5,24 +5,36 @@
       Aqui você encontra tudo que acontece na nossa oficina: os próximos
       encontros, o que já passou e as novidades que vêm por aí.
     </p>
-    <mat-form-field appearance="outline" class="w-full max-w-md">
-      <input
-        matInput
-        placeholder="Busque por eventos..."
-        aria-label="Buscar eventos"
-        [(ngModel)]="searchInput"
-        (keydown.enter)="refresh()"
-      />
-      <button
-        mat-icon-button
-        matSuffix
-        matTooltip="Buscar evento"
-        aria-label="Buscar evento"
-        (click)="refresh()"
+    <div class="flex items-center justify-center gap-2 mb-4">
+      <mat-form-field
+        appearance="outline"
+        class="w-full max-w-md"
+        subscriptSizing="dynamic"
       >
-        <mat-icon>search</mat-icon>
-      </button>
-    </mat-form-field>
+        <input
+          matInput
+          placeholder="Busque por eventos..."
+          aria-label="Buscar eventos"
+          [(ngModel)]="searchEvent"
+          (keydown.enter)="refresh()"
+        />
+        <button
+          mat-icon-button
+          matSuffix
+          matTooltip="Buscar evento"
+          aria-label="Buscar evento"
+          (click)="refresh()"
+        >
+          <mat-icon>search</mat-icon>
+        </button>
+      </mat-form-field>
+      <app-calendar-filter
+        [(dateRange)]="dateRange"
+        (apply)="applyDateFilter()"
+        (clear)="clearFilters()"
+        tooltipText="Filtrar eventos por data"
+      />
+    </div>
   </div>
   <div
     class="relative w-full min-h-110 bg-lime-600/70 py-10 px-4 md:px-10 flex flex-col items-center justify-center overflow-hidden"
