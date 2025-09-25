@@ -1,0 +1,37 @@
+<div class="relative inline-block">
+  <button
+    mat-fab
+    [aria-label]="tooltipText"
+    [matTooltip]="tooltipText"
+    (click)="picker.open()"
+    [matBadge]="hasDateFilter() ? '1' : null"
+    matBadgeSize="large"
+    class="text-xs"
+  >
+    <mat-icon>calendar_month</mat-icon>
+  </button>
+
+  <mat-date-range-input [rangePicker]="picker" class="sr-only">
+    <input
+      matStartDate
+      aria-label="Data inicial"
+      [(ngModel)]="dateRange.start"
+    />
+    <input matEndDate aria-label="Data final" [(ngModel)]="dateRange.end" />
+  </mat-date-range-input>
+
+  <mat-date-range-picker #picker panelClass="date-range-panel">
+    <mat-date-range-picker-actions>
+      <button matButton matDateRangePickerCancel (click)="onClearDateFilter()">
+        Limpar
+      </button>
+      <button
+        matButton="elevated"
+        matDateRangePickerApply
+        (click)="onApplyDateFilter()"
+      >
+        Aplicar
+      </button>
+    </mat-date-range-picker-actions>
+  </mat-date-range-picker>
+</div>
