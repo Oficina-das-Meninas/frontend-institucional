@@ -2,9 +2,10 @@ import { DatePipe, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { Component, ElementRef, inject, LOCALE_ID, OnInit, Renderer2, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltip } from '@angular/material/tooltip';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { environment } from '../../../../../environments/environment.development';
 import { SkeletonButton } from '../../../../shared/components/skeleton-button/skeleton-button';
@@ -19,12 +20,22 @@ registerLocaleData(localePt);
 
 @Component({
   selector: 'app-event-details',
-  imports: [EventInfo, MatButtonModule, DatePipe, MatProgressSpinnerModule, SkeletonButton, SkeletonImage, SkeletonText, MarkdownModule, MatTooltip],
+  imports: [
+    EventInfo,
+    MatButtonModule,
+    DatePipe,
+    MatProgressSpinnerModule,
+    SkeletonButton,
+    SkeletonImage,
+    SkeletonText,
+    MarkdownModule,
+    MatTooltip,
+    MatIcon,
+    RouterLink,
+  ],
   templateUrl: './event-details.html',
   styleUrl: './event-details.scss',
-  providers: [
-    { provide: LOCALE_ID, useValue: 'pt-BR' }
-  ],
+  providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
 })
 export class EventDetails implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
@@ -37,6 +48,7 @@ export class EventDetails implements OnInit {
 
   event = signal<Event | null>(null);
   isLoading = signal(true);
+  isError = signal(false);
 
   eventId = this.activatedRoute.snapshot.paramMap.get('id');
 
@@ -48,7 +60,7 @@ export class EventDetails implements OnInit {
         this.renderer.addClass(headerElement, 'loading');
       }
       this.eventService.getById(this.eventId).subscribe({
-        next: async (data) => {
+        next: async data => {
           data.previewImageUrl = this.BUCKET_URL + data.previewImageUrl;
           data.partnersImageUrl = data.partnersImageUrl ? this.BUCKET_URL + data.partnersImageUrl : undefined;
           this.event.set(data);
@@ -59,14 +71,15 @@ export class EventDetails implements OnInit {
             this.renderer.addClass(headerElement, 'color-extracted');
           }
         },
-        error: (error) => {
-          console.error('Erro ao carregar o evento:', error);
-          this.event.set(null);
-          this.isLoading.set(false);
+        error: error => {
+          console.error('Erro ao carregar evento:', error);
+          this.isError.set(true);
+          this.applyDynamicBackground('#e2e2e2', '#c7c7c7');
           if (headerElement) {
             this.renderer.removeClass(headerElement, 'loading');
+            this.renderer.addClass(headerElement, 'color-extracted');
           }
-        }
+        },
       });
     }
   }
@@ -85,6 +98,8 @@ export class EventDetails implements OnInit {
       try {
         const dominantColor = await this.colorExtractor.extractDominantColor(this.event()!.previewImageUrl);
         const darkerColor = this.colorExtractor.getDarkerVariation(dominantColor);
+
+        console.log('Cores extraídas:', { dominantColor, darkerColor });
 
         this.applyDynamicBackground(dominantColor, darkerColor);
       } catch (error) {
@@ -109,11 +124,7 @@ export class EventDetails implements OnInit {
 
       this.renderer.setStyle(headerElement, '--new-background-color', primaryColor);
       this.renderer.setStyle(headerElement, '--new-background', newBackgroundStyle);
-      this.renderer.setStyle(
-        headerElement,
-        '--new-background-size',
-        '135px 135px, 135px 135px, 67.5px 67.5px, 67.5px 67.5px'
-      );
+      this.renderer.setStyle(headerElement, '--new-background-size', '135px 135px, 135px 135px, 67.5px 67.5px, 67.5px 67.5px');
 
       const style = headerElement.style;
       style.setProperty('--new-background-color', primaryColor);
