@@ -6,6 +6,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltip } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
+import { environment } from '../../../../../environments/environment.development';
 import { SkeletonButton } from '../../../../shared/components/skeleton-button/skeleton-button';
 import { SkeletonImage } from '../../../../shared/components/skeleton-image/skeleton-image';
 import { SkeletonText } from '../../../../shared/components/skeleton-text/skeleton-text';
@@ -32,6 +33,8 @@ export class EventDetails implements OnInit {
   private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
 
+  private readonly BUCKET_URL = `${environment.bucketUrl}/`;
+
   event = signal<Event | null>(null);
   isLoading = signal(true);
 
@@ -46,6 +49,7 @@ export class EventDetails implements OnInit {
       }
       this.eventService.getById(this.eventId).subscribe({
         next: async (data) => {
+          data.previewImageUrl = this.BUCKET_URL + data.previewImageUrl;
           this.event.set(data);
           await this.updateHeaderBackground();
           this.isLoading.set(false);

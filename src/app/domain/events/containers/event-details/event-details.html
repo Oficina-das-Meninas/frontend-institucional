@@ -1,6 +1,8 @@
 <section class="event-header w-full h-70 xl:h-[25rem] flex items-center justify-center relative">
   <div class="text-center pt-25 relative z-10">
-    <p class="title text-white text-3xl lg:text-5xl font-bold text-shadow-lg/20">{{ event()?.title }}</p>
+    @if (!isLoading()) {
+      <p class="title text-white text-3xl lg:text-5xl font-bold text-shadow-lg/20">{{ event()?.title }}</p>
+    }
   </div>
 </section>
 
@@ -51,11 +53,11 @@
           'lg:w-auto'
         "
       />
-    } @else {
+    } @else if (event()?.previewImageUrl) {
       <img
         class="h-96 object-cover lg:mr-5 rounded-xl lg:float-left float-none mx-auto hover:scale-105 transition-transform duration-300"
         src="{{ event()?.previewImageUrl }}"
-        alt="{{ event()?.title }}" />
+        alt="Imagem do evento {{ event()?.title }}" />
     }
     @if (isLoading()) {
       <app-skeleton-text [lines]="15" pattern="full" containerClasses="mt-5 lg:mt-0 lg:pl-160 lg:p-0 p-10" />

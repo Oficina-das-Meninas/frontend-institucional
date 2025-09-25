@@ -2,6 +2,12 @@
   position: relative;
   overflow: hidden;
 
+  .title {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity 0.4s ease, transform 0.4s ease;
+  }
+
   &::before {
     content: '';
     position: absolute;
@@ -24,6 +30,8 @@
   &.color-extracted {
     .title {
       color: var(--new-text-color);
+      opacity: 1;
+      transform: translateY(0);
     }
 
     &::before {
