@@ -3,6 +3,8 @@ import { inject, Injectable } from '@angular/core';
 import { delay, first, Observable, of } from 'rxjs';
 import { environment } from '../../../../environments/environment.development';
 import { Event } from '../model/event';
+import { EventPage } from '../model/event-page';
+
 
 @Injectable({
   providedIn: 'root',
@@ -37,7 +39,8 @@ export class EventService {
         {
           id: '3',
           title: 'Espetáculo Amazônias',
-          description: 'Nossas meninas foram  convidadas para assistir o espetáculo Amazônias.',
+          description:
+            'Nossas meninas foram  convidadas para assistir o espetáculo Amazônias.',
           previewImageUrl: './evento-amazonias.webp',
           eventDate: new Date('2023-08-28'),
         },
@@ -49,7 +52,7 @@ export class EventService {
     //   .get<EventPage>(this.API_URL, {
     //     params: {
     //       page: page,
-    //       size: pageSize,
+    //       pageSize: pageSize,
     //     },
     //   })
     //   .pipe(first());

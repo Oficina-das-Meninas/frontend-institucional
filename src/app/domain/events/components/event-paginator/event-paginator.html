@@ -1,0 +1,38 @@
+<div class="flex justify-center">
+  <nav aria-label="Paginação de eventos">
+    <ul class="inline-flex flex-wrap items-center gap-1 text-sm">
+      <li>
+        <button
+          [matButton]="hasPreviousPage() ? 'elevated' : 'outlined'"
+          [disabled]="!hasPreviousPage()"
+          (click)="previousPage()"
+        >
+          <div class="flex items-center gap-1">
+            <mat-icon>chevron_left</mat-icon>
+            <span class="hidden sm:inline">Anterior</span>
+          </div>
+        </button>
+      </li>
+      <li>
+        <button matButton="elevated">
+          <div class="flex items-center gap-1">
+            <span class="hidden sm:inline">Página</span> <b class="mx-1">{{ pageIndex + 1 }}</b> de
+            <b class="ml-1">{{ getNumberOfPages() }}</b>
+          </div>
+        </button>
+      </li>
+      <li>
+        <button
+          [matButton]="hasNextPage() ? 'elevated' : 'outlined'"
+          [disabled]="!hasNextPage()"
+          (click)="nextPage()"
+        >
+          <div class="flex items-center gap-1">
+            <span class="hidden sm:inline">Próximo</span>
+            <mat-icon>chevron_right</mat-icon>
+          </div>
+        </button>
+      </li>
+    </ul>
+  </nav>
+</div>
