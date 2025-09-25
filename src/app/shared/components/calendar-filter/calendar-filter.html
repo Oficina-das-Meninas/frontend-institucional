@@ -1,15 +1,18 @@
 <div class="relative inline-block">
-  <button
-    mat-fab
-    [aria-label]="tooltipText"
-    [matTooltip]="tooltipText"
-    (click)="picker.open()"
-    [matBadge]="hasDateFilter() ? '1' : null"
-    matBadgeSize="large"
-    class="text-xs"
-  >
-    <mat-icon>calendar_month</mat-icon>
-  </button>
+  <div class="relative">
+    @if (hasDateFilter()) {
+      <div class="absolute size-3 bg-[var(--mat-sys-primary)] rounded-full top-0 right-0 z-50"></div>
+    }
+    <button
+      mat-fab
+      [aria-label]="tooltipText"
+      [matTooltip]="tooltipText"
+      (click)="picker.open()"
+      class="text-xs"
+    >
+      <mat-icon>calendar_month</mat-icon>
+    </button>
+  </div>
 
   <mat-date-range-input [rangePicker]="picker" class="sr-only">
     <input
