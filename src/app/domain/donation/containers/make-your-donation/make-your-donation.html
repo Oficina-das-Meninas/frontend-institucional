@@ -24,7 +24,7 @@
   <div
     class="flex flex-1 items-start justify-start px-6 py-[10rem] sm:items-center sm:justify-center sm:px-6 lg:px-12 lg:w-1/2"
   >
-    <form class="flex flex-col gap-6 w-full">
+    <form class="flex flex-col gap-6 w-full" [formGroup]="form" (ngSubmit)="onSubmit()">
       <div class="flex items-center gap-4 mb-6">
         <a
           routerLink="/"
@@ -44,22 +44,36 @@
       @if(!userAuthenticated) {
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Nome completo</mat-label>
-        <input matInput placeholder="Digite seu nome" />
+        <input formControlName="name" matInput placeholder="Digite seu nome" />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>E-mail</mat-label>
-        <input matInput placeholder="fulano@email.com" />
+        <input
+          formControlName="email"
+          matInput
+          placeholder="fulano@email.com"
+        />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>CPF</mat-label>
-        <input matInput placeholder="000.000.000-00" mask="000.000.000-00" />
+        <input
+          formControlName="cpf"
+          matInput
+          placeholder="000.000.000-00"
+          mask="000.000.000-00"
+        />
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Telefone</mat-label>
-        <input matInput placeholder="(00) 00000-0000" mask="(00) 00000-0000" />
+        <input
+          formControlName="phone"
+          matInput
+          placeholder="(00) 00000-0000"
+          mask="(00) 00000-0000"
+        />
       </mat-form-field>
       } @else {
       <div
@@ -76,7 +90,7 @@
       }
 
       <div class="space-y-4">
-        <h3 class="text-lg font-medium text-gray-900">Selecione o valor</h3>
+        <h3 class="text-lg font-medium text-gray-900">Selecione o valor *</h3>
         <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
           <button
             type="button"
@@ -128,6 +142,7 @@
         <mat-label>Ou digite um valor</mat-label>
         <span matPrefix class="px-4">R$&nbsp;</span>
         <input
+          formControlName="amount"
           matInput
           placeholder="125,00"
           type="text"
@@ -138,13 +153,14 @@
       </mat-form-field>
 
       <div class="space-y-4">
-        <h3 class="text-lg font-medium text-gray-900">Frequência</h3>
+        <h3 class="text-lg font-medium text-gray-900">Frequência *</h3>
         <div class="flex flex-col gap-2">
           <div class="flex gap-4">
             <label
               class="flex flex-1 cursor-pointer items-center justify-center gap-3 rounded-md border border-gray-300 p-3 has-[:checked]:border-[#BA005C] has-[:checked]:bg-[#C7265B]/15 has-[:checked]:text-[#BA005C]"
             >
               <input
+                formControlName="frequency"
                 type="radio"
                 name="frequency"
                 value="once"
@@ -158,6 +174,7 @@
               class="flex flex-1 cursor-pointer items-center justify-center gap-3 rounded-md border border-gray-300 p-3 has-[:checked]:border-[#BA005C] has-[:checked]:bg-[#C7265B]/15 has-[:checked]:text-[#BA005C]"
             >
               <input
+                formControlName="frequency"
                 type="radio"
                 name="frequency"
                 value="monthly"
@@ -175,7 +192,7 @@
         </div>
       </div>
       <button
-        class="w-full rounded-md bg-[#DA235F] py-3 px-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#BA005C] focus:outline-none focus:ring-2 focus:ring-[#BA005C] focus:ring-offset-2 cursor-pointer"
+        class="w-full rounded-md bg-[#BA005C] py-3 px-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#DA235F] focus:outline-none focus:ring-2 focus:ring-[#BA005C] focus:ring-offset-2 cursor-pointer"
         type="submit"
       >
         Continuar para Pagamento
