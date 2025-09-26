@@ -109,12 +109,14 @@
     </div>
   </div>
   <div class="pb-14">
-    <app-carousel
-      [slides]="['./imagem1.webp', './imagem2.webp', './imagem3.webp']"
-      [spaceBetween]=20
-      slideClass="bg-white p-2 rounded-xl shadow-lg border-2 border-white h-75 w-full"
-      imgClass="object-cover rounded-md size-full"
-    />
+    @if (eventImages$ | async; as eventImages) {
+      <app-carousel
+        [slides]="eventImages"
+        [spaceBetween]=20
+        slideClass="bg-white p-2 rounded-xl shadow-lg border-2 border-white h-75 w-full"
+        imgClass="object-cover rounded-md size-full"
+      />
+    }
   </div>
 </section>
 
@@ -160,10 +162,12 @@
 
 <section class="w-full bg-white py-14">
   <h2 class="font-bold text-3xl md:text-5xl text-center mb-14 px-4 md:px-25">Nossos parceiros</h2>
-  <app-carousel
-    [slides]="['/mesa_brasil.png', '/passarinho.png', '/pref_araraquara.png']"
-    [spaceBetween]=25
-    slideClass="flex justify-center items-center h-36 hover:scale-105 transition-transform duration-300"
-    imgClass="object-cover size-full"
-  />
+  @if (partnerImages$ | async; as partnerImages) {
+    <app-carousel
+      [slides]="partnerImages"
+      [spaceBetween]=25
+      slideClass="flex justify-center items-center h-36 hover:scale-105 transition-transform duration-300"
+      imgClass="object-cover size-full"
+    />
+  }
 </section>
