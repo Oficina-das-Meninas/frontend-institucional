@@ -64,13 +64,15 @@
         <li><a routerLink="/eventos" class="link-hover">Eventos</a></li>
         <li><a routerLink="/transparencia" class="link-hover">Transparência</a></li>
         <li>
-          <span
-            class="cursor-pointer link-hover flex items-center"
+          <button
+            type="button"
+            class="cursor-pointer link-hover flex items-center bg-transparent border-none p-0"
             [matMenuTriggerFor]="helpOptions"
+            aria-label="Opções de como ajudar"
             >
             Como ajudar?
             <mat-icon>arrow_drop_down</mat-icon>
-            </span
+            </button
           >
           <mat-menu #helpOptions="matMenu" yPosition="below" class="text-sm glassy">
             <a routerLink="/doar-nota-fiscal" mat-menu-item>Doe sua nota fiscal</a>
