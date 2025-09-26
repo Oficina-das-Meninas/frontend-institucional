@@ -93,6 +93,7 @@ export class EventDetails implements OnInit {
 
     const isLightColor = this.colorExtractor.isLightColor(primaryColor);
     const textColor = isLightColor ? 'black' : 'white';
+    const textShadow = isLightColor ? '2px 2px 4px rgba(255,255,255,0.8)' : '2px 2px 4px rgba(0,0,0,0.8)';
 
     if (headerElement) {
       const newBackgroundStyle = `
@@ -111,8 +112,10 @@ export class EventDetails implements OnInit {
       style.setProperty('--new-background', newBackgroundStyle);
       style.setProperty('--new-background-size', '135px 135px, 135px 135px, 67.5px 67.5px, 67.5px 67.5px');
       style.setProperty('--new-text-color', textColor);
+      style.setProperty('--new-text-shadow', textShadow);
 
       this.renderer.setStyle(headerElement, '--new-text-color', textColor);
+      this.renderer.setStyle(headerElement, '--new-text-shadow', textShadow);
     }
   }
 }

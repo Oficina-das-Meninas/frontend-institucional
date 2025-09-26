@@ -30,6 +30,7 @@
   &.color-extracted {
     .title {
       color: var(--new-text-color);
+      text-shadow: var(--new-text-shadow);
       opacity: 1;
       transform: translateY(0);
     }

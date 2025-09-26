@@ -10,9 +10,9 @@
   <app-event-info icon="access_time" [cssClass]="'w-20'" [text]="(event()?.eventDate | date:'shortTime') || ''" />
 
   @if (event() && !isEventPast(event()!)) {
-    <a matButton="filled" [href]="event()?.urlToPlatform" target="_blank" class="!max-w-fit">Quero Participar</a>
+    <a matButton="filled" [href]="event()?.urlToPlatform" target="_blank" rel="noopener" aria-label="Participar do evento {{ event()?.title }}" class="!max-w-fit">Quero Participar</a>
   } @else if (event()) {
-    <a matButton="filled" disabled disabledInteractive matTooltip="Evento já realizado" class="!max-w-fit">Quero Participar</a>
+    <button matButton="filled" disabled disabledInteractive matTooltip="Evento já realizado" aria-label="Evento {{ event()?.title }} já foi realizado" class="!max-w-fit">Quero Participar</button>
   }
 </section>
 
