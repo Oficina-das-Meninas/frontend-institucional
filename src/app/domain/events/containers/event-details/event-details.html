@@ -19,10 +19,28 @@
 <section class="w-full flex flex-col lg:flex-row pl-4 pr-4 lg:pl-20 lg:pr-20 pb-10 gap-10">
   <div class="text-justify leading-relaxed w-full">
     @if (event()?.previewImageUrl) {
+      @if (!previewImageLoaded()) {
+        <app-skeleton-image
+          [imageCss]="
+              'h-96 ' +
+              'lg:mr-5 ' +
+              'lg:float-left ' +
+              'float-none ' +
+              'mx-auto ' +
+              'w-full ' +
+              'max-w-160 ' +
+              'lg:max-w-max ' +
+              'lg:aspect-[16/10] ' +
+              'lg:w-auto'
+            "
+          [text]="'Imagem do evento ' + event()?.title" />
+      }
       <img
         class="h-96 object-cover lg:mr-5 rounded-xl lg:float-left float-none mx-auto hover:scale-105 transition-transform duration-300"
+        [class.hidden]="!previewImageLoaded()"
         src="{{ event()?.previewImageUrl }}"
-        alt="Imagem do evento {{ event()?.title }}" />
+        alt="Imagem do evento {{ event()?.title }}"
+        (load)="onPreviewImageLoad()" />
     }
       <markdown class="text-justify hyphens-auto text-lg leading-relaxed lg:p-0 p-10" [data]="event()?.description" />
   </div>
@@ -32,10 +50,17 @@
   <section class="w-full flex flex-col pl-4 pr-4 lg:pl-20 lg:pr-20 pb-10 pt-8 bg-gray-100">
     <div class="w-full text-center">
       <h2 class="text-2xl lg:text-4xl font-bold mb-8 text-gray-800">Parceiros</h2>
+      @if (!partnersImageLoaded()) {
+        <app-skeleton-image
+          [imageCss]="'w-250 h-96 mx-auto'"
+          [text]="'Parceiros e apoiadores do evento ' + event()?.title" />
+      }
       <img
         class="w-250 rounded-xl object-contain mx-auto hover:scale-105 transition-transform duration-300 shadow-lg"
+        [class.hidden]="!partnersImageLoaded()"
         src="{{ event()?.partnersImageUrl }}"
-        alt="Imagem dos parceiros do evento {{ event()?.title }}" />
+        alt="Parceiros e apoiadores do evento {{ event()?.title }}"
+        (load)="onPartnersImageLoad()" />
     </div>
   </section>
 }

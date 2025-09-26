@@ -7,6 +7,7 @@ import { MatTooltip } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { environment } from '../../../../../environments/environment.development';
+import { SkeletonImage } from '../../../../shared/components/skeleton-image/skeleton-image';
 import { ColorExtractorService } from '../../../../shared/services/color-extractor.service';
 import { EventInfo } from '../../components/event-info/event-info';
 import { Event } from '../../model/event';
@@ -15,14 +16,7 @@ registerLocaleData(localePt);
 
 @Component({
   selector: 'app-event-details',
-  imports: [
-    EventInfo,
-    MatButtonModule,
-    DatePipe,
-    MatProgressSpinnerModule,
-    MarkdownModule,
-    MatTooltip,
-  ],
+  imports: [EventInfo, MatButtonModule, DatePipe, MatProgressSpinnerModule, SkeletonImage, MarkdownModule, MatTooltip],
   templateUrl: './event-details.html',
   styleUrl: './event-details.scss',
   providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
@@ -36,6 +30,8 @@ export class EventDetails implements OnInit {
   private readonly BUCKET_URL = `${environment.bucketUrl}/`;
 
   event = signal<Event | null>(null);
+  previewImageLoaded = signal(false);
+  partnersImageLoaded = signal(false);
 
   eventId = this.activatedRoute.snapshot.paramMap.get('id');
 
@@ -46,10 +42,7 @@ export class EventDetails implements OnInit {
     resolvedEvent.partnersImageUrl = resolvedEvent.partnersImageUrl ? this.BUCKET_URL + resolvedEvent.partnersImageUrl : undefined;
 
     this.event.set(resolvedEvent);
-    this.updateHeaderBackground();
-
-    const headerElement = this.elementRef.nativeElement.querySelector('.event-header');
-    if (headerElement) this.renderer.addClass(headerElement, 'color-extracted');
+    await this.updateHeaderBackground();
   }
 
   isEventPast(event: Event): boolean {
@@ -61,6 +54,14 @@ export class EventDetails implements OnInit {
     return eventDate < now;
   }
 
+  onPreviewImageLoad() {
+    this.previewImageLoaded.set(true);
+  }
+
+  onPartnersImageLoad() {
+    this.partnersImageLoaded.set(true);
+  }
+
   private async updateHeaderBackground(): Promise<void> {
     if (this.event()?.previewImageUrl) {
       try {
@@ -68,8 +69,21 @@ export class EventDetails implements OnInit {
         const darkerColor = this.colorExtractor.getDarkerVariation(dominantColor);
 
         this.applyDynamicBackground(dominantColor, darkerColor);
+        const headerElement = this.elementRef.nativeElement.querySelector('.event-header');
+        if (headerElement) {
+          this.renderer.addClass(headerElement, 'color-extracted');
+        }
       } catch (error) {
         console.warn('Erro ao extrair cor da imagem, usando cor padrão:', error);
+        const headerElement = this.elementRef.nativeElement.querySelector('.event-header');
+        if (headerElement) {
+          this.renderer.addClass(headerElement, 'color-extracted');
+        }
+      }
+    } else {
+      const headerElement = this.elementRef.nativeElement.querySelector('.event-header');
+      if (headerElement) {
+        this.renderer.addClass(headerElement, 'color-extracted');
       }
     }
   }
