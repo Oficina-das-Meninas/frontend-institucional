@@ -2,19 +2,14 @@ import { DatePipe, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
 import { Component, ElementRef, inject, LOCALE_ID, OnInit, Renderer2, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIcon } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltip } from '@angular/material/tooltip';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
 import { environment } from '../../../../../environments/environment.development';
-import { SkeletonButton } from '../../../../shared/components/skeleton-button/skeleton-button';
-import { SkeletonImage } from '../../../../shared/components/skeleton-image/skeleton-image';
-import { SkeletonText } from '../../../../shared/components/skeleton-text/skeleton-text';
 import { ColorExtractorService } from '../../../../shared/services/color-extractor.service';
 import { EventInfo } from '../../components/event-info/event-info';
 import { Event } from '../../model/event';
-import { EventService } from '../../services/event-service';
 
 registerLocaleData(localePt);
 
@@ -25,13 +20,8 @@ registerLocaleData(localePt);
     MatButtonModule,
     DatePipe,
     MatProgressSpinnerModule,
-    SkeletonButton,
-    SkeletonImage,
-    SkeletonText,
     MarkdownModule,
     MatTooltip,
-    MatIcon,
-    RouterLink,
   ],
   templateUrl: './event-details.html',
   styleUrl: './event-details.scss',
@@ -39,7 +29,6 @@ registerLocaleData(localePt);
 })
 export class EventDetails implements OnInit {
   private activatedRoute = inject(ActivatedRoute);
-  private eventService = inject(EventService);
   private colorExtractor = inject(ColorExtractorService);
   private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
@@ -47,41 +36,20 @@ export class EventDetails implements OnInit {
   private readonly BUCKET_URL = `${environment.bucketUrl}/`;
 
   event = signal<Event | null>(null);
-  isLoading = signal(true);
-  isError = signal(false);
 
   eventId = this.activatedRoute.snapshot.paramMap.get('id');
 
-  async ngOnInit(): Promise<void> {
-    if (this.eventId) {
-      this.isLoading.set(true);
-      const headerElement = this.elementRef.nativeElement.querySelector('.event-header');
-      if (headerElement) {
-        this.renderer.addClass(headerElement, 'loading');
-      }
-      this.eventService.getById(this.eventId).subscribe({
-        next: async data => {
-          data.previewImageUrl = this.BUCKET_URL + data.previewImageUrl;
-          data.partnersImageUrl = data.partnersImageUrl ? this.BUCKET_URL + data.partnersImageUrl : undefined;
-          this.event.set(data);
-          await this.updateHeaderBackground();
-          this.isLoading.set(false);
-          if (headerElement) {
-            this.renderer.removeClass(headerElement, 'loading');
-            this.renderer.addClass(headerElement, 'color-extracted');
-          }
-        },
-        error: error => {
-          console.error('Erro ao carregar evento:', error);
-          this.isError.set(true);
-          this.applyDynamicBackground('#e2e2e2', '#c7c7c7');
-          if (headerElement) {
-            this.renderer.removeClass(headerElement, 'loading');
-            this.renderer.addClass(headerElement, 'color-extracted');
-          }
-        },
-      });
-    }
+  async ngOnInit() {
+    const resolvedEvent = this.activatedRoute.snapshot.data['event'] as Event;
+
+    resolvedEvent.previewImageUrl = this.BUCKET_URL + resolvedEvent.previewImageUrl;
+    resolvedEvent.partnersImageUrl = resolvedEvent.partnersImageUrl ? this.BUCKET_URL + resolvedEvent.partnersImageUrl : undefined;
+
+    this.event.set(resolvedEvent);
+    this.updateHeaderBackground();
+
+    const headerElement = this.elementRef.nativeElement.querySelector('.event-header');
+    if (headerElement) this.renderer.addClass(headerElement, 'color-extracted');
   }
 
   isEventPast(event: Event): boolean {
@@ -98,8 +66,6 @@ export class EventDetails implements OnInit {
       try {
         const dominantColor = await this.colorExtractor.extractDominantColor(this.event()!.previewImageUrl);
         const darkerColor = this.colorExtractor.getDarkerVariation(dominantColor);
-
-        console.log('Cores extraídas:', { dominantColor, darkerColor });
 
         this.applyDynamicBackground(dominantColor, darkerColor);
       } catch (error) {

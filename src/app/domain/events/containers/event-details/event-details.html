@@ -1,37 +1,15 @@
 <section class="event-header w-full h-70 xl:h-[25rem] flex items-center justify-center relative">
   <div class="text-center pt-25 relative z-10">
-    @if (!isLoading() && !isError()) {
       <p class="title text-white text-3xl lg:text-5xl font-bold text-shadow-lg/20">{{ event()?.title }}</p>
-    } @else if (isError()) {
-
-      <section class="flex flex-col items-center justify-center gap-4">
-        <div class="flex items-center justify-center gap-2">
-          <p class="text-[var(--mat-sys-primary)] text-xl lg:text-3xl font-bold">Evento não encontrado</p>
-          <mat-icon fontSet="material-symbols-rounded" class="!min-w-fit !text-[var(--mat-sys-primary)]">sentiment_dissatisfied</mat-icon>
-        </div>
-
-        <a matButton="filled" routerLink="/eventos">Voltar para a lista de eventos</a>
-      </section>
-    }
   </div>
 </section>
 
-@if (isLoading() && !isError()) {
-  <section class="w-full h-70 xl:h-[25rem] flex items-center justify-center absolute top-0 left-0">
-    <div class="h-full flex items-center justify-center pt-25">
-      <mat-spinner diameter="50" class="mx-auto" />
-    </div>
-  </section>
-}
-
 <section class="text-lg w-full flex-col lg:flex-row flex items-start justify-between gap-5 pl-4 pr-4 lg:pl-20 lg:pr-20 pt-10 pb-10 mb-10 bg-gray-100">
-  <app-event-info [isLoading]="isLoading()" icon="location_on" [cssClass]="'w-56'" [text]="event()?.location || ''" />
-  <app-event-info [isLoading]="isLoading()" icon="calendar_today" [cssClass]="'w-48'" [text]="(event()?.eventDate | date:'longDate') || '' " />
-  <app-event-info [isLoading]="isLoading()" icon="access_time" [cssClass]="'w-20'" [text]="(event()?.eventDate | date:'shortTime') || ''" />
+  <app-event-info icon="location_on" [cssClass]="'w-56'" [text]="event()?.location || ''" />
+  <app-event-info icon="calendar_today" [cssClass]="'w-48'" [text]="(event()?.eventDate | date:'longDate') || '' " />
+  <app-event-info icon="access_time" [cssClass]="'w-20'" [text]="(event()?.eventDate | date:'shortTime') || ''" />
 
-  @if (isLoading()) {
-    <app-skeleton-button cssClass="h-10 w-36" />
-  } @else if (event() && !isEventPast(event()!)) {
+  @if (event() && !isEventPast(event()!)) {
     <a matButton="filled" [href]="event()?.urlToPlatform" target="_blank" class="!max-w-fit">Quero Participar</a>
   } @else if (event()) {
     <a matButton="filled" disabled disabledInteractive matTooltip="Evento já realizado" class="!max-w-fit">Quero Participar</a>
@@ -40,35 +18,17 @@
 
 <section class="w-full flex flex-col lg:flex-row pl-4 pr-4 lg:pl-20 lg:pr-20 pb-10 gap-10">
   <div class="text-justify leading-relaxed w-full">
-    @if (isLoading()) {
-      <app-skeleton-image
-        [imageCss]="
-            'h-96 ' +
-            'lg:mr-5 ' +
-            'lg:float-left ' +
-            'float-none ' +
-            'mx-auto ' +
-            'w-full ' +
-            'max-w-160 ' +
-            'lg:max-w-max ' +
-            'lg:aspect-[16/10] ' +
-            'lg:w-auto'
-          " />
-    } @else if (event()?.previewImageUrl) {
+    @if (event()?.previewImageUrl) {
       <img
         class="h-96 object-cover lg:mr-5 rounded-xl lg:float-left float-none mx-auto hover:scale-105 transition-transform duration-300"
         src="{{ event()?.previewImageUrl }}"
         alt="Imagem do evento {{ event()?.title }}" />
-    } @if (isLoading()) {
-      <app-skeleton-text [lines]="15" pattern="full" containerClasses="mt-5 lg:mt-0 lg:pl-160 lg:p-0 p-10" />
-      <app-skeleton-text [lines]="5" containerClasses="lg:pt-5 lg:mt-0 lg:p-0 p-10 lg:block hidden" />
-    } @else {
-      <markdown class="text-justify hyphens-auto text-lg leading-relaxed lg:p-0 p-10" [data]="event()?.description" />
     }
+      <markdown class="text-justify hyphens-auto text-lg leading-relaxed lg:p-0 p-10" [data]="event()?.description" />
   </div>
 </section>
 
-@if (!isLoading() && event()?.partnersImageUrl) {
+@if (event()?.partnersImageUrl) {
   <section class="w-full flex flex-col pl-4 pr-4 lg:pl-20 lg:pr-20 pb-10 pt-8 bg-gray-100">
     <div class="w-full text-center">
       <h2 class="text-2xl lg:text-4xl font-bold mb-8 text-gray-800">Parceiros</h2>
