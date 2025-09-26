@@ -34,6 +34,7 @@ export const routes: Routes = [
         loadComponent: () =>
           import('./domain/events/containers/event-details/event-details').then((m) => m.EventDetails),
       },
+      {
         path: 'seja-um-voluntario',
         loadComponent: () =>
           import('./domain/volunteer/containers/volunteer/volunteer').then((m) => m.Volunteer),
