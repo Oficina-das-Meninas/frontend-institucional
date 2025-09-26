@@ -4,7 +4,7 @@
   </div>
 </section>
 
-<section class="text-lg w-full flex-col lg:flex-row flex items-center justify-between gap-5 pl-4 pr-4 lg:pl-20 lg:pr-20 pt-10 pb-10 mb-10 bg-gray-100">
+<section class="text-lg w-full flex-col lg:flex-row flex items-start lg:items-center justify-between gap-5 pl-4 pr-4 lg:pl-20 lg:pr-20 pt-10 pb-10 mb-10 bg-gray-100">
   <app-event-info icon="location_on" [cssClass]="'w-56'" [text]="event()?.location || ''" />
   <app-event-info icon="calendar_today" [cssClass]="'w-48'" [text]="(event()?.eventDate | date:'longDate') || '' " />
   <app-event-info icon="access_time" [cssClass]="'w-20'" [text]="(event()?.eventDate | date:'shortTime') || ''" />
