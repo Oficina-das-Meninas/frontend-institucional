@@ -27,7 +27,8 @@ export class EventService {
   }
 
   getById(id: string): Observable<Event> {
-    if (this.eventCache.has(id)) return of(this.eventCache.get(id)!);
+    const cachedEvent = this.eventCache.get(id);
+    if (cachedEvent) return of(cachedEvent);
 
     return this.httpClient.get<Event>(`${this.API_URL}/${id}`, {}).pipe(
       first(),

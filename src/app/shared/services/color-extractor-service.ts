@@ -4,6 +4,8 @@ import { Injectable } from '@angular/core';
   providedIn: 'root'
 })
 export class ColorExtractorService {
+  private readonly LIGHT_COLOR_LUMINANCE_THRESHOLD = 0.35;
+
   isLightColor(primaryColor: string): boolean {
   let hex = primaryColor.startsWith('#') ? primaryColor.slice(1) : primaryColor;
 
@@ -31,7 +33,7 @@ export class ColorExtractorService {
   const luminance = 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear;
 
 
-  return luminance > 0.35;
+  return luminance > this.LIGHT_COLOR_LUMINANCE_THRESHOLD;
 }
 
   async extractDominantColor(imageUrl: string): Promise<string> {

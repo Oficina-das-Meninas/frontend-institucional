@@ -57,9 +57,10 @@ export class EventDetails implements OnInit {
   }
 
   private async updateHeaderBackground(): Promise<void> {
-    if (this.event()?.previewImageUrl) {
+    const currentEvent = this.event();
+    if (currentEvent?.previewImageUrl) {
       try {
-        const dominantColor = await this.colorExtractor.extractDominantColor(this.event()!.previewImageUrl);
+        const dominantColor = await this.colorExtractor.extractDominantColor(currentEvent.previewImageUrl);
         const darkerColor = this.colorExtractor.getDarkerVariation(dominantColor);
 
         this.applyDynamicBackground(dominantColor, darkerColor);
