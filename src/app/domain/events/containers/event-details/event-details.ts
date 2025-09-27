@@ -6,9 +6,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltip } from '@angular/material/tooltip';
 import { ActivatedRoute } from '@angular/router';
 import { MarkdownModule } from 'ngx-markdown';
-import { environment } from '../../../../../environments/environment.development';
 import { SkeletonImage } from '../../../../shared/components/skeleton-image/skeleton-image';
-import { ColorExtractorService } from '../../../../shared/services/color-extractor.service';
+import { ColorExtractorService } from '../../../../shared/services/color-extractor-service';
 import { EventInfo } from '../../components/event-info/event-info';
 import { Event } from '../../model/event';
 
@@ -27,8 +26,6 @@ export class EventDetails implements OnInit {
   private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
 
-  private readonly BUCKET_URL = `${environment.bucketUrl}/`;
-
   event = signal<Event | null>(null);
   previewImageLoaded = signal(false);
   partnersImageLoaded = signal(false);
@@ -37,9 +34,6 @@ export class EventDetails implements OnInit {
 
   async ngOnInit() {
     const resolvedEvent = this.activatedRoute.snapshot.data['event'] as Event;
-
-    resolvedEvent.previewImageUrl = this.BUCKET_URL + resolvedEvent.previewImageUrl;
-    resolvedEvent.partnersImageUrl = resolvedEvent.partnersImageUrl ? this.BUCKET_URL + resolvedEvent.partnersImageUrl : undefined;
 
     this.event.set(resolvedEvent);
     await this.updateHeaderBackground();

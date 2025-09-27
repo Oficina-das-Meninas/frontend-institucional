@@ -10,8 +10,9 @@
     </p>
     <h3 class="text-xl font-bold text-white w-fit truncate" [matTooltip]="eventTitle">{{ eventTitle }}</h3>
     <p class="text-md mt-1 text-gray-200 ml-[0.2rem] w-fit line-clamp-2 text-ellipsis"
-    [matTooltip]="description">
-      {{ description }}
+    [matTooltip]="getTooltipText()"
+    >
+      {{ getTooltipText() }}
     </p>
   </div>
 </div>

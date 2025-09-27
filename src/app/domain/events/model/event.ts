@@ -2,7 +2,7 @@ export interface Event {
   id: string;
   title: string;
   previewImageUrl: string;
-  partnersImageUrl?: string;
+  partnersImageUrl: string;
   description: string;
   eventDate: Date;
   location?: string;
