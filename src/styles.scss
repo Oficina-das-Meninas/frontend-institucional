@@ -2,6 +2,7 @@
 @use '@angular/material' as mat;
 @use 'swiper/scss';
 @use 'swiper/scss/navigation';
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Send+Flowers&family=Sniglet:wght@400;800&display=swap');
 
 :root {
   @include mat.menu-overrides((
