@@ -4,6 +4,14 @@
   </div>
 </section>
 
+@if (!previewImageLoaded()) {
+<section class="w-full h-70 xl:h-[25rem] flex items-center justify-center absolute top-0 left-0">
+  <div class="h-full flex items-center justify-center pt-25">
+    <mat-spinner diameter="50" class="mx-auto" />
+  </div>
+</section>
+}
+
 <section class="text-lg w-full flex-col lg:flex-row flex items-start lg:items-center justify-between gap-5 pl-4 pr-4 lg:pl-20 lg:pr-20 pt-10 pb-10 mb-10 bg-gray-100">
   <app-event-info icon="location_on" [cssClass]="'w-56'" [text]="event()?.location || ''" />
   <app-event-info icon="calendar_today" [cssClass]="'w-48'" [text]="(event()?.eventDate | date:'longDate') || '' " />
