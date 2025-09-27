@@ -2,8 +2,8 @@ export interface Event {
   id: string;
   title: string;
   previewImageUrl: string;
+  partnersImageUrl?: string;
   description: string;
-  amount?: number;
   eventDate: Date;
   location?: string;
   urlToPlatform?: string;

@@ -54,4 +54,11 @@ export class Toolbar {
       document.body.classList.remove('overflow-hidden');
     }
   }
+
+  closeDrawer(): void {
+    if (this.drawer && this.drawer.opened) {
+      this.drawer.close();
+    }
+  }
+
 }

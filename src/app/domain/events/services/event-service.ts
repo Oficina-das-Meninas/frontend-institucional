@@ -1,9 +1,11 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { first } from 'rxjs';
-import { environment } from '../../../../environments/environment';
-import { EventPage } from '../model/event-page';
+import { first, Observable } from 'rxjs';
+import { environment } from '../../../../environments/environment.development';
 import { toLocalDateTime } from '../../../shared/utils/date-utils';
+import { Event } from '../model/event';
+import { EventPage } from '../model/event-page';
+
 
 @Injectable({
   providedIn: 'root',
@@ -11,6 +13,10 @@ import { toLocalDateTime } from '../../../shared/utils/date-utils';
 export class EventService {
   private readonly API_URL = `${environment.apiUrl}/events`;
   private httpClient = inject(HttpClient);
+
+  getById(id: string): Observable<Event> {
+    return this.httpClient.get<Event>(`${this.API_URL}/${id}`, {}).pipe(first());
+  }
 
   list(
     page = 0,
@@ -31,6 +37,7 @@ export class EventService {
     if (endDate) {
       params = params.set('endDate', toLocalDateTime(endDate, true));
     }
+
     return this.httpClient
       .get<EventPage>(this.API_URL, { params })
       .pipe(first());
