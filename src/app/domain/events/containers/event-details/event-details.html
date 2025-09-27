@@ -48,6 +48,8 @@
         [class.hidden]="!previewImageLoaded()"
         src="{{ event()?.previewImageUrl }}"
         alt="Imagem do evento {{ event()?.title }}"
+        priority
+        crossorigin="anonymous"
         (load)="onPreviewImageLoad()" />
     }
       <markdown class="text-justify hyphens-auto text-lg leading-relaxed lg:p-0 p-10" [data]="event()?.description" />
@@ -68,6 +70,8 @@
         [class.hidden]="!partnersImageLoaded()"
         src="{{ event()?.partnersImageUrl }}"
         alt="Parceiros e apoiadores do evento {{ event()?.title }}"
+        loading="lazy"
+        crossorigin="anonymous"
         (load)="onPartnersImageLoad()" />
     </div>
   </section>
