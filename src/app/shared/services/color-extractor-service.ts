@@ -111,9 +111,9 @@ export class ColorExtractorService {
 
   getDarkerVariation(hexColor: string, percentage: number = 20): string {
     const hex = hexColor.replace('#', '');
-    const r = parseInt(hex.substr(0, 2), 16);
-    const g = parseInt(hex.substr(2, 2), 16);
-    const b = parseInt(hex.substr(4, 2), 16);
+    const r = parseInt(hex.slice(0, 2), 16);
+    const g = parseInt(hex.slice(2, 4), 16);
+    const b = parseInt(hex.slice(4, 6), 16);
 
     const darkerR = Math.max(0, Math.floor(r * (100 - percentage) / 100));
     const darkerG = Math.max(0, Math.floor(g * (100 - percentage) / 100));

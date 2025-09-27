@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { first, map, Observable, of } from 'rxjs';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 import { ImageService } from '../../../shared/services/image-service';
 import { toLocalDateTime } from '../../../shared/utils/date-utils';
 import { Event } from '../model/event';

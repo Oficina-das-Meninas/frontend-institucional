@@ -97,19 +97,12 @@ export class EventDetails implements OnInit {
         linear-gradient(90deg, ${secondaryColor} 5.4px, ${primaryColor} 5.4px) -2.7px 0
       `;
 
-      this.renderer.setStyle(headerElement, '--new-background-color', primaryColor);
-      this.renderer.setStyle(headerElement, '--new-background', newBackgroundStyle);
-      this.renderer.setStyle(headerElement, '--new-background-size', '135px 135px, 135px 135px, 67.5px 67.5px, 67.5px 67.5px');
-
       const style = headerElement.style;
       style.setProperty('--new-background-color', primaryColor);
       style.setProperty('--new-background', newBackgroundStyle);
       style.setProperty('--new-background-size', '135px 135px, 135px 135px, 67.5px 67.5px, 67.5px 67.5px');
       style.setProperty('--new-text-color', textColor);
       style.setProperty('--new-text-shadow', textShadow);
-
-      this.renderer.setStyle(headerElement, '--new-text-color', textColor);
-      this.renderer.setStyle(headerElement, '--new-text-shadow', textShadow);
     }
   }
 }
