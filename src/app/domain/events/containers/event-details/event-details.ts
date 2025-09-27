@@ -42,25 +42,6 @@ export class EventDetails implements OnInit {
     resolvedEvent.partnersImageUrl = resolvedEvent.partnersImageUrl ? this.BUCKET_URL + resolvedEvent.partnersImageUrl : undefined;
 
     this.event.set(resolvedEvent);
-
-    if (resolvedEvent.previewImageUrl) {
-      const link = this.renderer.createElement('link');
-      this.renderer.setAttribute(link, 'rel', 'preload');
-      this.renderer.setAttribute(link, 'href', resolvedEvent.previewImageUrl);
-      this.renderer.setAttribute(link, 'as', 'image');
-      this.renderer.setAttribute(link, 'crossorigin', 'anonymous');
-      this.renderer.appendChild(document.head, link);
-    }
-
-    if (resolvedEvent.partnersImageUrl) {
-      const partnersLink = this.renderer.createElement('link');
-      this.renderer.setAttribute(partnersLink, 'rel', 'preload');
-      this.renderer.setAttribute(partnersLink, 'href', resolvedEvent.partnersImageUrl);
-      this.renderer.setAttribute(partnersLink, 'as', 'image');
-      this.renderer.setAttribute(partnersLink, 'crossorigin', 'anonymous');
-      this.renderer.appendChild(document.head, partnersLink);
-    }
-
     await this.updateHeaderBackground();
   }
 
