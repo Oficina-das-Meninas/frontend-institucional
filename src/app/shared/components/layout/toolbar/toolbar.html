@@ -1,5 +1,5 @@
 <mat-drawer-container #drawerContainer>
-  <mat-drawer #drawer mode="over" (closed)="onDrawerClosed()">
+  <mat-drawer #drawer mode="over" [autoFocus]="false" (closed)="onDrawerClosed()">
     <div class="p-4 bg-white min-h-dvh">
       <a routerLink="/" (click)="closeDrawer()">
         <img
@@ -11,7 +11,7 @@
       <ul
         class="flex flex-col gap-8 mt-10 ml-6 text-lg font-medium text-[#726F78]"
       >
-        <li><a routerLink="/sobre" class="link-hover" (click)="closeDrawer()">Sobre a oficina</a></li>
+        <li><a routerLink="/sobre" class="link-hover" routerLinkActive="active" (click)="closeDrawer()">Sobre a oficina</a></li>
         <li><a routerLink="/eventos" class="link-hover" (click)="closeDrawer()">Eventos</a></li>
         <li><a routerLink="/transparencia" class="link-hover" (click)="closeDrawer()">Transparência</a></li>
         <li>
