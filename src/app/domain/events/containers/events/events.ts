@@ -2,13 +2,20 @@ import { AsyncPipe } from '@angular/common';
 import { Component, inject } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import {
+  MAT_DATE_LOCALE,
+  provideNativeDateAdapter,
+} from '@angular/material/core';
+import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { catchError, map, Observable, of, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
+import { CalendarFilter } from '../../../../shared/components/calendar-filter/calendar-filter';
+import { DateRange } from '../../../../shared/models/date-range';
 import { EventPaginator } from '../../components/event-paginator/event-paginator';
 import { EventsList } from '../../components/events-list/events-list';
 import { EventPage } from '../../model/event-page';
@@ -27,6 +34,12 @@ import { EventService } from '../../services/event-service';
     MatProgressSpinner,
     MatButtonModule,
     MatTooltipModule,
+    MatDatepickerModule,
+    CalendarFilter,
+  ],
+  providers: [
+    provideNativeDateAdapter(),
+    { provide: MAT_DATE_LOCALE, useValue: 'pt-BR' },
   ],
   templateUrl: './events.html',
   styleUrl: './events.scss',
@@ -39,7 +52,12 @@ export class Events {
   pageIndex = 0;
   pageSize = 9;
 
-  searchInput = '';
+  searchEvent = '';
+
+  dateRange: DateRange = {
+    start: null,
+    end: null,
+  };
 
   ngOnInit() {
     this.refresh();
@@ -47,10 +65,15 @@ export class Events {
 
   refresh(pageEvent: PageEvent = { length: 0, pageIndex: 0, pageSize: 9 }) {
     this.events$ = this.eventService
-      .list(pageEvent.pageIndex, pageEvent.pageSize)
+      .list(
+        pageEvent.pageIndex,
+        pageEvent.pageSize,
+        this.searchEvent,
+        this.dateRange.start,
+        this.dateRange.end
+      )
       .pipe(
         tap(() => this.updatePagination(pageEvent)),
-        map((eventPage) => this.filterEvents(eventPage)),
         catchError(() => this.emptyEventPage())
       );
   }
@@ -60,27 +83,22 @@ export class Events {
     this.pageSize = pageEvent.pageSize;
   }
 
-  private trimSearchInput() {
-    this.searchInput = this.searchInput.trim();
-  }
-
-  // filtro temporário, até a API suportar busca
-  private filterEvents(eventPage: EventPage): EventPage {
-    this.trimSearchInput();
-    if (this.searchInput !== '') {
-      const filteredData = eventPage.data.filter((event) =>
-        event.title.toLowerCase().includes(this.searchInput.toLowerCase())
-      );
-      return {
-        data: filteredData,
-        totalElements: filteredData.length,
-        totalPages: Math.ceil(filteredData.length / this.pageSize),
-      };
-    }
-    return eventPage;
-  }
-
   private emptyEventPage() {
     return of({ data: [], totalElements: 0, totalPages: 0 });
+  }
+
+  applyDateFilter() {
+    if (this.dateRange.start && this.dateRange.end) {
+      this.pageIndex = 0;
+      this.refresh();
+    }
+  }
+
+  clearFilters() {
+    this.dateRange.start = null;
+    this.dateRange.end = null;
+    this.searchEvent = '';
+    this.pageIndex = 0;
+    this.refresh();
   }
 }
