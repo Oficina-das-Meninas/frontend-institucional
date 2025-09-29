@@ -1,0 +1,17 @@
+@use "@angular/material" as mat;
+
+:host {
+  @include mat.form-field-overrides(
+    (
+      outlined-container-shape: 4px,
+    )
+  );
+}
+
+.airplane-bg {
+  background-image: url("/airplane1.png");
+  background-position: right;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #f8f8f8;
+}

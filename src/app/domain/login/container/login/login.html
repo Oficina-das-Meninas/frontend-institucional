@@ -1,0 +1,66 @@
+<form
+  class="airplane-bg h-screen w-screen relative flex flex-col justify-center items-center text-center flex flex-col gap-6 w-full"
+  [formGroup]="loginForm"
+  (ngSubmit)="onSubmit()"
+>
+  <div
+    class="login rounded-[12px] w-[400px] h-[480px] absolute bg-white shadow-md flex flex-col items-center justify-center p-6"
+  >
+    <a
+      routerLink="/"
+      class="absolute top-4 left-4 inline-flex cursor-pointer items-center justify-center rounded-md text-sm font-medium h-10 w-10 text-gray-600 hover:bg-gray-100"
+    >
+      <mat-icon>arrow_back</mat-icon>
+    </a>
+
+    <img
+      src="logo-oficina-flor.png"
+      class="w-[60px] h-[60px] rounded-full object-cover mb-4 shadow-md"
+    />
+
+    <h2 class="text-black font-semibold text-2xl">Acesse sua conta</h2>
+    <p class="mt-2 text-gray-600 mb-3 text-sm">
+      Bem-vindo à Oficina das Meninas!
+    </p>
+
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Email</mat-label>
+      <input
+        formControlName="email"
+        matInput
+        placeholder="Digite seu email"
+        type="email"
+      />
+    </mat-form-field>
+
+    <a href="lin.com" class="mt-2 text-[#BA005C] self-end text-sm font-semibold"
+      >Esqueceu sua senha?
+    </a>
+    <mat-form-field appearance="outline" class="w-full">
+      <mat-label>Senha</mat-label>
+      <input
+        formControlName="password"
+        matInput
+        placeholder="Digite seu email"
+        type="email"
+      />
+    </mat-form-field>
+
+    <button
+      class="w-full rounded-md bg-[#BA005C] py-3 px-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#DA235F] focus:outline-none focus:ring-2 focus:ring-[#BA005C] focus:ring-offset-2 cursor-pointer"
+      type="submit"
+    >
+      Acessar
+    </button>
+
+    <p class="mt-4 text-gray-600 text-sm">
+      Não tem uma conta?
+      <a
+        routerLink="/link"
+        class="text-[#BA005C] font-semibold hover:underline"
+      >
+        Cadastre-se agora
+      </a>
+    </p>
+  </div>
+</form>
