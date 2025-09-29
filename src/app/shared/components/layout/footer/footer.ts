@@ -27,7 +27,7 @@ export class Footer {
     { label: 'História', route: '/sobre' },
     { label: 'Eventos', route: '/eventos' },
     { label: 'Parceiros', route: '/' },
-    { label: 'Transparência', route: '/' },
+    { label: 'Transparência', route: '/transparencia' },
   ];
 
   accountLinks: NavigationLink[] = [
@@ -38,7 +38,7 @@ export class Footer {
   helpLinks: NavigationLink[] = [
     { label: 'Doe nota fiscal', route: '/doar-nota-fiscal' },
     { label: 'Doe imposto de renda', route: '/' },
-    { label: 'Seja um voluntário', route: '/' },
+    { label: 'Seja um voluntário', route: '/seja-um-voluntario' },
     { label: 'Seja um padrinho', route: '/seja-um-padrinho' }
   ];
 }

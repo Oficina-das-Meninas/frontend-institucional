@@ -1,7 +1,7 @@
 <mat-drawer-container #drawerContainer>
-  <mat-drawer #drawer mode="over" (closed)="onDrawerClosed()">
+  <mat-drawer #drawer mode="over" [autoFocus]="false" (closed)="onDrawerClosed()">
     <div class="p-4 bg-white min-h-dvh">
-      <a routerLink="/">
+      <a routerLink="/" (click)="closeDrawer()">
         <img
         class="size-30 object-contain ml-3 mt-3"
         src="./logo_preenchimento_branco.png"
@@ -11,20 +11,20 @@
       <ul
         class="flex flex-col gap-8 mt-10 ml-6 text-lg font-medium text-[#726F78]"
       >
-        <li><a routerLink="/sobre" class="link-hover">Sobre a oficina</a></li>
-        <li><a routerLink="/eventos" class="link-hover">Eventos</a></li>
-        <li><a routerLink="/transparencia" class="link-hover">Transparência</a></li>
+        <li><a routerLink="/sobre" class="link-hover" routerLinkActive="active" (click)="closeDrawer()">Sobre a oficina</a></li>
+        <li><a routerLink="/eventos" class="link-hover" (click)="closeDrawer()">Eventos</a></li>
+        <li><a routerLink="/transparencia" class="link-hover" (click)="closeDrawer()">Transparência</a></li>
         <li>
           <app-dropdown>
             <span ep-title>Como ajudar?</span>
             <div class="flex flex-col gap-4 mt-2">
-              <a routerLink="/doar-nota-fiscal" class="link-hover">Doe sua nota fiscal</a>
-              <a routerLink="/" class="link-hover">Doe seu imposto de renda</a>
-              <a routerLink="/seja-um-voluntario" class="link-hover">Seja um voluntário</a>
+              <a routerLink="/doar-nota-fiscal" class="link-hover" (click)="closeDrawer()">Doe sua nota fiscal</a>
+              <a routerLink="/" class="link-hover" (click)="closeDrawer()">Doe seu imposto de renda</a>
+              <a routerLink="/seja-um-voluntario" class="link-hover" (click)="closeDrawer()">Seja um voluntário</a>
             </div>
           </app-dropdown>
         </li>
-        <li><a routerLink="/seja-um-padrinho" class="link-hover">Seja um padrinho</a></li>
+        <li><a routerLink="/seja-um-padrinho" class="link-hover" (click)="closeDrawer()">Seja um padrinho</a></li>
       </ul>
     </div>
   </mat-drawer>
@@ -64,13 +64,15 @@
         <li><a routerLink="/eventos" class="link-hover">Eventos</a></li>
         <li><a routerLink="/transparencia" class="link-hover">Transparência</a></li>
         <li>
-          <span
-            class="cursor-pointer link-hover flex items-center"
+          <button
+            type="button"
+            class="cursor-pointer link-hover flex items-center bg-transparent border-none p-0"
             [matMenuTriggerFor]="helpOptions"
+            aria-label="Opções de como ajudar"
             >
             Como ajudar?
             <mat-icon>arrow_drop_down</mat-icon>
-            </span
+            </button
           >
           <mat-menu #helpOptions="matMenu" yPosition="below" class="text-sm glassy">
             <a routerLink="/doar-nota-fiscal" mat-menu-item>Doe sua nota fiscal</a>
