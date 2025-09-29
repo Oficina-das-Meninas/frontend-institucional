@@ -1,1 +1,38 @@
+@use '@angular/material' as mat;
 
+.toolbar-menu {
+  @include mat.menu-overrides((
+    container-color: var(--color-gray-100),
+    container-shape: var(--radius-4xl),
+    item-label-text-weight: 500,
+    item-leading-spacing: 1rem,
+    item-trailing-spacing: 1rem,
+  ));
+
+  .mat-mdc-menu-item:hover {
+    background-color: transparent !important;
+    color: var(--mat-sys-primary) !important;
+  }
+}
+
+.toolbar-container {
+  @include mat.button-overrides((
+      filled-horizontal-padding: calc(var(--spacing) * 3),
+  ));
+  @include mat.sidenav-overrides((
+    container-shape: var(--radius-4xl),
+    container-background-color: white,
+    scrim-color: rgba(0, 0, 0, 0.452),
+    content-background-color: transparent,
+    container-width: 80%
+  ));
+
+  .mat-drawer-backdrop {
+    min-height: 100dvh !important;
+    position: fixed !important;
+  }
+
+  .mat-drawer-over {
+    position: fixed !important;
+  }
+}

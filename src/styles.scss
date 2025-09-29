@@ -4,27 +4,6 @@
 @use 'swiper/scss/navigation';
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Send+Flowers&family=Sniglet:wght@400;800&display=swap');
 
-:root {
-  @include mat.menu-overrides((
-    container-color: var(--color-gray-100),
-    container-shape: var(--radius-4xl),
-    item-label-text-weight: 500,
-    item-leading-spacing: 1rem,
-    item-trailing-spacing: 1rem,
-  ));
-  @include mat.button-overrides((
-      filled-horizontal-padding: calc(var(--spacing) * 3),
-  ));
-  @include mat.sidenav-overrides((
-    container-shape: var(--radius-4xl),
-    container-background-color: white,
-    scrim-color: rgba(0, 0, 0, 0.452),
-    content-background-color: transparent,
-    container-width: 80%
-  ));
-
-}
-
 /* resolve conflito da borda do componente
     mat-form-field appearance="outline" */
 .mdc-notched-outline__notch{
@@ -89,17 +68,3 @@ html, body { height: 100%; }
 }
 
 .link-hover:hover { color: var(--mat-sys-primary) !important; }
-
-.mat-mdc-menu-item:hover {
-  background-color: transparent !important;
-  color: var(--mat-sys-primary) !important;
-}
-
-.mat-drawer-backdrop {
-  min-height: 100dvh !important;
-  position: fixed !important;
-}
-
-.mat-drawer-over {
-  position: fixed !important;
-}

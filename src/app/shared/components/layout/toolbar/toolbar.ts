@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -27,6 +27,7 @@ import { DropdownComponent } from '../../dropdown/dropdown';
   ],
   templateUrl: './toolbar.html',
   styleUrl: './toolbar.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class Toolbar {
   @ViewChild('drawerContainer', { static: false, read: ElementRef }) drawerContainerRef?: ElementRef;
