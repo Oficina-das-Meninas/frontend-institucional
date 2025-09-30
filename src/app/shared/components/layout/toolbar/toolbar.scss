@@ -1,13 +1,15 @@
 @use '@angular/material' as mat;
 
 .toolbar-menu {
-  @include mat.menu-overrides((
-    container-color: var(--color-gray-100),
-    container-shape: var(--radius-4xl),
-    item-label-text-weight: 500,
-    item-leading-spacing: 1rem,
-    item-trailing-spacing: 1rem,
-  ));
+  @include mat.menu-overrides(
+    (
+      container-color: var(--color-gray-100),
+      container-shape: var(--radius-4xl),
+      item-label-text-weight: 500,
+      item-leading-spacing: 1rem,
+      item-trailing-spacing: 1rem,
+    )
+  );
 
   .mat-mdc-menu-item:hover {
     background-color: transparent !important;
@@ -16,16 +18,20 @@
 }
 
 .toolbar-container {
-  @include mat.button-overrides((
+  @include mat.button-overrides(
+    (
       filled-horizontal-padding: calc(var(--spacing) * 3),
-  ));
-  @include mat.sidenav-overrides((
-    container-shape: var(--radius-4xl),
-    container-background-color: white,
-    scrim-color: rgba(0, 0, 0, 0.452),
-    content-background-color: transparent,
-    container-width: 80%
-  ));
+    )
+  );
+  @include mat.sidenav-overrides(
+    (
+      container-shape: var(--radius-4xl),
+      container-background-color: white,
+      scrim-color: rgba(0, 0, 0, 0.452),
+      content-background-color: transparent,
+      container-width: 80%,
+    )
+  );
 
   .mat-drawer-backdrop {
     min-height: 100dvh !important;
@@ -34,5 +40,13 @@
 
   .mat-drawer-over {
     position: fixed !important;
+  }
+
+  .glassy {
+    box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
+    background-color: rgba(255, 255, 255, 0.35) !important;
+    backdrop-filter: blur(8px) !important;
+    border: 1px solid rgba(255, 255, 255, 0.3) !important;
+    color: #000 !important;
   }
 }
