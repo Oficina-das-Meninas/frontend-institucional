@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +14,7 @@ import { DonationPlanCard } from '../../components/donation-plan-card/donation-p
             DonationPlanCard],
   templateUrl: './donation-plans.html',
   styleUrl: './donation-plans.scss',
+  encapsulation: ViewEncapsulation.None
 })
 export class DonationPlans {
   @ViewChild('donationInput') donationInput!: ElementRef<HTMLElement>;

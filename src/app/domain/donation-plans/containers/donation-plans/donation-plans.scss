@@ -1,24 +1,32 @@
 @use '@angular/material' as mat;
 
-.bg-gradient{
-  background: linear-gradient(90deg,rgba(186, 0, 92, 0.15) 0%, rgba(237, 221, 83, 0.15) 100%);
-}
+.donation-plans {
+  .bg-gradient {
+    background: linear-gradient(90deg, rgba(186, 0, 92, 0.15) 0%, rgba(237, 221, 83, 0.15) 100%);
+  }
 
-mat-form-field {
-  @include mat.form-field-overrides((
-    outlined-caret-color: #ffffff,
-    outlined-label-text-color: #ffffff,
-    outlined-focus-label-text-color: #ffffff,
-    outlined-hover-outline-color: #ffffff,
-    outlined-hover-label-text-color: #ffffff,
-    outlined-outline-color: #ffffff,
-    outlined-focus-outline-color: #ffffff,
-    outlined-input-text-color: #ffffff
-  ));
-}
+  mat-form-field {
+    @include mat.form-field-overrides(
+      (
+        outlined-caret-color: #ffffff,
+        outlined-label-text-color: #ffffff,
+        outlined-focus-label-text-color: #ffffff,
+        outlined-hover-outline-color: #ffffff,
+        outlined-hover-label-text-color: #ffffff,
+        outlined-outline-color: #ffffff,
+        outlined-focus-outline-color: #ffffff,
+        outlined-input-text-color: #ffffff,
+      )
+    );
+  }
 
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
+  .mdc-notched-outline__notch {
+    border-right: none !important;
+  }
+
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
 }
