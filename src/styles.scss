@@ -17,12 +17,6 @@ html {
   );
 }
 
-// Fix for mat-form-field outline
-.mdc-notched-outline__notch {
-  border-right: none;
-}
-
-
 html,
 body {
   height: 100%;
@@ -38,6 +32,11 @@ body {
 
 * {
   font-family: 'Inter', sans-serif;
+}
+
+// Fix for mat-form-field outline
+.mdc-notched-outline__notch {
+  border-right: none;
 }
 
 .material-symbols-rounded,
