@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -14,6 +14,7 @@ import {
 } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
+import { DonationService } from '../../service/donation.service';
 
 @Component({
   selector: 'app-make-your-donation',
@@ -37,6 +38,7 @@ export class MakeYourDonation implements OnInit {
   selectedAmount: number | null = null;
   userAuthenticated = false;
   form!: FormGroup;
+  donationService = inject(DonationService);
 
   constructor() {
     this.form = new FormGroup({
@@ -45,7 +47,7 @@ export class MakeYourDonation implements OnInit {
         Validators.required,
         Validators.email,
       ]),
-      cpf: new FormControl<string>(null!, [Validators.required]),
+      document: new FormControl<string>(null!, [Validators.required]),
       phone: new FormControl<string>(null!, [Validators.required]),
       amount: new FormControl<number | null>(null!, [
         Validators.required,
@@ -66,8 +68,30 @@ export class MakeYourDonation implements OnInit {
   onSubmit() {
     const rawValue = this.form.getRawValue();
 
-    rawValue.amount = rawValue.amount ?? this.selectedAmount;
+    rawValue.amount = (rawValue.amount ?? this.selectedAmount) * 100;
 
-    console.log(this.form.value);
+    const donationRequest = {
+      donor: {
+        ...rawValue,
+        phone: {
+          country: '+55',
+          area: rawValue.phone.substring(0, 2),
+          number: rawValue.phone.substring(2).replace(/\D/g, ''),
+        },
+      },
+      donation: {
+        value: rawValue.amount,
+        isRecurring: rawValue.frequency === 'monthly',
+      },
+    };
+
+    this.donationService.sendDonation(donationRequest).subscribe({
+      next: (response) => {
+        window.open(response.checkoutLink, '_blank');
+      },
+      error: (error) => {
+        console.error('Error processing donation:', error);
+      },
+    });
   }
 }
