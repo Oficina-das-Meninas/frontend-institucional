@@ -4,11 +4,6 @@
 @use 'swiper/scss/navigation';
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Send+Flowers&family=Sniglet:wght@400;800&display=swap');
 
-/* resolve conflito da borda do componente
-    mat-form-field appearance="outline" */
-.mdc-notched-outline__notch {
-  border-right: none;
-}
 
 html {
   @include mat.theme(
@@ -20,6 +15,17 @@ html {
       density: 0,
     )
   );
+}
+
+// Fix for mat-form-field outline
+.mdc-notched-outline__notch {
+  border-right: none;
+}
+
+
+html,
+body {
+  height: 100%;
 }
 
 body {
@@ -34,10 +40,6 @@ body {
   font-family: 'Inter', sans-serif;
 }
 
-html,
-body {
-  height: 100%;
-}
 
 .glassy {
   box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1) !important;
@@ -54,7 +56,10 @@ body {
 
 .link:hover {
   color: var(--mat-sys-primary) !important;
-  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke;
-  transition-duration: 200ms;
-  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition: color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+              background-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+              border-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+              text-decoration-color 200ms cubic-bezier(0.4, 0, 0.2, 1),
+              fill 200ms cubic-bezier(0.4, 0, 0.2, 1),
+              stroke 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
