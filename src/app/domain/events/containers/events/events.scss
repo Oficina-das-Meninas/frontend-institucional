@@ -1,0 +1,14 @@
+@use '@angular/material' as mat;
+
+.events-page {
+  .mat-mdc-fab {
+    @include mat.fab-overrides(
+      (
+        container-elevation-shadow: none,
+        hover-container-elevation-shadow: none,
+        focus-container-elevation-shadow: none,
+        pressed-container-elevation-shadow: none,
+      )
+    );
+  }
+}

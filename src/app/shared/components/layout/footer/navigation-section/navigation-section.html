@@ -4,7 +4,7 @@
   <ul class="flex flex-col gap-2">
     @for (link of links; track $index) {
     <li>
-      <a [routerLink]="link.route" class="link-hover">{{ link.label }}</a>
+      <a [routerLink]="link.route" class="link">{{ link.label }}</a>
     </li>
     }
   </ul>
