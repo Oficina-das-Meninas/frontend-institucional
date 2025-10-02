@@ -4,7 +4,7 @@
   <ul class="text-[#BA005C] flex gap-8">
     @for (socialLink of socialLinks; track $index) {
     <li>
-      <a [href]="socialLink.link" target="_blank" class="link-hover" [attr.aria-label]="socialLink.label">
+      <a [href]="socialLink.link" target="_blank" class="link" [attr.aria-label]="socialLink.label">
         @if (socialLink.icon === 'instagram') {
         <app-instagram-icon />
         } @if (socialLink.icon === 'facebook') {

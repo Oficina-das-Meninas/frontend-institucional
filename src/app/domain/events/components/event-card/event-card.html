@@ -1,6 +1,7 @@
 <div class="relative w-full max-w-sm max-h-[18rem] aspect-[4/3] overflow-hidden
   rounded-lg bg-white shadow hover:scale-[1.02] transition duration-300 cursor-pointer"
->
+  [routerLink]="['/eventos', eventId]"
+  >
   <img [src]="imageUrl" class="h-full object-cover" [alt]="eventTitle" />
   <div class="absolute inset-0 z-10 bg-gradient-to-t from-black"></div>
   <div class="absolute inset-x-0 bottom-0 z-20 p-4">
@@ -9,8 +10,9 @@
     </p>
     <h3 class="text-xl font-bold text-white w-fit truncate" [matTooltip]="eventTitle">{{ eventTitle }}</h3>
     <p class="text-md mt-1 text-gray-200 ml-[0.2rem] w-fit line-clamp-2 text-ellipsis"
-    [matTooltip]="description">
-      {{ description }}
+    [matTooltip]="getTooltipText()"
+    >
+      {{ getTooltipText() }}
     </p>
   </div>
 </div>

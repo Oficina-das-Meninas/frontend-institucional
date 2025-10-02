@@ -1,4 +1,4 @@
-import { CategoryResponse } from "./categoryResponse"
+import { CategoryResponse } from "./category-response"
 
 export type CategoriesResponse = {
     categories: CategoryResponse[]

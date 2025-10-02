@@ -1,4 +1,5 @@
 import { Routes } from '@angular/router';
+import { eventDetailsResolver } from './domain/events/services/event-details-resolver';
 
 
 export const routes: Routes = [
@@ -39,6 +40,14 @@ export const routes: Routes = [
           import(
             './domain/donation/containers/make-your-donation/make-your-donation'
           ).then((m) => m.MakeYourDonation),
+      },
+      {
+        path: 'eventos/:id',
+        loadComponent: () =>
+          import('./domain/events/containers/event-details/event-details').then((m) => m.EventDetails),
+        resolve: {
+          event: eventDetailsResolver,
+        },
       },
       {
         path: 'seja-um-voluntario',

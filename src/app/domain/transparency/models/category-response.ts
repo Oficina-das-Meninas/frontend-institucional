@@ -1,5 +1,5 @@
-import { CollaboratorResponse } from "./collaboratorResponse"
-import { DocumentResponse } from "./documentResponse"
+import { CollaboratorResponse } from "./collaborator-response"
+import { DocumentResponse } from "./document-response"
 
 export type CategoryResponse = {
     id: string,
