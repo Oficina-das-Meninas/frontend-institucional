@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -12,7 +12,7 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
 import { DonationService } from '../../service/donation.service';
 
@@ -34,11 +34,12 @@ import { DonationService } from '../../service/donation.service';
   templateUrl: './make-your-donation.html',
   styleUrls: ['./make-your-donation.scss'],
 })
-export class MakeYourDonation implements OnInit {
+export class MakeYourDonation implements OnInit, AfterViewInit {
   selectedAmount: number | null = null;
   userAuthenticated = false;
   form!: FormGroup;
   donationService = inject(DonationService);
+  route = inject(ActivatedRoute);
 
   constructor() {
     this.form = new FormGroup({
@@ -63,6 +64,17 @@ export class MakeYourDonation implements OnInit {
         this.selectedAmount = null;
       }
     });
+  }
+
+  ngAfterViewInit() {
+    const valor = this.route.snapshot.queryParamMap.get('valor');
+
+    if (valor) {
+      this.selectedAmount = null;
+      this.form.patchValue({ amount: valor });
+      this.form.get("amount")?.markAsDirty();
+      this.form.get("amount")?.markAsTouched();
+    }
   }
 
   onSubmit() {
