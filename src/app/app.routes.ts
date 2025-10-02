@@ -5,11 +5,13 @@ import { eventDetailsResolver } from './domain/events/services/event-details-res
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./shared/components/layout/layout').then(m => m.Layout),
+    loadComponent: () =>
+      import('./shared/components/layout/layout').then((m) => m.Layout),
     children: [
       {
         path: '',
-        loadComponent: () => import('./domain/home/containers/home/home').then(m => m.Home),
+        loadComponent: () =>
+          import('./domain/home/containers/home/home').then((m) => m.Home),
       },
       {
         path: 'eventos',
@@ -28,7 +30,16 @@ export const routes: Routes = [
       {
         path: 'seja-um-padrinho',
         loadComponent: () =>
-          import('./domain/donation-plans/containers/donation-plans/donation-plans').then((m) => m.DonationPlans),
+          import(
+            './domain/donation-plans/containers/donation-plans/donation-plans'
+          ).then((m) => m.DonationPlans),
+      },
+      {
+        path: 'faca-sua-doacao',
+        loadComponent: () =>
+          import(
+            './domain/donation/containers/make-your-donation/make-your-donation'
+          ).then((m) => m.MakeYourDonation),
       },
       {
         path: 'eventos/:id',
@@ -50,5 +61,6 @@ export const routes: Routes = [
       },
     ],
   },
+
   { path: '**', redirectTo: '' },
 ];
