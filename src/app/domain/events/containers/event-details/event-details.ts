@@ -10,6 +10,7 @@ import { SkeletonImage } from '../../../../shared/components/skeleton-image/skel
 import { ColorExtractorService } from '../../../../shared/services/color-extractor-service';
 import { EventInfo } from '../../components/event-info/event-info';
 import { Event } from '../../model/event';
+import { Title } from '@angular/platform-browser';
 
 registerLocaleData(localePt);
 
@@ -25,6 +26,7 @@ export class EventDetails implements OnInit {
   private colorExtractor = inject(ColorExtractorService);
   private elementRef = inject(ElementRef);
   private renderer = inject(Renderer2);
+  private title = inject(Title);
 
   event = signal<Event | null>(null);
   previewImageLoaded = signal(false);
@@ -34,7 +36,7 @@ export class EventDetails implements OnInit {
 
   async ngOnInit() {
     const resolvedEvent = this.activatedRoute.snapshot.data['event'] as Event;
-
+    this.title.setTitle(resolvedEvent.title ? `${resolvedEvent.title} - Oficina das Meninas` : 'Detalhes do evento — Oficina das Meninas');
     this.event.set(resolvedEvent);
     await this.updateHeaderBackground();
   }
