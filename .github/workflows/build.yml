@@ -12,9 +12,6 @@ on:
           - development
           - production
 
-env:
-  AMBIENT: ${{ github.event.inputs.ENVIRONMENT }}
-
 permissions:
   contents: read
 
@@ -40,9 +37,8 @@ jobs:
       # 4. Build do Angular (usando configuration conforme input)
       - name: Build Angular
         run: |
-          run: |
-          echo "🏗️ Buildando para $AMBIENT ..."
-          npm run build --configuration=$AMBIENT
+          echo "🏗️ Buildando para ${{ github.event.inputs.ENVIRONMENT }}..."
+          npm run build --configuration=${{ github.event.inputs.ENVIRONMENT }}
 
       # 5. Publica o build como artefato para ser usado no job deploy
       - name: Upload build como artefato
@@ -79,7 +75,7 @@ jobs:
       # 4. Copia os arquivos do build para a VM
       - name: Enviar arquivos para VM
         run: |
-          if [[ "$AMBIENT" == "development" ]]; then
+          if [[ "${{ github.event.inputs.ENVIRONMENT }}" == "development" ]]; then
             DEST_DIR="${{ vars.VM_DIR_DEV }}"
           else
             DEST_DIR="${{ vars.VM_DIR_PRD }}"
