@@ -4,43 +4,42 @@
   <img
     src="/estrela2.svg"
     alt="Estrelinha"
-    class="absolute z-20 top-20 left-20 size-40 brightness-125 -rotate-30 hover:animate-spin hover:brightness-200"
+    class="absolute size-16 top-30 left-10 z-20 md:top-20 md:left-20 md:size-40 brightness-125 -rotate-30 hover:animate-spin hover:brightness-200"
   />
   <img
     src="/estrela2.svg"
     alt="Estrelinha"
-    class="absolute z-20 top-40 size-36 brightness-125 hover:animate-spin hover:brightness-200"
+    class="absolute size-16 top-35 z-20 md:top-40 md:size-36 brightness-125 hover:animate-spin hover:brightness-200"
   />
 
-  <div class="relative z-10 text-center pt-50">
-    <h1 class="font-bold text-8xl text-zinc-500 send-flowers drop-shadow-md">
+  <div class="relative z-10 text-center pt-50 px-12">
+    <h1 class="font-bold text-5xl lg:text-8xl text-zinc-500 send-flowers drop-shadow-md">
       Oficina das Meninas
     </h1>
-    <p class="text-2xl sniglet text-zinc-500 drop-shadow-md">
+    <p class="text-base lg:text-2xl sniglet text-zinc-500 drop-shadow-md">
       AMOR E ACOLHIMENTO
     </p>
   </div>
   <img
     src="/flor1.svg"
     alt="Flor"
-    class="absolute bottom-0 left-10 size-40 hover:skew-12"
+    class="absolute hidden sm:block bottom-0 left-10 size-40 hover:skew-12"
   />
   <img
     src="/flor2.svg"
     alt="Flor"
-    class="absolute bottom-0 left-32 size-32 hover:skew-12"
+    class="absolute hidden sm:block bottom-0 left-32 size-32 hover:skew-12"
   />
-  <img
+  <!-- <img
     src="/grama4.svg"
     alt="Grama"
     class="absolute bottom-0 left-50 size-48 hover:skew-12"
-  />
+  /> -->
   <img
     src="/two-red-paper-dolls-holding-hands-cut-out-stock.png"
     alt="Meninas de papel"
-    class="absolute bottom-0 right-10 filter hover:animate-bounce"
+    class="absolute bottom-0 md:right-10 hover:animate-bounce"
   />
-
   <!-- <img
     src="/papel-cortado3.svg"
     alt="Papelzinho cortado"
@@ -59,7 +58,7 @@
         oferecer acolhimento e oportunidades a meninas de 6 a 17 anos em
         situação de vulnerabilidade social.
       </p>
-      <button matButton="filled" routerLink="/">Conheça nossa história</button>
+      <button matButton="filled" routerLink="/sobre">Conheça nossa história</button>
     </div>
     <div class="w-full md:w-1/2 lg:max-w-xl lg:w-full">
       <img
@@ -109,12 +108,14 @@
     </div>
   </div>
   <div class="pb-14">
-    <app-carousel
-      [slides]="['./imagem1.webp', './imagem2.webp', './imagem3.webp']"
-      [spaceBetween]=20
-      slideClass="bg-white p-2 rounded-xl shadow-lg border-2 border-white h-75 w-full"
-      imgClass="object-cover rounded-md size-full"
-    />
+    @if (eventImages$ | async; as eventImages) {
+      <app-carousel
+        [slides]="eventImages"
+        [spaceBetween]=20
+        slideClass="bg-white p-2 rounded-xl shadow-lg border-2 border-white h-75 w-full"
+        imgClass="object-cover rounded-md size-full"
+      />
+    }
   </div>
 </section>
 
@@ -143,7 +144,7 @@
       title="Faça uma doação"
       description="Contribuição única para manter nossos projetos e atividades em funcionamento."
       buttonText="Fazer doação"
-      link="/"
+      link="/seja-um-padrinho"
       class="hover:scale-105 transition-transform duration-300"
     />
 
@@ -160,10 +161,12 @@
 
 <section class="w-full bg-white py-14">
   <h2 class="font-bold text-3xl md:text-5xl text-center mb-14 px-4 md:px-25">Nossos parceiros</h2>
-  <app-carousel
-    [slides]="['/mesa_brasil.png', '/passarinho.png', '/pref_araraquara.png']"
-    [spaceBetween]=25
-    slideClass="flex justify-center items-center h-36 hover:scale-105 transition-transform duration-300"
-    imgClass="object-cover size-full"
-  />
+  @if (partnerImages$ | async; as partnerImages) {
+    <app-carousel
+      [slides]="partnerImages"
+      [spaceBetween]=25
+      slideClass="flex justify-center items-center h-36 hover:scale-105 transition-transform duration-300"
+      imgClass="object-cover size-full"
+    />
+  }
 </section>
