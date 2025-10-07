@@ -23,7 +23,7 @@ export class TransparencyService {
             : AccordionContentType.DOCUMENT,
           documents: category.documents?.map((doc) => ({
             name: doc.title,
-            url: doc.previewLink,
+            url: `${environment.bucketUrl}${doc.previewLink}`
           })),
           collaborators: category.collaborators?.map((collab) => ({
             imageUrl: collab.previewLink,
