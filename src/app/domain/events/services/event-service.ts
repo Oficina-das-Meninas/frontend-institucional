@@ -3,10 +3,9 @@ import { inject, Injectable } from '@angular/core';
 import { first, map, Observable, of } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ImageService } from '../../../shared/services/image-service';
-import { toLocalDateTime } from '../../../shared/utils/date-utils';
+import { toLocalDate } from '../../../shared/utils/date-utils';
 import { Event } from '../model/event';
 import { EventPage } from '../model/event-page';
-
 
 @Injectable({
   providedIn: 'root',
@@ -54,10 +53,10 @@ export class EventService {
       params = params.set('title', title.trim());
     }
     if (startDate) {
-      params = params.set('startDate', toLocalDateTime(startDate, false));
+      params = params.set('startDate', toLocalDate(startDate));
     }
     if (endDate) {
-      params = params.set('endDate', toLocalDateTime(endDate, true));
+      params = params.set('endDate', toLocalDate(endDate));
     }
 
     return this.httpClient
