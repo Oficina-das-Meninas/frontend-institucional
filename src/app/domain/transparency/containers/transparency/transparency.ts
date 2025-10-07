@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
-import { TransparencyAccordion } from "../../components/transparency-accordion/transparency-accordion";
-import { AccordionContent } from '../../models/accordionContent';
-import { TransparencyService } from '../../services/transparency-service';
-import { Observable } from 'rxjs';
 import { AsyncPipe } from '@angular/common';
+import { Component, inject } from '@angular/core';
+import { Observable } from 'rxjs';
+import { TransparencyAccordion } from "../../components/transparency-accordion/transparency-accordion";
+import { AccordionContent } from '../../models/accordion-content';
+import { TransparencyService } from '../../services/transparency-service';
 
 @Component({
   selector: 'app-transparency',
@@ -12,11 +12,11 @@ import { AsyncPipe } from '@angular/common';
   styleUrl: './transparency.scss'
 })
 export class Transparency {
+  accordionContent$: Observable<AccordionContent[]> | null = null;
 
-  accordionContent$: Observable<AccordionContent[]>;
+  private transparencyService = inject(TransparencyService);
 
-  constructor(private transparencyService: TransparencyService) {
-    this.accordionContent$ = this.transparencyService.getAll();
+  ngOnInit() {
+    this.accordionContent$ = this.transparencyService.list();
   }
-
 }

@@ -1,0 +1,74 @@
+<section class="event-header w-full h-70 xl:h-[25rem] flex items-center justify-center relative">
+  <div class="text-center pt-25 relative z-10">
+      <p class="title text-white text-3xl lg:text-5xl font-bold text-shadow-lg/20">{{ event()?.title }}</p>
+  </div>
+</section>
+
+@if (!previewImageLoaded()) {
+<section class="w-full h-70 xl:h-[25rem] flex items-center justify-center absolute top-0 left-0">
+  <div class="h-full flex items-center justify-center pt-25">
+    <mat-spinner diameter="50" class="mx-auto" />
+  </div>
+</section>
+}
+
+<section class="text-lg w-full flex-col lg:flex-row flex items-start lg:items-center justify-between gap-5 pl-4 pr-4 lg:pl-20 lg:pr-20 pt-10 pb-10 mb-10 bg-gray-100">
+  <app-event-info icon="location_on" [cssClass]="'w-56'" [text]="event()?.location || ''" />
+  <app-event-info icon="calendar_today" [cssClass]="'w-48'" [text]="(event()?.eventDate | date:'longDate') || '' " />
+  <app-event-info icon="access_time" [cssClass]="'w-20'" [text]="(event()?.eventDate | date:'shortTime') || ''" />
+
+  @if (event() && !isEventPast(event()!)) {
+    <a matButton="filled" [href]="event()?.urlToPlatform" target="_blank" rel="noopener" aria-label="Participar do evento {{ event()?.title }}" class="!max-w-fit">Quero Participar</a>
+  } @else if (event()) {
+    <button matButton="filled" disabled disabledInteractive matTooltip="Evento já realizado" aria-label="Evento {{ event()?.title }} já foi realizado" class="!max-w-fit">Quero Participar</button>
+  }
+</section>
+
+<section class="w-full flex flex-col lg:flex-row pl-4 pr-4 lg:pl-20 lg:pr-20 pb-10 gap-10">
+  <div class="text-justify leading-relaxed w-full">
+    @if (event()?.previewImageUrl) {
+      @if (!previewImageLoaded()) {
+        <app-skeleton-image
+          [imageCss]="
+              'h-96 ' +
+              'lg:mr-5 ' +
+              'lg:float-left ' +
+              'float-none ' +
+              'mx-auto ' +
+              'w-full ' +
+              'max-w-160 ' +
+              'lg:max-w-max ' +
+              'lg:aspect-[16/10] ' +
+              'lg:w-auto'
+            "
+          [text]="'Imagem do evento ' + event()?.title" />
+      }
+      <img
+        class="h-96 object-cover lg:mr-5 rounded-xl lg:float-left float-none mx-auto hover:scale-105 transition-transform duration-300"
+        [class.hidden]="!previewImageLoaded()"
+        src="{{ event()?.previewImageUrl }}"
+        alt="Imagem do evento {{ event()?.title }}"
+        (load)="onPreviewImageLoad()" />
+    }
+      <markdown class="text-justify hyphens-auto text-lg leading-relaxed lg:p-0 p-10" [data]="event()?.description" />
+  </div>
+</section>
+
+@if (event()?.partnersImageUrl) {
+  <section class="w-full flex flex-col pl-4 pr-4 lg:pl-20 lg:pr-20 pb-10 pt-8 bg-gray-100">
+    <div class="w-full text-center">
+      <h2 class="text-2xl lg:text-4xl font-bold mb-8 text-gray-800">Parceiros</h2>
+      @if (!partnersImageLoaded()) {
+        <app-skeleton-image
+          [imageCss]="'w-full max-w-250 mx-auto aspect-[16/9]'"
+          [text]="'Parceiros e apoiadores do evento ' + event()?.title" />
+      }
+      <img
+        class="w-250 rounded-xl object-contain mx-auto hover:scale-105 transition-transform duration-300 shadow-lg"
+        [class.hidden]="!partnersImageLoaded()"
+        src="{{ event()?.partnersImageUrl }}"
+        alt="Parceiros e apoiadores do evento {{ event()?.title }}"
+        (load)="onPartnersImageLoad()" />
+    </div>
+  </section>
+}
