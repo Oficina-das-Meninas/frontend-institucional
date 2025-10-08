@@ -1,5 +1,5 @@
 <section
-  class="relative w-full h-screen bg-[#f5f7f8] opacity-100 bg-[length:35px_35px] [background-image:repeating-linear-gradient(0deg,#d9e2eb,#d9e2eb_2px,#f5f7f8_2px,#f5f7f8)]"
+  class="relative overflow-y-hidden w-full h-screen bg-[#f5f7f8] opacity-100 bg-[length:35px_35px] [background-image:repeating-linear-gradient(0deg,#d9e2eb,#d9e2eb_2px,#f5f7f8_2px,#f5f7f8)]"
 >
   <img
     src="/estrela2.svg"
@@ -49,7 +49,9 @@
 
 <section class="bg-[#B9B885] w-full px-4 lg:px-20 xl:px-40 py-14 space-y-12">
   <div class="flex flex-col md:flex-row items-center gap-5">
-    <div class="flex flex-col items-center text-center space-y-5 md:w-1/2 md:pr-16 lg:flex-grow lg:pr-24 md:items-start md:text-left md:mb-0 ">
+    <div
+      class="flex flex-col items-center text-center space-y-5 md:w-1/2 md:pr-16 lg:flex-grow lg:pr-24 md:items-start md:text-left md:mb-0"
+    >
       <h2 class="text-3xl lg:text-5xl font-bold">
         Centro Cultural e Assistencial
       </h2>
@@ -101,13 +103,23 @@
     <div class="text-white text-center px-4 max-w-xl py-14">
       <h2 class="font-bold text-3xl md:text-5xl mb-4">Eventos</h2>
       <p class="text-base lg:text-xl leading-relaxed">
-        Promovemos atividades culturais e esportivas que fortalecem a comunidade e
-        apoiam o desenvolvimento das meninas.
+        Promovemos atividades culturais e esportivas que fortalecem a comunidade
+        e apoiam o desenvolvimento das meninas.
       </p>
-      <button matButton="filled" class="mt-6" routerLink="/eventos">Ver eventos</button>
+      <button matButton="filled" class="mt-6" routerLink="/eventos">
+        Ver eventos
+      </button>
     </div>
   </div>
   <div class="pb-14">
+<<<<<<< HEAD
+    <app-carousel
+      [slides]="['./imagem1.webp', './imagem2.webp', './imagem3.webp']"
+      [spaceBetween]="20"
+      slideClass="bg-white p-2 rounded-xl shadow-lg border-2 border-white h-75 w-full"
+      imgClass="object-cover rounded-md size-full"
+    />
+=======
     @if (eventImages$ | async; as eventImages) {
       <app-carousel
         [slides]="eventImages"
@@ -116,6 +128,7 @@
         imgClass="object-cover rounded-md size-full"
       />
     }
+>>>>>>> 51e01996ce16702595fbf818dcd5e5ab7ac8b488
   </div>
 </section>
 
@@ -126,7 +139,9 @@
       Contribuir com a Oficina das Meninas nunca foi tão simples.
     </p>
     <div class="flex justify-center mt-6">
-      <div class="w-16 h-1 rounded-full bg-[var(--mat-sys-primary)] inline-flex"></div>
+      <div
+        class="w-16 h-1 rounded-full bg-[var(--mat-sys-primary)] inline-flex"
+      ></div>
     </div>
   </div>
   <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -160,6 +175,17 @@
 </section>
 
 <section class="w-full bg-white py-14">
+<<<<<<< HEAD
+  <h2 class="font-bold text-3xl md:text-5xl text-center mb-14 px-4 md:px-25">
+    Nossos parceiros
+  </h2>
+  <app-carousel
+    [slides]="['/mesa_brasil.png', '/passarinho.png', '/pref_araraquara.png']"
+    [spaceBetween]="25"
+    slideClass="flex justify-center items-center h-36 hover:scale-105 transition-transform duration-300"
+    imgClass="object-cover size-full"
+  />
+=======
   <h2 class="font-bold text-3xl md:text-5xl text-center mb-14 px-4 md:px-25">Nossos parceiros</h2>
   @if (partnerImages$ | async; as partnerImages) {
     <app-carousel
@@ -169,4 +195,5 @@
       imgClass="object-cover size-full"
     />
   }
+>>>>>>> 51e01996ce16702595fbf818dcd5e5ab7ac8b488
 </section>

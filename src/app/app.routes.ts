@@ -4,7 +4,8 @@ import { eventDetailsResolver } from './domain/events/guards/event-details-resol
 export const routes: Routes = [
   {
     path: '',
-    loadComponent: () => import('./shared/components/layout/layout').then(m => m.Layout),
+    loadComponent: () =>
+      import('./shared/components/layout/layout').then((m) => m.Layout),
     children: [
       {
         path: '',
@@ -32,7 +33,16 @@ export const routes: Routes = [
         path: 'seja-um-padrinho',
         title: 'Seja um padrinho - Oficina das Meninas',
         loadComponent: () =>
-          import('./domain/donation-plans/containers/donation-plans/donation-plans').then((m) => m.DonationPlans),
+          import(
+            './domain/donation-plans/containers/donation-plans/donation-plans'
+          ).then((m) => m.DonationPlans),
+      },
+      {
+        path: 'faca-sua-doacao',
+        loadComponent: () =>
+          import(
+            './domain/donation/containers/make-your-donation/make-your-donation'
+          ).then((m) => m.MakeYourDonation),
       },
       {
         path: 'eventos/:id',
@@ -56,5 +66,6 @@ export const routes: Routes = [
       },
     ],
   },
+
   { path: '**', redirectTo: '' },
 ];
