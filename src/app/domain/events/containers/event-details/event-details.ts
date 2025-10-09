@@ -4,19 +4,19 @@ import { Component, ElementRef, inject, LOCALE_ID, OnInit, Renderer2, signal } f
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltip } from '@angular/material/tooltip';
+import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
-import { MarkdownModule } from 'ngx-markdown';
 import { SkeletonImage } from '../../../../shared/components/skeleton-image/skeleton-image';
 import { ColorExtractorService } from '../../../../shared/services/color-extractor-service';
 import { EventInfo } from '../../components/event-info/event-info';
+import { RenderHtml } from "../../components/render-html/render-html";
 import { Event } from '../../model/event';
-import { Title } from '@angular/platform-browser';
 
 registerLocaleData(localePt);
 
 @Component({
   selector: 'app-event-details',
-  imports: [EventInfo, MatButtonModule, DatePipe, MatProgressSpinnerModule, SkeletonImage, MarkdownModule, MatTooltip],
+  imports: [EventInfo, MatButtonModule, DatePipe, MatProgressSpinnerModule, SkeletonImage, MatTooltip, RenderHtml],
   templateUrl: './event-details.html',
   styleUrl: './event-details.scss',
   providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
