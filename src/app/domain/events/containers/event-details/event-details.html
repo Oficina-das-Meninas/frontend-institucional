@@ -50,7 +50,8 @@
         alt="Imagem do evento {{ event()?.title }}"
         (load)="onPreviewImageLoad()" />
     }
-      <markdown class="text-justify hyphens-auto text-lg leading-relaxed lg:p-0 p-10" [data]="event()?.description" />
+
+    <app-render-html [content]="event()?.description || ''" />
   </div>
 </section>
 
