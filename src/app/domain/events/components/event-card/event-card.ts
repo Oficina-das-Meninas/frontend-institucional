@@ -3,7 +3,6 @@ import localePt from '@angular/common/locales/pt';
 import { Component, Input, LOCALE_ID } from '@angular/core';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
-import { marked } from 'marked';
 
 registerLocaleData(localePt);
 
@@ -24,7 +23,6 @@ export class EventCard {
   @Input() date!: Date;
 
   getTooltipText(): string {
-    const html = marked(this.description) as string;
-    return html.replace(/<[^>]*>/g, '').trim();
+    return this.description.replace(/<[^>]*>/g, '').trim();
   }
 }
