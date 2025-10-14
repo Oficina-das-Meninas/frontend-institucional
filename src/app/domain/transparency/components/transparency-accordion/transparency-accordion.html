@@ -19,7 +19,7 @@
     @if (content?.type === accordionContentType.DOCUMENT) {
       <section class="py-4">
         @for (item of content?.documents; track $index) {
-          <a [href]="item.url" rel="noopener noreferrer" target="_blank" class="flex items-center gap-2 py-2">
+          <a [href]="item.url" rel="noopener noreferrer" target="_blank" class="flex items-center gap-2 py-2 w-fit">
             <p class="text-lg font-semibold">{{ item.name }}</p>
             <mat-icon fontSet="material-symbols-rounded">download</mat-icon>
           </a>
@@ -33,7 +33,7 @@
             <img
               [src]="item.imageUrl"
               alt="collaborator-image"
-              class="w-25 rounded-full object-cover"
+              class="size-30 rounded-full object-cover"
             />
             <h1 class="text-lg text-center font-semibold">{{ item.name }}</h1>
             <p class="text-stone-500">{{ item.role }}</p>
