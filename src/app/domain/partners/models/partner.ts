@@ -1,6 +1,6 @@
 export interface Partner {
   id: string;
   name: string;
-  previewUrl: string; // logoUrl
+  previewImageUrl: string; // logoUrl
   // websiteUrl: string;
 }

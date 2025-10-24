@@ -1,7 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { first } from 'rxjs';
+import { first, map } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { ImageService } from '../../../shared/services/image-service';
 import { PartnerPage } from '../models/partner-page';
 
 @Injectable({
@@ -10,6 +11,14 @@ import { PartnerPage } from '../models/partner-page';
 export class PartnerService {
   private readonly API_URL = `${environment.apiUrl}/partners`;
   private httpClient = inject(HttpClient);
+  private imageService = inject(ImageService);
+
+  private transformPartner(partner: any) {
+    return {
+      ...partner,
+      previewImageUrl: this.imageService.getPubImageUrl(partner.previewImageUrl),
+    };
+  }
 
   list(page = 0, pageSize = 10) {
     return this.httpClient
@@ -19,6 +28,15 @@ export class PartnerService {
           pageSize: pageSize,
         },
       })
-      .pipe(first());
+      .pipe(
+        first(),
+        map(partnerPage => {
+          const transformed = {
+            ...partnerPage,
+            data: partnerPage.data.map(partner => this.transformPartner(partner))
+          };
+          return transformed as PartnerPage;
+        })
+      );
   }
 }

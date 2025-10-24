@@ -5,10 +5,9 @@ import { environment } from '../../../environments/environment';
   providedIn: 'root'
 })
 export class ImageService {
+  private readonly BUCKET_URL = `${environment.bucketUrl}`;
 
-  private readonly BUCKET_URL = `${environment.bucketUrl}/pub/`;
-
-  getImageUrl(key: string): string {
-    return this.BUCKET_URL + key;
+  getPubImageUrl(key: string): string {
+    return this.BUCKET_URL + '/pub/' + key;
   }
 }

@@ -42,7 +42,7 @@ export class Home {
     this.partnerImages$ = this.partnerService
       .list()
       .pipe(
-        map((partners) => partners.data.map((partner) => partner.previewUrl))
+        map((partners) => partners.data.map((partner) => partner.previewImageUrl))
       );
   }
 }
