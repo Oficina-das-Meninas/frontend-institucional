@@ -13,9 +13,9 @@
     <swiper-slide class="flex justify-center items-center">
       <div [class]="slideClass" [style]="'--carousel-aspect-ratio: ' + aspectRatio">
         <img
-          [src]="slide"
+          [src]="slide.path"
           [class]="imgClass"
-          alt="Imagem do carrossel"
+          [alt]="slide.alt"
         />
       </div>
     </swiper-slide>

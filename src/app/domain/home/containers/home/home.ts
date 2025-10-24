@@ -25,8 +25,8 @@ import { SupportCard } from '../../components/support-card/support-card';
   styleUrl: './home.scss',
 })
 export class Home {
-  eventImages$: Observable<string[]> | null = null;
-  partnerImages$: Observable<string[]> | null = null;
+  eventImages$: Observable<{ path: string, alt: string }[]> | null = null;
+  partnerImages$: Observable<{ path: string, alt: string }[]> | null = null;
 
   yearOfFoundation = new Date('03-23-2002').getFullYear();
   today = new Date().getFullYear();
@@ -37,12 +37,18 @@ export class Home {
   ngOnInit() {
     this.eventImages$ = this.eventService
       .list()
-      .pipe(map((events) => events.data.map((event) => event.previewImageUrl)));
+      .pipe(map((events) => events.data.map((event) => ({
+        path: event.previewImageUrl,
+        alt: "Evento " + event.title
+      }))));
 
     this.partnerImages$ = this.partnerService
       .list()
       .pipe(
-        map((partners) => partners.data.map((partner) => partner.previewImageUrl))
+        map((partners) => partners.data.map((partner) => ({
+          path: partner.previewImageUrl,
+          alt: "Logo " + partner.name
+        })))
       );
   }
 }

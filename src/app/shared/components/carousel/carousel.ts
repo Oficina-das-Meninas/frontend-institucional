@@ -9,13 +9,13 @@ register();
   templateUrl: './carousel.html',
   styleUrls: ['./carousel.scss'],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
-  encapsulation: ViewEncapsulation.None
+  encapsulation: ViewEncapsulation.None,
 })
 export class CarouselComponent {
-  @Input() slides!: string[];
+  @Input() slides!: { path: string; alt: string }[];
   @Input() slideClass: string = '';
   @Input() imgClass: string = '';
-  @Input() slidesPerView: number | 'auto' = 'auto';
+  @Input() slidesPerView: number = 0;
   @Input() spaceBetween: number = 30;
   @Input() autoplayDelay: number = 5000;
   @Input() aspectRatio: string = '16 / 10';
@@ -33,17 +33,17 @@ export class CarouselComponent {
     const width = window.innerWidth;
     const slideCount = this.slides.length;
 
-    if (width < 768 ) {
+    if (width < 768) {
       this.slidesPerView = 1;
     }
 
-    for (const breakpoint of this.breakpoints) {
-      if (width > breakpoint.width && slideCount > breakpoint.slides) {
-        this.slidesPerView = breakpoint.slidesPerView;
-        break;
+    if (this.slidesPerView === 0) {
+      for (const breakpoint of this.breakpoints) {
+        if (width > breakpoint.width && slideCount > breakpoint.slides) {
+          this.slidesPerView = breakpoint.slidesPerView;
+          break;
+        }
       }
     }
-
-
   }
 }
