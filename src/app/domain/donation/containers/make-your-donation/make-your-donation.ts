@@ -50,6 +50,7 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
   donationService = inject(DonationService);
   route = inject(ActivatedRoute);
   formHelper = inject(FormHelperService);
+  loadingRequest = false;
   readonly dialog = inject(MatDialog);
 
   constructor() {
@@ -144,12 +145,18 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
       captchaToken: rawValue.recaptcha,
     };
 
+    this.loadingRequest = true;
+
     this.donationService.sendDonation(donationRequest).subscribe({
       next: (response) => {
         window.open(response.checkoutLink, '_blank');
       },
       error: (error) => {
         console.error('Error processing donation:', error);
+        this.loadingRequest = false;
+      },
+      complete: () => {
+        this.loadingRequest = false;
       },
     });
   }

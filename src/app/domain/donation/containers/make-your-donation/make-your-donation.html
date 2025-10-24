@@ -220,17 +220,22 @@
           [siteKey]="captchaKey"
           (reset)="handleReset()"
           (expire)="handleExpire()"
+          [required]="true"
           (load)="handleLoad()"
           (success)="handleSuccess($event)"
           [useGlobalDomain]="false"
           formControlName="recaptcha"
         >
         </ngx-recaptcha2>
+        @if(form.get('recaptcha')?.touched && form.get('recaptcha')?.invalid) {
+        <mat-error>Campo obrigatório</mat-error>
+        }
       </div>
 
       <button
-        class="w-full rounded-md bg-[#BA005C] py-3 px-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#DA235F] focus:outline-none focus:ring-2 focus:ring-[#BA005C] focus:ring-offset-2 cursor-pointer"
+        class="w-full rounded-md bg-[#BA005C] py-3 px-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#DA235F] focus:outline-none focus:ring-2 focus:ring-[#BA005C] focus:ring-offset-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         type="submit"
+        [disabled]="loadingRequest"
       >
         Continuar para Pagamento
       </button>
