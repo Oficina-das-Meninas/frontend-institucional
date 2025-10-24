@@ -98,8 +98,8 @@
   </div>
 </section>
 
-<section class="w-full bg-[#737373]">
-  <div class="flex flex-col items-center">
+<section class="w-full bg-[#737373] events-section relative overflow-hidden">
+  <div class="flex flex-col items-center relative z-10">
     <div class="text-white text-center px-4 max-w-xl py-14">
       <h2 class="font-bold text-3xl md:text-5xl mb-4">Eventos</h2>
       <p class="text-base lg:text-xl leading-relaxed">
@@ -111,7 +111,7 @@
       </button>
     </div>
   </div>
-  <div class="pb-14">
+  <div class="pb-14 relative z-10">
     @if (eventImages$ | async; as eventImages) {
       <app-carousel
         [slides]="eventImages"
