@@ -200,6 +200,7 @@
                 name="frequency"
                 value="monthly"
                 class="absolute opacity-0"
+                (click)="openDialog()"
               />
               <span class="font-medium">Mensal</span>
             </label>
@@ -212,6 +213,21 @@
           </div>
         </div>
       </div>
+
+      <div class="space-y-4">
+        <ngx-recaptcha2
+          #captchaElem
+          [siteKey]="captchaKey"
+          (reset)="handleReset()"
+          (expire)="handleExpire()"
+          (load)="handleLoad()"
+          (success)="handleSuccess($event)"
+          [useGlobalDomain]="false"
+          formControlName="recaptcha"
+        >
+        </ngx-recaptcha2>
+      </div>
+
       <button
         class="w-full rounded-md bg-[#BA005C] py-3 px-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#DA235F] focus:outline-none focus:ring-2 focus:ring-[#BA005C] focus:ring-offset-2 cursor-pointer"
         type="submit"

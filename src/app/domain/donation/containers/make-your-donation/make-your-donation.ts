@@ -17,6 +17,11 @@ import { NgxMaskDirective } from 'ngx-mask';
 import { DonationService } from '../../service/donation.service';
 import { cpfValidator } from '../../../../shared/validators/document.validator';
 import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
+import { NgxCaptchaModule } from 'ngx-captcha';
+import { environment } from '../../../../../environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogSubscripition } from '../../components/alert-dialog-subscripition/alert-dialog-subscripition';
+import { celularValidator } from '../../../../shared/validators/celular.validator';
 
 @Component({
   selector: 'app-make-your-donation',
@@ -32,17 +37,20 @@ import { FormHelperService } from '../../../../shared/services/form/form-helper-
     RouterLink,
     MatRadioModule,
     MatIconModule,
+    NgxCaptchaModule,
   ],
   templateUrl: './make-your-donation.html',
   styleUrls: ['./make-your-donation.scss'],
 })
 export class MakeYourDonation implements AfterViewInit, OnInit {
   selectedAmount: number | null = null;
+  captchaKey = environment.captchaSiteKey;
   userAuthenticated = false;
   form!: FormGroup;
   donationService = inject(DonationService);
   route = inject(ActivatedRoute);
   formHelper = inject(FormHelperService);
+  readonly dialog = inject(MatDialog);
 
   constructor() {
     this.form = new FormGroup({
@@ -55,9 +63,13 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
         Validators.required,
         cpfValidator(),
       ]),
-      phone: new FormControl<string>(null!, [Validators.required]),
+      phone: new FormControl<string>(null!, [
+        Validators.required,
+        celularValidator(),
+      ]),
       amount: new FormControl<number | null>(null, [Validators.min(1)]),
       frequency: new FormControl<string>('once', [Validators.required]),
+      recaptcha: new FormControl<string>(null!, [Validators.required]),
     });
   }
 
@@ -116,17 +128,20 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
 
     const donationRequest = {
       donor: {
-        ...rawValue,
-        phone: {
-          country: '+55',
-          area: rawValue.phone.substring(0, 2),
-          number: rawValue.phone.substring(2).replace(/\D/g, ''),
-        },
+        name: rawValue.name,
+        email: rawValue.email,
+        document: rawValue.document,
+        id: '',
+        phone:
+          '+55' +
+          rawValue.phone.substring(0, 2) +
+          rawValue.phone.substring(2).replace(/\D/g, ''),
       },
       donation: {
-        value: amountToSend * 100,
+        value: amountToSend,
         isRecurring: rawValue.frequency === 'monthly',
       },
+      captchaToken: rawValue.recaptcha,
     };
 
     this.donationService.sendDonation(donationRequest).subscribe({
@@ -137,5 +152,30 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
         console.error('Error processing donation:', error);
       },
     });
+  }
+
+  handleReset() {
+    this.form.get('recaptcha')?.setValue(null);
+  }
+
+  handleExpire() {
+    this.form.get('recaptcha')?.setValue(null);
+  }
+
+  handleLoad() {
+    this.form.get('recaptcha')?.setValue(null);
+  }
+
+  handleSuccess(event: unknown) {
+    this.form.get('recaptcha')?.setValue(event);
+  }
+
+  openDialog() {
+    if (!this.userAuthenticated) {
+      const modalRef = this.dialog.open(AlertDialogSubscripition);
+      modalRef.afterClosed().subscribe(() => {
+        this.form.patchValue({ frequency: 'once' });
+      });
+    }
   }
 }
