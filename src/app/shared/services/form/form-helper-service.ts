@@ -51,6 +51,7 @@ export class FormHelperService {
           : null
       )
       .addHandler((f) => (f?.hasError('document') ? 'CPF inválido' : null))
+      .addHandler((f) => (f?.hasError('phone') ? 'Telefone inválido' : null))
       .addHandler((f) => (f?.hasError('email') ? 'E-mail inválido' : null))
       .addHandler((f) =>
         f?.hasError('min')
