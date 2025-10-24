@@ -3,8 +3,13 @@
 
   <ul class="flex flex-col gap-2">
     @for (link of links; track $index) {
+
     <li>
-      <a [routerLink]="link.route" class="link">{{ link.label }}</a>
+      @if (link.route != '') {
+      <a [routerLink]="link.route" (click)="link.onClick?.()" class="link">{{ link.label }}</a>
+      } @else {
+      <a  (click)="link.onClick?.()" class="link">{{ link.label }}</a>
+      }
     </li>
     }
   </ul>
