@@ -116,7 +116,8 @@
       <app-carousel
         [slides]="eventImages"
         [spaceBetween]=20
-        slideClass="bg-white p-2 rounded-xl shadow-lg border-2 border-white h-75 w-full"
+        [aspectRatio]="'16 / 10'"
+        slideClass="bg-white p-2 rounded-xl shadow-lg border-2 border-white w-full"
         imgClass="object-cover rounded-md size-full"
       />
     }
@@ -171,8 +172,9 @@
     <app-carousel
       [slides]="partnerImages"
       [spaceBetween]=25
-      slideClass="flex justify-center items-center h-36 hover:scale-105 transition-transform duration-300"
-      imgClass="object-cover size-full"
+      [slidesPerView]=3
+      slideClass="flex justify-center items-center h-24 w-full hover:scale-105 transition-transform duration-300"
+      imgClass="object-contain w-auto h-full"
     />
   }
 </section>
