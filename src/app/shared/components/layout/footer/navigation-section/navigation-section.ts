@@ -5,6 +5,7 @@ import { RouterLink } from '@angular/router';
 export interface NavigationLink {
   label: string;
   route: string;
+  onClick?: () => void;
 }
 
 @Component({

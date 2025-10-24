@@ -20,8 +20,8 @@ export class EventService {
   private transformEvent(event: Event): Event {
     return {
       ...event,
-      previewImageUrl: this.imageService.getImageUrl(event.previewImageUrl),
-      partnersImageUrl: event.partnersImageUrl ? this.imageService.getImageUrl(event.partnersImageUrl) : undefined
+      previewImageUrl: this.imageService.getPubImageUrl(event.previewImageUrl),
+      partnersImageUrl: event.partnersImageUrl ? this.imageService.getPubImageUrl(event.partnersImageUrl) : undefined
     } as Event;
   }
 

@@ -2,18 +2,16 @@
   [attr.slides-per-view]="slidesPerView"
   [attr.autoplay-delay]="autoplayDelay"
   [attr.space-between]="spaceBetween"
-  centered-slides="true"
   grab-cursor="true"
   mousewheel="true"
   keyboard="true"
   autoplay-disable-on-interaction="false"
   autoplay-pause-on-mouse-enter="true"
-  centered-slides="true"
   class="w-full"
 >
   @for (slide of slides; track $index) {
     <swiper-slide class="flex justify-center items-center">
-      <div [class]="slideClass">
+      <div [class]="slideClass" [style]="'--carousel-aspect-ratio: ' + aspectRatio">
         <img
           [src]="slide"
           [class]="imgClass"

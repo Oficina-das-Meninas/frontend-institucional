@@ -1,0 +1,15 @@
+swiper-slide {
+  height: auto;
+
+  div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    aspect-ratio: var(--carousel-aspect-ratio, auto);
+  }
+
+  img {
+    object-fit: cover;
+  }
+}

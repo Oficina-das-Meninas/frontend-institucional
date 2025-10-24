@@ -10,13 +10,14 @@ import { CategoriesResponse } from '../models/categories-response';
   providedIn: 'root',
 })
 export class TransparencyService {
+
   private readonly API_URL = `${environment.apiUrl}/transparencies`;
   private httpClient = inject(HttpClient);
 
   list(): Observable<AccordionContent[]> {
-    return this.httpClient.get<CategoriesResponse>(`${this.API_URL}`).pipe(
+    return this.httpClient.get<{ data: CategoriesResponse }>(`${this.API_URL}`).pipe(
       map((response) =>
-        response.categories.map((category) => ({
+        response.data.categories.map((category) => ({
           categoryName: category.name,
           type: category.isImage
             ? AccordionContentType.COLLABORATOR
@@ -26,7 +27,7 @@ export class TransparencyService {
             url: `${environment.bucketUrl}${doc.previewLink}`
           })),
           collaborators: category.collaborators?.map((collab) => ({
-            imageUrl: collab.previewLink,
+            imageUrl: `${environment.bucketUrl}${collab.previewLink}`,
             name: collab.name,
             role: collab.role,
             description: collab.description,
@@ -35,4 +36,5 @@ export class TransparencyService {
       )
     );
   }
+
 }

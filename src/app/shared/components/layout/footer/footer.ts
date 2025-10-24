@@ -1,4 +1,6 @@
+import { Location } from '@angular/common';
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { ContactInfoComponent } from './contact-info/contact-info';
 import { NavigationLink, NavigationSectionComponent } from './navigation-section/navigation-section';
 import { OrganizationInfoComponent } from './organization-info/organization-info';
@@ -17,6 +19,19 @@ export interface SocialLink {
   styleUrl: './footer.scss',
 })
 export class Footer {
+  constructor(private router: Router, private location: Location) {}
+
+  navigateToPartners() {
+    console.log('navigating to partners', this.location.path());
+    if (this.location.path() == '') return;
+
+    this.router.navigate(['/'], { fragment: 'parceiros' });
+    setTimeout(() => {
+      const element = document.getElementById('parceiros');
+      element?.scrollIntoView({ behavior: 'smooth' });
+    }, 100);
+  }
+
   socialLinks: SocialLink[] = [
     { icon: 'instagram', link: 'https://www.instagram.com/oficinadasmeninasoficial/', label: 'Instagram' },
     { icon: 'facebook', link: 'https://www.facebook.com/OficinaDasMeninas', label: 'Facebook' },
@@ -26,7 +41,7 @@ export class Footer {
   aboutLinks: NavigationLink[] = [
     { label: 'História', route: '/sobre' },
     { label: 'Eventos', route: '/eventos' },
-    { label: 'Parceiros', route: '/' },
+    { label: 'Parceiros', route: '', onClick: () => this.navigateToPartners() },
     { label: 'Transparência', route: '/transparencia' },
   ];
 

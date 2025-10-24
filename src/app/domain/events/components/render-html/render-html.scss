@@ -105,6 +105,12 @@
       color: var(--mat-sys-tertiary);
     }
   }
+
+  hr {
+    margin: 1.5rem 0;
+    border: none;
+    border-top: 5px solid #e0e0e0;
+  }
 }
 
 @media (min-width: 1024px) {
