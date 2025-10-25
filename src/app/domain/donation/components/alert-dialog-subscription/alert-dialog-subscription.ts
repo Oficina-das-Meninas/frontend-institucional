@@ -4,7 +4,6 @@ import { MatButtonModule } from '@angular/material/button';
 import {
   MatDialogClose,
   MatDialogContent,
-  MatDialogTitle,
 } from '@angular/material/dialog';
 
 @Component({
@@ -23,6 +22,6 @@ import {
       </div>
     </mat-dialog-content>
   `,
-  styleUrl: './alert-dialog-subscripition.scss',
+  styleUrls: ['./alert-dialog-subscription.scss'],
 })
-export class AlertDialogSubscripition {}
+export class AlertDialogSubscription {}

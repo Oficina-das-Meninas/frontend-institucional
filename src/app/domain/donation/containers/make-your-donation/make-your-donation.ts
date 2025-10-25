@@ -20,8 +20,8 @@ import { FormHelperService } from '../../../../shared/services/form/form-helper-
 import { NgxCaptchaModule } from 'ngx-captcha';
 import { environment } from '../../../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
-import { AlertDialogSubscripition } from '../../components/alert-dialog-subscripition/alert-dialog-subscripition';
-import { celularValidator } from '../../../../shared/validators/celular.validator';
+import { AlertDialogSubscription } from '../../components/alert-dialog-subscription/alert-dialog-subscription';
+import { phoneValidator } from '../../../../shared/validators/phone.validator';
 
 @Component({
   selector: 'app-make-your-donation',
@@ -66,7 +66,7 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
       ]),
       phone: new FormControl<string>(null!, [
         Validators.required,
-        celularValidator(),
+        phoneValidator(),
       ]),
       amount: new FormControl<number | null>(null, [Validators.min(1)]),
       frequency: new FormControl<string>('once', [Validators.required]),
@@ -179,7 +179,7 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
 
   openDialog() {
     if (!this.userAuthenticated) {
-      const modalRef = this.dialog.open(AlertDialogSubscripition);
+      const modalRef = this.dialog.open(AlertDialogSubscription);
       modalRef.afterClosed().subscribe(() => {
         this.form.patchValue({ frequency: 'once' });
       });
