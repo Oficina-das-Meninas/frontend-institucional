@@ -1,17 +1,8 @@
-import { MatDividerModule } from '@angular/material/divider';
 import { TextFieldModule } from '@angular/cdk/text-field';
-import { CommonModule } from '@angular/common';
 import { Component, inject } from '@angular/core';
-import {
-  AbstractControl,
-  FormBuilder,
-  FormGroup,
-  FormsModule,
-  ReactiveFormsModule,
-  ValidationErrors,
-  Validators,
-} from '@angular/forms';
+import { AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, ValidationErrors, Validators } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
@@ -29,7 +20,7 @@ import { FormHelperService } from '../../../../shared/services/form/form-helper-
     TextFieldModule,
     NgxMaskDirective,
     MatSelectModule,
-    MatDividerModule
+    MatDividerModule,
   ],
   providers: [provideNgxMask()],
   templateUrl: './volunteer.html',
@@ -91,23 +82,26 @@ export class Volunteer {
     }
   }
 
+  onlyLetters(event: KeyboardEvent) {
+    const char = String.fromCharCode(event.keyCode || event.which);
+    if (!/^[A-Za-zÀ-ÿ\s]$/.test(char)) {
+      event.preventDefault();
+    }
+  }
+
   private buildMessage(): string {
     const { name, cpf, proposal, availability } = this.volunteerForm.value;
 
     const selectedDays = this.days
-      .map((day) => {
+      .map(day => {
         const periodValue = availability[day.key];
-        const periodLabel = this.periods.find(
-          (p) => p.value === periodValue
-        )?.label;
+        const periodLabel = this.periods.find(p => p.value === periodValue)?.label;
         return periodValue ? `- ${day.label}: ${periodLabel}` : null;
       })
       .filter(Boolean)
       .join('\n');
 
-    const availabilityMessage = selectedDays
-      ? `\n\nDisponibilidade:\n${selectedDays}`
-      : '';
+    const availabilityMessage = selectedDays ? `\n\nDisponibilidade:\n${selectedDays}` : '';
 
     return (
       `Olá! Tenho interesse em ser voluntário(a).\n` +
@@ -123,19 +117,12 @@ export class Volunteer {
     if (isMobile) {
       window.location.href = `whatsapp://send?phone=${this.ongPhoneNumber}&text=${encodedMessage}`;
     } else {
-      window.open(
-        `https://web.whatsapp.com/send?phone=${this.ongPhoneNumber}&text=${encodedMessage}`,
-        '_blank'
-      );
+      window.open(`https://web.whatsapp.com/send?phone=${this.ongPhoneNumber}&text=${encodedMessage}`, '_blank');
     }
   }
 
-  private availabilityValidator(
-    group: AbstractControl
-  ): ValidationErrors | null {
-    const hasAvailability = Object.values((group as FormGroup).controls).some(
-      (control) => control.value
-    );
+  private availabilityValidator(group: AbstractControl): ValidationErrors | null {
+    const hasAvailability = Object.values((group as FormGroup).controls).some(control => control.value);
     return hasAvailability ? null : { atLeastOneDayRequired: true };
   }
 }
