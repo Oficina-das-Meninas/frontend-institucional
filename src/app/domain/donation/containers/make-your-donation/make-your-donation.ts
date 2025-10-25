@@ -15,6 +15,13 @@ import {
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
 import { DonationService } from '../../service/donation.service';
+import { cpfValidator } from '../../../../shared/validators/document.validator';
+import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
+import { NgxCaptchaModule } from 'ngx-captcha';
+import { environment } from '../../../../../environments/environment';
+import { MatDialog } from '@angular/material/dialog';
+import { AlertDialogSubscription } from '../../components/alert-dialog-subscription/alert-dialog-subscription';
+import { phoneValidator } from '../../../../shared/validators/phone.validator';
 
 @Component({
   selector: 'app-make-your-donation',
@@ -30,16 +37,21 @@ import { DonationService } from '../../service/donation.service';
     RouterLink,
     MatRadioModule,
     MatIconModule,
+    NgxCaptchaModule,
   ],
   templateUrl: './make-your-donation.html',
   styleUrls: ['./make-your-donation.scss'],
 })
-export class MakeYourDonation implements OnInit, AfterViewInit {
+export class MakeYourDonation implements AfterViewInit, OnInit {
   selectedAmount: number | null = null;
+  captchaKey = environment.captchaSiteKey;
   userAuthenticated = false;
   form!: FormGroup;
   donationService = inject(DonationService);
   route = inject(ActivatedRoute);
+  formHelper = inject(FormHelperService);
+  loadingRequest = false;
+  readonly dialog = inject(MatDialog);
 
   constructor() {
     this.form = new FormGroup({
@@ -48,19 +60,23 @@ export class MakeYourDonation implements OnInit, AfterViewInit {
         Validators.required,
         Validators.email,
       ]),
-      document: new FormControl<string>(null!, [Validators.required]),
-      phone: new FormControl<string>(null!, [Validators.required]),
-      amount: new FormControl<number | null>(null!, [
+      document: new FormControl<string>(null!, [
         Validators.required,
-        Validators.min(1),
+        cpfValidator(),
       ]),
+      phone: new FormControl<string>(null!, [
+        Validators.required,
+        phoneValidator(),
+      ]),
+      amount: new FormControl<number | null>(null, [Validators.min(1)]),
       frequency: new FormControl<string>('once', [Validators.required]),
+      recaptcha: new FormControl<string>(null!, [Validators.required]),
     });
   }
 
   ngOnInit() {
-    this.form.valueChanges.subscribe((value) => {
-      if (value.amount !== null || value.amount > 0) {
+    this.form.get('amount')?.valueChanges.subscribe((val) => {
+      if (val !== null && val !== '' && Number(val) > 0) {
         this.selectedAmount = null;
       }
     });
@@ -72,30 +88,64 @@ export class MakeYourDonation implements OnInit, AfterViewInit {
     if (valor) {
       this.selectedAmount = null;
       this.form.patchValue({ amount: valor });
-      this.form.get("amount")?.markAsDirty();
-      this.form.get("amount")?.markAsTouched();
     }
   }
 
+  setSelectedAmount(value: number) {
+    this.selectedAmount = value;
+    this.form.patchValue({ amount: null });
+    this.form.get('amount')?.markAsPristine();
+    this.form.get('amount')?.markAsUntouched();
+  }
+
+  onAmountInput(event: Event) {
+    const input = event.target as HTMLInputElement;
+    let value = input.value.replace(/\D/g, '');
+
+    while (value.length < 3) value = '0' + value;
+
+    const inteiro = value.slice(0, -2);
+    const decimais = value.slice(-2);
+
+    const newValue = `${inteiro},${decimais}`;
+
+    input.value = newValue;
+    this.form.get('amount')?.setValue(newValue, { emitEvent: false });
+  }
+
   onSubmit() {
+    if (this.form.invalid) {
+      this.form.markAllAsTouched();
+      return;
+    }
     const rawValue = this.form.getRawValue();
 
-    rawValue.amount = (rawValue.amount ?? this.selectedAmount) * 100;
+    const amountToSend = rawValue.amount ?? this.selectedAmount;
+
+    if (!amountToSend || amountToSend <= 0) {
+      this.form.get('amount')?.setErrors({ required: true });
+      return;
+    }
 
     const donationRequest = {
       donor: {
-        ...rawValue,
-        phone: {
-          country: '+55',
-          area: rawValue.phone.substring(0, 2),
-          number: rawValue.phone.substring(2).replace(/\D/g, ''),
-        },
+        name: rawValue.name,
+        email: rawValue.email,
+        document: rawValue.document,
+        id: '',
+        phone:
+          '+55' +
+          rawValue.phone.substring(0, 2) +
+          rawValue.phone.substring(2).replace(/\D/g, ''),
       },
       donation: {
-        value: rawValue.amount,
+        value: amountToSend,
         isRecurring: rawValue.frequency === 'monthly',
       },
+      captchaToken: rawValue.recaptcha,
     };
+
+    this.loadingRequest = true;
 
     this.donationService.sendDonation(donationRequest).subscribe({
       next: (response) => {
@@ -103,7 +153,36 @@ export class MakeYourDonation implements OnInit, AfterViewInit {
       },
       error: (error) => {
         console.error('Error processing donation:', error);
+        this.loadingRequest = false;
+      },
+      complete: () => {
+        this.loadingRequest = false;
       },
     });
+  }
+
+  handleReset() {
+    this.form.get('recaptcha')?.setValue(null);
+  }
+
+  handleExpire() {
+    this.form.get('recaptcha')?.setValue(null);
+  }
+
+  handleLoad() {
+    this.form.get('recaptcha')?.setValue(null);
+  }
+
+  handleSuccess(event: unknown) {
+    this.form.get('recaptcha')?.setValue(event);
+  }
+
+  openDialog() {
+    if (!this.userAuthenticated) {
+      const modalRef = this.dialog.open(AlertDialogSubscription);
+      modalRef.afterClosed().subscribe(() => {
+        this.form.patchValue({ frequency: 'once' });
+      });
+    }
   }
 }

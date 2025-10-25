@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { DonationPlanCard } from '../../components/donation-plan-card/donation-plan-card';
 import { Router, RouterLink } from '@angular/router';
 import { NgxMaskDirective } from 'ngx-mask';
+import { normalizeCurrencyValue } from '../../../../shared/utils/value-utils';
 
 @Component({
   selector: 'app-donation-plans',
@@ -43,10 +44,11 @@ export class DonationPlans {
       this.redirectToDonationPage();
     }
   }
-
   redirectToDonationPage() {
+    const value = normalizeCurrencyValue(this.inputValue(), true);
+
     this.router.navigate(['/faca-sua-doacao'], {
-      queryParams: { valor: this.inputValue() },
+      queryParams: { valor: value },
     });
   }
 

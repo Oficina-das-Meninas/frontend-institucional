@@ -1,6 +1,6 @@
 export const environment = {
-  production: true,
-  apiUrl: 'https://api.apollomusic.com.br/api',
+  production: false,
+  apiUrl: 'http://localhost:8080/api',
   bucketUrl: 'https://files.apollomusic.com.br/oficinadasmeninasteste',
   captchaSiteKey: '6LdbC-grAAAAANM6iLnFAGJyJE1aOgq8Ba83gEeZ',
 };

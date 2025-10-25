@@ -49,6 +49,9 @@
       <mat-form-field appearance="outline" class="w-full">
         <mat-label>Nome completo</mat-label>
         <input formControlName="name" matInput placeholder="Digite seu nome" />
+        @if(formHelper.getErrorMessage(form, 'name') ) {
+        <mat-error>{{ formHelper.getErrorMessage(form, 'name') }}</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-full">
@@ -58,6 +61,9 @@
           matInput
           placeholder="fulano@email.com"
         />
+        @if(formHelper.getErrorMessage(form, 'email') ) {
+        <mat-error>{{ formHelper.getErrorMessage(form, 'email') }}</mat-error>
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-full">
@@ -68,6 +74,11 @@
           placeholder="000.000.000-00"
           mask="000.000.000-00"
         />
+        @if(formHelper.getErrorMessage(form, 'document') ) {
+        <mat-error
+          >{{ formHelper.getErrorMessage(form, 'document') }}</mat-error
+        >
+        }
       </mat-form-field>
 
       <mat-form-field appearance="outline" class="w-full">
@@ -78,6 +89,9 @@
           placeholder="(00) 00000-0000"
           mask="(00) 00000-0000"
         />
+        @if(formHelper.getErrorMessage(form, 'phone') ) {
+        <mat-error>{{ formHelper.getErrorMessage(form, 'phone') }}</mat-error>
+        }
       </mat-form-field>
       } @else {
       <div
@@ -100,9 +114,9 @@
             type="button"
             class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all"
             [ngClass]="selectedAmount === 20
-      ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
-      : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
-            (click)="selectedAmount = 20"
+        ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
+        : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
+            (click)="setSelectedAmount(20)"
           >
             R$20
           </button>
@@ -111,9 +125,9 @@
             type="button"
             class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all"
             [ngClass]="selectedAmount === 50
-      ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
-      : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
-            (click)="selectedAmount = 50"
+        ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
+        : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
+            (click)="setSelectedAmount(50)"
           >
             R$50
           </button>
@@ -122,9 +136,9 @@
             type="button"
             class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all"
             [ngClass]="selectedAmount === 100
-      ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
-      : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
-            (click)="selectedAmount = 100"
+        ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
+        : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
+            (click)="setSelectedAmount(100)"
           >
             R$100
           </button>
@@ -133,9 +147,9 @@
             type="button"
             class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all"
             [ngClass]="selectedAmount === 200
-      ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
-      : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
-            (click)="selectedAmount = 200"
+        ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
+        : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
+            (click)="setSelectedAmount(200)"
           >
             R$200
           </button>
@@ -148,12 +162,15 @@
         <input
           formControlName="amount"
           matInput
-          placeholder="125,00"
+          placeholder="0,00"
           type="text"
           mask="separator.2"
           thousandSeparator="."
           decimalMarker=","
         />
+        @if(formHelper.getErrorMessage(form, 'amount')) {
+        <mat-error>{{ formHelper.getErrorMessage(form, 'amount') }}</mat-error>
+        }
       </mat-form-field>
 
       <div class="space-y-4">
@@ -183,6 +200,7 @@
                 name="frequency"
                 value="monthly"
                 class="absolute opacity-0"
+                (click)="openDialog()"
               />
               <span class="font-medium">Mensal</span>
             </label>
@@ -195,9 +213,29 @@
           </div>
         </div>
       </div>
+
+      <div class="space-y-4">
+        <ngx-recaptcha2
+          #captchaElem
+          [siteKey]="captchaKey"
+          (reset)="handleReset()"
+          (expire)="handleExpire()"
+          [required]="true"
+          (load)="handleLoad()"
+          (success)="handleSuccess($event)"
+          [useGlobalDomain]="false"
+          formControlName="recaptcha"
+        >
+        </ngx-recaptcha2>
+        @if(form.get('recaptcha')?.touched && form.get('recaptcha')?.invalid) {
+        <mat-error>Campo obrigatório</mat-error>
+        }
+      </div>
+
       <button
-        class="w-full rounded-md bg-[#BA005C] py-3 px-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#DA235F] focus:outline-none focus:ring-2 focus:ring-[#BA005C] focus:ring-offset-2 cursor-pointer"
+        class="w-full rounded-md bg-[#BA005C] py-3 px-4 text-base font-semibold text-white shadow-sm transition-colors hover:bg-[#DA235F] focus:outline-none focus:ring-2 focus:ring-[#BA005C] focus:ring-offset-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
         type="submit"
+        [disabled]="loadingRequest"
       >
         Continuar para Pagamento
       </button>
