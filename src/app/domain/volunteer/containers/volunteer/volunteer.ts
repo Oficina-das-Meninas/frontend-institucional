@@ -53,9 +53,9 @@ export class Volunteer {
 
   ngOnInit() {
     this.volunteerForm = this.formBuilder.group({
-      name: ['', [Validators.required, Validators.minLength(5)]],
-      cpf: ['', Validators.required],
-      proposal: ['', [Validators.required, Validators.minLength(5)]],
+      name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
+      cpf: ['', [Validators.required, Validators.maxLength(14)]],
+      proposal: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(500)]],
       availability: this.formBuilder.group(
         {
           sunday: [''],
