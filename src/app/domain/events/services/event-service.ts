@@ -1,11 +1,14 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { first, map, Observable, of } from 'rxjs';
+import { map, Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ImageService } from '../../../shared/services/image-service';
 import { toLocalDate } from '../../../shared/utils/date-utils';
 import { Event } from '../model/event';
+import { EventFilters } from '../model/event-filters';
+import { EventListResponse } from '../model/event-list-response';
 import { EventPage } from '../model/event-page';
+import { EventResponse } from '../model/event-response';
 
 @Injectable({
   providedIn: 'root',
@@ -25,54 +28,54 @@ export class EventService {
     } as Event;
   }
 
-  getById(id: string): Observable<Event> {
-    const cachedEvent = this.eventCache.get(id);
-    if (cachedEvent) return of(cachedEvent);
-
-    return this.httpClient.get<Event>(`${this.API_URL}/${id}`, {}).pipe(
-      first(),
-      map(event => {
-        const transformedEvent = this.transformEvent(event);
-        this.eventCache.set(id, transformedEvent);
-        return transformedEvent;
+  getById(eventId: string): Observable<Event> {
+    return this.httpClient.get<EventResponse>(`${this.API_URL}/${eventId}`).pipe(
+      map((res: EventResponse) => {
+        const event = res.data;
+        return {
+          ...event,
+          previewImageUrl: event?.previewImageUrl ? this.imageService.getPubImageUrl(event.previewImageUrl) : undefined,
+          partnersImageUrl: event?.partnersImageUrl ? this.imageService.getPubImageUrl(event.partnersImageUrl) : undefined,
+        } as Event;
       })
     );
   }
 
   list(
-    page = 0,
-    pageSize = 10,
-    title: string | null = null,
-    startDate: Date | null = null,
-    endDate: Date | null = null
+    filters: EventFilters
   ) {
-    let params = new HttpParams()
-      .set('page', String(page))
-      .set('pageSize', String(pageSize));
-    if (title && title.trim()) {
-      params = params.set('title', title.trim());
+    let params = new HttpParams();
+
+    params = params.set('page', (filters.page ?? 0).toString());
+    params = params.set('pageSize', (filters.pageSize ?? 10).toString());
+
+    if (filters.title?.trim()) {
+      params = params.set('searchTerm', filters.title.trim());
     }
-    if (startDate) {
-      params = params.set('startDate', toLocalDate(startDate));
+
+    if (filters.startDate) {
+      params = params.set('startDate', toLocalDate(filters.startDate));
     }
-    if (endDate) {
-      params = params.set('endDate', toLocalDate(endDate));
+    if (filters.endDate) {
+      params = params.set('endDate', toLocalDate(filters.endDate));
     }
 
     return this.httpClient
-      .get<EventPage>(this.API_URL, { params })
+      .get<EventListResponse>(this.API_URL, { params })
       .pipe(
-        first(),
-        map(eventPage => {
-          const transformed = {
-            ...eventPage,
-            data: eventPage.data.map(event => {
-              const transformedEvent = this.transformEvent(event);
-              this.eventCache.set(event.id, transformedEvent);
-              return transformedEvent;
-            })
-          };
-          return transformed as EventPage;
+        map((eventPage: EventListResponse) => {
+          const items = eventPage.data.contents;
+
+          const mappedItems = items.map((ev: any) => ({
+            ...ev,
+            previewImageUrl: this.imageService.getPubImageUrl(ev.previewImageUrl)
+          }));
+
+          return {
+            data: mappedItems,
+            totalElements: eventPage.data.totalElements,
+            totalPages: eventPage.data.totalPages,
+          } as EventPage;
         })
       );
   }
