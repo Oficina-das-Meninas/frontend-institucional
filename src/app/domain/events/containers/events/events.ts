@@ -67,11 +67,13 @@ export class Events {
   refresh(pageEvent: PageEvent = { length: 0, pageIndex: 0, pageSize: 9 }) {
     this.events$ = this.eventService
       .list(
-        pageEvent.pageIndex,
-        pageEvent.pageSize,
-        this.searchEvent,
-        this.dateRange.start,
-        this.dateRange.end
+        {
+          page: pageEvent.pageIndex,
+          pageSize: pageEvent.pageSize,
+          title: this.searchEvent,
+          startDate: this.dateRange.start ?? undefined,
+          endDate: this.dateRange.end ?? undefined
+        }
       )
       .pipe(
         tap(() => this.updatePagination(pageEvent)),

@@ -36,7 +36,7 @@ export class Home {
 
   ngOnInit() {
     this.eventImages$ = this.eventService
-      .list()
+      .list({})
       .pipe(map((events) => events.data.map((event) => ({
         path: event.previewImageUrl,
         alt: "Evento " + event.title

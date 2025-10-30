@@ -1,9 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
-import { first, map } from 'rxjs';
+import { map } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 import { ImageService } from '../../../shared/services/image-service';
-import { PartnerPage } from '../models/partner-page';
+import { PartnerListResponse } from '../models/partner-list-response';
 
 @Injectable({
   providedIn: 'root',
@@ -22,21 +22,23 @@ export class PartnerService {
 
   list(page = 0, pageSize = 10) {
     return this.httpClient
-      .get<PartnerPage>(this.API_URL, {
+      .get<{ data: PartnerListResponse }>(this.API_URL, {
         params: {
           page: page,
           pageSize: pageSize,
         },
       })
       .pipe(
-        first(),
-        map(partnerPage => {
-          const transformed = {
-            ...partnerPage,
-            data: partnerPage.data.map(partner => this.transformPartner(partner))
-          };
-          return transformed as PartnerPage;
-        })
+        map(response => ({
+          data: response.data.contents.map(partner => ({
+            ...partner,
+            previewImageUrl: this.imageService.getPubImageUrl(partner.previewImageUrl),
+          })),
+          totalElements: response.data.totalItems,
+          currentPage: response.data.currentPage,
+          totalPages: response.data.totalPages,
+          pageSize: response.data.pageSize,
+        }))
       );
   }
 }
