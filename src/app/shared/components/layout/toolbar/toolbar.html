@@ -19,7 +19,7 @@
           <app-dropdown>
             <span ep-title>Como ajudar?</span>
             <div class="flex flex-col gap-4 mt-2">
-              <a routerLink="/faca-sua-doacao">Faça uma doação</a>
+              <a routerLink="/faca-sua-doacao" class="link" (click)="closeDrawer()">Faça uma doação</a>
               <a routerLink="/doar-nota-fiscal" class="link" (click)="closeDrawer()">Doe sua nota fiscal</a>
               <a routerLink="/" class="link" (click)="closeDrawer()">Doe seu imposto de renda</a>
               <a routerLink="/seja-um-voluntario" class="link" (click)="closeDrawer()">Seja um voluntário</a>
