@@ -51,6 +51,7 @@ export class Footer {
   ];
 
   helpLinks: NavigationLink[] = [
+    { label: 'Faça uma doação', route: '/faca-sua-doacao' },
     { label: 'Doe nota fiscal', route: '/doar-nota-fiscal' },
     { label: 'Doe imposto de renda', route: '/' },
     { label: 'Seja um voluntário', route: '/seja-um-voluntario' },

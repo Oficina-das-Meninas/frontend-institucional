@@ -19,6 +19,7 @@
           <app-dropdown>
             <span ep-title>Como ajudar?</span>
             <div class="flex flex-col gap-4 mt-2">
+              <a routerLink="/faca-sua-doacao">Faça uma doação</a>
               <a routerLink="/doar-nota-fiscal" class="link" (click)="closeDrawer()">Doe sua nota fiscal</a>
               <a routerLink="/" class="link" (click)="closeDrawer()">Doe seu imposto de renda</a>
               <a routerLink="/seja-um-voluntario" class="link" (click)="closeDrawer()">Seja um voluntário</a>
@@ -76,6 +77,7 @@
             </button
           >
           <mat-menu #helpOptions="matMenu" yPosition="below" class="text-sm glassy mdc-menu-panel toolbar-menu">
+            <a routerLink="/faca-sua-doacao" mat-menu-item>Faça uma doação</a>
             <a routerLink="/doar-nota-fiscal" mat-menu-item>Doe sua nota fiscal</a>
             <a routerLink="/" mat-menu-item>Doe seu imposto de renda</a>
             <a routerLink="/seja-um-voluntario" mat-menu-item>Seja um voluntário</a>
