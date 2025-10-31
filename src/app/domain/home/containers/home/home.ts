@@ -47,7 +47,7 @@ export class Home {
       .pipe(
         map((partners) => partners.data.map((partner) => ({
           path: partner.previewImageUrl,
-          alt: "Logo " + partner.name
+          alt: partner.name
         })))
       );
   }
