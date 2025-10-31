@@ -30,21 +30,11 @@
     alt="Flor"
     class="absolute hidden sm:block bottom-0 left-32 size-32 hover:skew-12"
   />
-  <!-- <img
-    src="/grama4.svg"
-    alt="Grama"
-    class="absolute bottom-0 left-50 size-48 hover:skew-12"
-  /> -->
   <img
     src="/two-red-paper-dolls-holding-hands-cut-out-stock.png"
     alt="Meninas de papel"
-    class="absolute bottom-0 md:right-10 hover:animate-bounce"
+    class="absolute h-64 md:h-72 object-cover bottom-0 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-10 hover:animate-bounce"
   />
-  <!-- <img
-    src="/papel-cortado3.svg"
-    alt="Papelzinho cortado"
-    class="absolute -bottom-30 left-0 z-30 -scale-x-100"
-  /> -->
 </section>
 
 <section class="bg-[#B9B885] w-full px-4 lg:px-20 xl:px-40 py-14 space-y-12">
@@ -73,7 +63,7 @@
 
   <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 justify-center">
     <app-flower-stat
-      [value]="70"
+      [value]="60"
       label="Meninas assistidas"
       flowerColor="#BC7C7C"
       valueColor="#B9B885"
@@ -81,7 +71,7 @@
     />
 
     <app-flower-stat
-      [value]="3"
+      [value]="partnerCount"
       label="Parceiros"
       flowerColor="#F6EFBD"
       valueColor="#B9B885"
@@ -151,7 +141,7 @@
       title="Faça uma doação"
       description="Contribuição única para manter nossos projetos e atividades em funcionamento."
       buttonText="Fazer doação"
-      link="/seja-um-padrinho"
+      link="/faca-sua-doacao"
       class="hover:scale-105 transition-transform duration-300"
     />
 

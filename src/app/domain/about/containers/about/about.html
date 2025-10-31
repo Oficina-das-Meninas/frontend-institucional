@@ -1,22 +1,134 @@
 <section
-  class="w-full h-70 md:h-[20rem] lg:h-[25rem] xl:h-[30rem] bg-cover bg-no-repeat bg-[center_75%] md:bg-[center_80%] flex items-end justify-center relative"
-  [style]="{'background-image': 'url(' + previewImagePath + ')'}"
+  class="w-full h-70 md:h-[20rem] lg:h-[25rem] xl:h-[30rem] bg-[url('/meninas_reunidas.webp')] bg-cover bg-no-repeat bg-[center_75%] md:bg-[center_80%] flex items-end justify-center relative"
 >
   <div class="absolute inset-0 bg-black/30"></div>
-  
-  <div class="text-center pb-6 md:pb-8 lg:pb-12 relative z-10">
-    <p class="text-3xl lg:text-5xl font-bold text-white text-shadow-lg/20 ">
-      {{ title }}
-    </p>
-  </div>
 </section>
 
-@for (section of sections; track $index; let i = $index) {
-  <section 
-    class="w-full px-4 lg:px-30 py-14"
-    [class.mt-20]="i === 0"
-    [class.mb-20]="i === sections.length - 1"
-  >
-    <app-about-section-page [section]="section"></app-about-section-page>
-  </section>
-}
+<section class="py-14 px-4 md:px-12 lg:px-24 bg-white flex flex-col justify-center">
+    <div class="text-center w-full mb-10">
+      <h2 class="font-bold text-3xl md:text-5xl mb-4">
+        Sobre nós
+      </h2>
+      <p class="text-base lg:text-xl leading-relaxed">
+        Um espaço de acolhimento, aprendizagem e transformação: criado para
+        fortalecer meninas e famílias.
+      </p>
+      <div class="flex justify-center mt-6">
+        <div class="w-16 h-1 rounded-full bg-[var(--mat-sys-primary)] inline-flex"></div>
+      </div>
+    </div>
+
+    <div class="md:flex gap-10">
+      <div class="flex flex-col gap-6 md:w-1/2">
+        <img
+          src="/meninas-quadra.png"
+          alt="Meninas participando de atividades na Oficina"
+          class="rounded-2xl shadow-md w-full object-cover h-[22rem]"
+        />
+        <img
+          src="/quadrilha.png"
+          alt="Meninas participando de atividades na Oficina"
+          class="rounded-2xl shadow-md w-full object-cover h-[22rem]"
+        />
+      </div>
+
+      <div class="text-gray-700 leading-relaxed text-justify md:w-1/2 space-y-4">
+        <p class="mb-4 mt-4 md:mt-0">
+          O
+          <strong>Centro Cultural e Assistencial Oficina das Meninas</strong> é
+          uma organização da sociedade civil, sem fins lucrativos, fundada em
+          <strong>23 de março de 2002</strong> por
+          <strong>Adélia Bellodi Privato</strong>, que sonhava em criar um
+          espaço de acolhimento e oportunidades para meninas em situação de
+          vulnerabilidade social.
+        </p>
+        <p>
+          Desde o início dos atendimentos, em 5 de janeiro de 2004, o Centro tem
+          sido um ambiente seguro e inspirador para meninas de 6 a 17 anos,
+          provenientes de famílias de baixa renda — muitas delas chefiadas por
+          mulheres — residentes nas regiões periféricas de Araraquara (SP).
+        </p>
+        <p>
+          Nossa missão é contribuir para o
+          <strong>desenvolvimento integral</strong> dessas meninas por meio de
+          atividades educacionais, culturais e sociais que complementam a ação
+          da família, da escola e da comunidade. Buscamos promover autonomia,
+          autoestima e transformação, formando cidadãs conscientes, responsáveis
+          e solidárias.
+        </p>
+        <p>
+          Atualmente, atendemos <strong>60 meninas</strong> no contraturno
+          escolar, oferecendo transporte e refeições diárias, além de um
+          ambiente de aprendizado, afeto e convivência.
+        </p>
+        <p>
+          Acreditamos no poder da
+          <strong>educação</strong>, da <strong>cultura</strong> e do <strong>afeto</strong>
+          como caminhos para transformar vidas e construir um futuro mais justo e igualitário.
+          Por meio da arte, leitura, música e expressão criativa, ampliamos
+          horizontes e fortalecemos a confiança de cada menina atendida.
+        </p>
+      </div>
+    </div>
+</section>
+
+<section class="w-full bg-pink-50/50 px-4 lg:px-25 py-14">
+  <div class="text-center mb-14">
+    <h2 class="font-bold text-3xl md:text-5xl mb-4">Nossos Pilares</h2>
+    <p class="text-base lg:text-xl leading-relaxed">
+      Valores que guiam nossa missão e fortalecem a Oficina
+      das Meninas.
+    </p>
+    <div class="flex justify-center mt-6">
+      <div
+        class="w-16 h-1 rounded-full bg-[var(--mat-sys-primary)] inline-flex"
+      ></div>
+    </div>
+
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 gap-6 mt-14">
+      <div
+        class="bg-white p-6 rounded-2xl shadow-sm hover:scale-105 transition-transform duration-300"
+      >
+        <div class="text-pink-500 text-3xl mb-3">🎨</div>
+        <h3 class="font-semibold text-lg mb-2">Criatividade</h3>
+        <p class="text-gray-600 text-sm">
+          Estimulamos a expressão artística e o pensamento criativo como formas
+          de autoconhecimento e empoderamento.
+        </p>
+      </div>
+
+      <div
+        class="bg-white p-6 rounded-2xl shadow-sm hover:scale-105 transition-transform duration-300"
+      >
+        <div class="text-blue-500 text-3xl mb-3">💬</div>
+        <h3 class="font-semibold text-lg mb-2">Empatia</h3>
+        <p class="text-gray-600 text-sm">
+          Promovemos o respeito, a escuta e o cuidado mútuo para fortalecer
+          vínculos e comunidades solidárias.
+        </p>
+      </div>
+
+      <div
+        class="bg-white p-6 rounded-2xl shadow-sm hover:scale-105 transition-transform duration-300"
+      >
+        <div class="text-pink-500 text-3xl mb-3">📚</div>
+        <h3 class="font-semibold text-lg mb-2">Educação</h3>
+        <p class="text-gray-600 text-sm">
+          Acreditamos que o conhecimento transforma e abre portas para novas
+          oportunidades e caminhos de autonomia.
+        </p>
+      </div>
+
+      <div
+        class="bg-white p-6 rounded-2xl shadow-sm hover:scale-105 transition-transform duration-300"
+      >
+        <div class="text-blue-500 text-3xl mb-3">🤝</div>
+        <h3 class="font-semibold text-lg mb-2">Inclusão</h3>
+        <p class="text-gray-600 text-sm">
+          Lutamos por um futuro mais justo e igualitário, onde todas as meninas
+          tenham voz, espaço e oportunidades.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
