@@ -39,7 +39,7 @@ export class Home {
 
     this.partnerImages$ = this.partnerService.list().pipe(
       map(partners => {
-        this.partnerCount = partners.totalElements;
+        this.partnerCount = partners.data.length;
         return partners.data.map(partner => ({
           path: partner.previewImageUrl,
           alt: partner.name,
