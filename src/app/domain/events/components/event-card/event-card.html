@@ -1,6 +1,8 @@
 <div class="relative w-full max-w-sm max-h-[18rem] aspect-[4/3] overflow-hidden
-  rounded-lg bg-white shadow hover:scale-[1.02] transition duration-300 cursor-pointer"
+  rounded-lg bg-white shadow hover:scale-[1.02] transition duration-300"
+  [class.cursor-pointer]="!isLoading()"
   [routerLink]="['/eventos', eventId]"
+  (click)="onCardClick()"
   >
   <img [src]="imageUrl" class="h-full object-cover" [alt]="eventTitle" />
   <div class="absolute inset-0 z-10 bg-gradient-to-t from-black"></div>
@@ -15,4 +17,10 @@
       {{ getTooltipText() }}
     </p>
   </div>
+
+  @if (isLoading()) {
+    <div class="absolute inset-0 z-30 rounded-lg flex items-center justify-center" style="background: rgba(0, 0, 0, 0.5);">
+      <mat-spinner diameter="40" color="accent"></mat-spinner>
+    </div>
+  }
 </div>
