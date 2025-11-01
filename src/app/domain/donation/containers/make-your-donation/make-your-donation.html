@@ -6,9 +6,9 @@
       class="flex flex-col justify-center items-center w-full h-full text-center px-8"
     >
       <img
-        alt="Garotas sorrindo"
+        alt="Meninas abraçando"
         class="mb-6 w-[48rem] h-[48rem] rounded-lg shadow-lg object-cover"
-        src="https://images.unsplash.com/photo-1597413545419-4013431dbfec?q=80&w=774&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+        src="./meninas-abraco.png"
       />
       <h2 class="text-4xl font-bold tracking-tight text-gray-900">
         Junte-se a nós para semear o futuro!
@@ -59,7 +59,7 @@
         <input
           formControlName="email"
           matInput
-          placeholder="fulano@email.com"
+          placeholder="Digite seu e-mail"
         />
         @if(formHelper.getErrorMessage(form, 'email') ) {
         <mat-error>{{ formHelper.getErrorMessage(form, 'email') }}</mat-error>
@@ -112,7 +112,7 @@
         <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
           <button
             type="button"
-            class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all"
+            class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all cursor-pointer"
             [ngClass]="selectedAmount === 20
         ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
         : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
@@ -123,7 +123,7 @@
 
           <button
             type="button"
-            class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all"
+            class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all cursor-pointer"
             [ngClass]="selectedAmount === 50
         ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
         : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
@@ -134,7 +134,7 @@
 
           <button
             type="button"
-            class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all"
+            class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all cursor-pointer"
             [ngClass]="selectedAmount === 100
         ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
         : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
@@ -145,7 +145,7 @@
 
           <button
             type="button"
-            class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all"
+            class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all cursor-pointer"
             [ngClass]="selectedAmount === 200
         ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
         : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"

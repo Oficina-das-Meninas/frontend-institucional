@@ -27,6 +27,7 @@ import { SupportCard } from '../../components/support-card/support-card';
 export class Home {
   eventImages$: Observable<{ path: string, alt: string }[]> | null = null;
   partnerImages$: Observable<{ path: string, alt: string }[]> | null = null;
+  partnerCount: number = 0;
 
   yearOfFoundation = new Date('03-23-2002').getFullYear();
   today = new Date().getFullYear();
@@ -43,9 +44,11 @@ export class Home {
       }))));
 
     this.partnerImages$ = this.partnerService
-      .list()
-      .pipe(
-        map((partners) => partners.data.map((partner) => ({
+    .list()
+    .pipe(
+      map((partners) => {
+        this.partnerCount = partners.totalElements;
+        return partners.data.map((partner) => ({
           path: partner.previewImageUrl,
           alt: partner.name
         })))
