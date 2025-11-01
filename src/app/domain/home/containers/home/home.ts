@@ -12,21 +12,13 @@ import { SupportCard } from '../../components/support-card/support-card';
 
 @Component({
   selector: 'app-home',
-  imports: [
-    MatButtonModule,
-    MatCardModule,
-    FlowerStat,
-    SupportCard,
-    CarouselComponent,
-    RouterLink,
-    AsyncPipe,
-  ],
+  imports: [MatButtonModule, MatCardModule, FlowerStat, SupportCard, CarouselComponent, RouterLink, AsyncPipe],
   templateUrl: './home.html',
   styleUrl: './home.scss',
 })
 export class Home {
-  eventImages$: Observable<{ path: string, alt: string }[]> | null = null;
-  partnerImages$: Observable<{ path: string, alt: string }[]> | null = null;
+  eventImages$: Observable<{ path: string; alt: string }[]> | null = null;
+  partnerImages$: Observable<{ path: string; alt: string }[]> | null = null;
   partnerCount: number = 0;
 
   yearOfFoundation = new Date('03-23-2002').getFullYear();
@@ -36,22 +28,23 @@ export class Home {
   private partnerService = inject(PartnerService);
 
   ngOnInit() {
-    this.eventImages$ = this.eventService
-      .list({})
-      .pipe(map((events) => events.data.map((event) => ({
-        path: event.previewImageUrl,
-        alt: "Evento " + event.title
-      }))));
+    this.eventImages$ = this.eventService.list({}).pipe(
+      map(events =>
+        events.data.map(event => ({
+          path: event.previewImageUrl,
+          alt: 'Evento ' + event.title,
+        }))
+      )
+    );
 
-    this.partnerImages$ = this.partnerService
-    .list()
-    .pipe(
-      map((partners) => {
+    this.partnerImages$ = this.partnerService.list().pipe(
+      map(partners => {
         this.partnerCount = partners.totalElements;
-        return partners.data.map((partner) => ({
+        return partners.data.map(partner => ({
           path: partner.previewImageUrl,
-          alt: partner.name
-        })))
-      );
+          alt: partner.name,
+        }));
+      })
+    );
   }
 }
