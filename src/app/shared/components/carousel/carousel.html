@@ -11,10 +11,10 @@
   @for (slide of slides; track $index) {
   <swiper-slide class="flex justify-center items-center flex-col">
     <div [class]="slideClass" [style]="'--carousel-aspect-ratio: ' + aspectRatio">
-      <img [src]="slide.path" [class]="imgClass" class="" [alt]="slide.alt" />
+      <img [src]="slide.path" [class]="imgClass" [alt]="slide.alt" />
     </div>
     @if (withTitle) {
-    <div class="mt-4 text-center text-lg  text-gray-700">{{ slide.alt }}</div>
+    <div class="mt-4 text-center text-lg text-gray-700">{{ slide.alt }}</div>
     }
   </swiper-slide>
   }
