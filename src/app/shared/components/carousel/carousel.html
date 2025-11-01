@@ -7,17 +7,15 @@
   keyboard="true"
   autoplay-disable-on-interaction="false"
   autoplay-pause-on-mouse-enter="true"
-  class="w-full"
->
+  class="w-full">
   @for (slide of slides; track $index) {
-    <swiper-slide class="flex justify-center items-center">
-      <div [class]="slideClass" [style]="'--carousel-aspect-ratio: ' + aspectRatio">
-        <img
-          [src]="slide.path"
-          [class]="imgClass"
-          [alt]="slide.alt"
-        />
-      </div>
-    </swiper-slide>
+  <swiper-slide class="flex justify-center items-center flex-col">
+    <div [class]="slideClass" [style]="'--carousel-aspect-ratio: ' + aspectRatio">
+      <img [src]="slide.path" [class]="imgClass" [alt]="slide.alt" />
+    </div>
+    @if (withTitle) {
+    <div class="mt-4 text-center text-lg text-gray-700">{{ slide.alt }}</div>
+    }
+  </swiper-slide>
   }
 </swiper-container>

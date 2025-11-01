@@ -65,7 +65,7 @@
           [text]="'Parceiros e apoiadores do evento ' + event()?.title" />
       }
       <img
-        class="w-250 rounded-xl object-contain mx-auto hover:scale-105 transition-transform duration-300 shadow-lg"
+        class="w-250 rounded-xl object-contain mx-auto hover:scale-105 transition-transform duration-300"
         [class.hidden]="!partnersImageLoaded()"
         src="{{ event()?.partnersImageUrl }}"
         alt="Parceiros e apoiadores do evento {{ event()?.title }}"
