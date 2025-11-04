@@ -113,12 +113,12 @@
           <button
             type="button"
             class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all cursor-pointer"
-            [ngClass]="selectedAmount === 20
+            [ngClass]="selectedAmount === 10
         ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
         : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
-            (click)="setSelectedAmount(20)"
+            (click)="setSelectedAmount(10)"
           >
-            R$20
+            + R$10
           </button>
 
           <button
@@ -129,7 +129,7 @@
         : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
             (click)="setSelectedAmount(50)"
           >
-            R$50
+            + R$50
           </button>
 
           <button
@@ -140,7 +140,7 @@
         : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
             (click)="setSelectedAmount(100)"
           >
-            R$100
+            + R$100
           </button>
 
           <button
@@ -151,7 +151,7 @@
         : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
             (click)="setSelectedAmount(200)"
           >
-            R$200
+            + R$200
           </button>
         </div>
       </div>
