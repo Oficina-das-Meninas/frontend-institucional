@@ -92,7 +92,7 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
   }
 
   setSelectedAmount(value: number) {
-    let currentAmount = this.form.get('amount')?.value;
+    let currentAmount = Number(this.form.get('amount')?.value) || 0;
 
     const newAmount = currentAmount + value;
 
