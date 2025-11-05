@@ -108,50 +108,38 @@
       }
 
       <div class="space-y-4">
-        <h3 class="text-lg font-medium text-gray-900">Selecione o valor *</h3>
+        <h3 class="text-lg font-medium text-gray-900">Adicione um valor *</h3>
         <div class="grid grid-cols-2 gap-4 sm:grid-cols-4">
           <button
             type="button"
             class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all cursor-pointer"
-            [ngClass]="selectedAmount === 20
-        ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
-        : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
-            (click)="setSelectedAmount(20)"
+            (click)="setSelectedAmount(10)"
           >
-            R$20
+            + R$10
           </button>
 
           <button
             type="button"
             class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all cursor-pointer"
-            [ngClass]="selectedAmount === 50
-        ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
-        : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
             (click)="setSelectedAmount(50)"
           >
-            R$50
+            + R$50
           </button>
 
           <button
             type="button"
             class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all cursor-pointer"
-            [ngClass]="selectedAmount === 100
-        ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
-        : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
             (click)="setSelectedAmount(100)"
           >
-            R$100
+            + R$100
           </button>
 
           <button
             type="button"
             class="flex-1 rounded-md border py-3 px-4 text-center font-semibold transition-all cursor-pointer"
-            [ngClass]="selectedAmount === 200
-        ? 'border-[#BA005C] bg-[#C7265B]/15 text-[#BA005C]'
-        : 'border-gray-300 text-gray-700 hover:border-primary hover:bg-pink-50'"
             (click)="setSelectedAmount(200)"
           >
-            R$200
+            + R$200
           </button>
         </div>
       </div>
