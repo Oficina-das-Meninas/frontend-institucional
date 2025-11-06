@@ -153,7 +153,7 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
 
     this.donationService.sendDonation(donationRequest).subscribe({
       next: (response) => {
-        window.open(response.checkoutLink, '_blank');
+        window.open(response.data.checkoutLink, '_blank');
       },
       error: (error) => {
         console.error('Error processing donation:', error);
