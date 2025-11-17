@@ -7,10 +7,10 @@ import { HttpClient } from '@angular/common/http';
   providedIn: 'root',
 })
 export class DonationService {
-  private readonly apiUrl = `${environment.apiUrl}/donation`;
+  private readonly apiUrl = `${environment.apiUrl}/donations`;
   private http = inject(HttpClient);
 
   public sendDonation(donationData: DonationRequest) {
-    return this.http.post<{ checkoutLink: string }>(`${this.apiUrl}/create`, donationData);
+    return this.http.post<{ data: { checkoutLink: string }  }>(`${this.apiUrl}`, donationData);
   }
 }

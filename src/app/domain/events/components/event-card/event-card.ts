@@ -1,6 +1,6 @@
 import { DatePipe, registerLocaleData } from '@angular/common';
 import localePt from '@angular/common/locales/pt';
-import { Component, Input, LOCALE_ID, OnDestroy, signal } from '@angular/core';
+import { Component, Input, LOCALE_ID, OnDestroy, computed, signal } from '@angular/core';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterLink } from '@angular/router';
@@ -23,6 +23,16 @@ export class EventCard implements OnDestroy {
   @Input() imageUrl!: string;
   @Input() date!: Date;
 
+  cleanDescription = computed(() => {
+    const text = this.description;
+    return text
+      .replace(/<[^>]*>/g, '')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&[a-z]+;/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  });
+
   isLoading = signal(false);
 
   onCardClick() {
@@ -32,8 +42,5 @@ export class EventCard implements OnDestroy {
   ngOnDestroy() {
     this.isLoading.set(false);
   }
-
-  getTooltipText(): string {
-    return this.description.replace(/<[^>]*>/g, '').trim();
-  }
 }
+

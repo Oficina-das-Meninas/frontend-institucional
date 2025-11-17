@@ -92,8 +92,12 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
   }
 
   setSelectedAmount(value: number) {
-    this.selectedAmount = value;
-    this.form.patchValue({ amount: null });
+    let currentAmount = Number(this.form.get('amount')?.value) || 0;
+
+    const newAmount = currentAmount + value;
+
+    this.form.patchValue({ amount: newAmount });
+    this.selectedAmount = null;
     this.form.get('amount')?.markAsPristine();
     this.form.get('amount')?.markAsUntouched();
   }
@@ -149,7 +153,7 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
 
     this.donationService.sendDonation(donationRequest).subscribe({
       next: (response) => {
-        window.open(response.checkoutLink, '_blank');
+        window.open(response.data.checkoutLink, '_blank');
       },
       error: (error) => {
         console.error('Error processing donation:', error);
