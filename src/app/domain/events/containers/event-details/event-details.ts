@@ -89,8 +89,8 @@ export class EventDetails implements OnInit {
     const headerElement = this.elementRef.nativeElement.querySelector('.event-header');
 
     const isLightColor = this.colorExtractor.isLightColor(primaryColor);
-    const textColor = isLightColor ? 'black' : 'white';
-    const textShadow = isLightColor ? '2px 2px 4px rgba(255,255,255,0.8)' : '2px 2px 4px rgba(0,0,0,0.8)';
+    const textColor = isLightColor ? 'rgba(0, 0, 0, 0.85)' : 'rgba(255, 255, 255, 0.9)';
+    const textShadow = isLightColor ? '2px 2px 4px rgba(255,255,255,0.4)' : '2px 2px 4px rgba(0,0,0,0.4)';
 
     if (headerElement) {
       const newBackgroundStyle = `
