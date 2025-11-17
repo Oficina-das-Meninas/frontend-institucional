@@ -10,9 +10,10 @@
     <p class="mb-1 text-sm text-gray-300 w-fit">
       <time>{{ date | date:"dd 'de' MMMM 'de' yyyy" }}</time>
     </p>
-    <h3 class="text-xl font-bold text-white w-fit truncate" [matTooltip]="eventTitle">{{ eventTitle }}</h3>
-    <p class="text-md mt-1 text-gray-200 ml-[0.2rem] w-fit line-clamp-2 text-ellipsis"
+    <h3 class="text-xl font-bold text-white w-fit max-w-full truncate" [matTooltip]="eventTitle">{{ eventTitle }}</h3>
+    <p class="text-md mt-1 text-gray-200 ml-[0.2rem] w-fit line-clamp-2 text-ellipsis max-w-full"
     [matTooltip]="getTooltipText()"
+    matTooltipClass="max-h-[8rem]"
     >
       {{ getTooltipText() }}
     </p>

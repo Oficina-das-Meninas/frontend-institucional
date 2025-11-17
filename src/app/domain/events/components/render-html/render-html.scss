@@ -44,6 +44,10 @@
     margin-bottom: 1rem;
     line-height: 1.75;
     color: var(--mat-sys-on-surface);
+    max-width: 100%;
+    word-break: break-word;
+    overflow-wrap: break-word;
+    hyphens: auto;
   }
 
   strong {

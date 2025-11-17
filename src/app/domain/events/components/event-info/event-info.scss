@@ -1,3 +1,11 @@
 .mat-icon {
   min-width: 24px;
 }
+
+.event-info-text {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+  display: block;
+  max-width: 100%;
+}
