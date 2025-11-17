@@ -1,0 +1,67 @@
+<mat-expansion-panel
+  hideToggle
+  #panel
+  class="rounded-2xl shadow-sm bg-card-light overflow-hidden transition-all duration-300 !min-h-0 !h-auto !py-4 !px-4 cursor-pointer"
+>
+  <mat-expansion-panel-header class="!px-4 !py-4 cursor-pointer">
+    <div class="flex items-center justify-between w-full">
+      <div class="flex items-center space-x-4">
+        <div
+          class="flex items-center justify-center h-12 w-12 bg-gray-100 rounded-lg"
+        >
+          <span class="material-symbols-outlined text-text-primary-light">
+            credit_card
+          </span>
+        </div>
+        <div>
+          <p class="font-bold text-lg text-text-primary-light">
+            {{ donation.value | currency }}
+          </p>
+          <p class="text-sm font-medium text-green-600">
+            + {{ donation.pointsEarned }} pontos
+          </p>
+        </div>
+      </div>
+
+      <span
+        class="material-symbols-outlined text-text-secondary-light transition-transform duration-300"
+        [class.rotate-180]="panel.expanded"
+      >
+        expand_more
+      </span>
+    </div>
+  </mat-expansion-panel-header>
+
+  <div class="border-t border-gray-200 px-4 pt-4 pb-4">
+    <div class="space-y-3 text-sm">
+      <div class="flex justify-between">
+        <span class="text-text-secondary-light">Método de pagamento:</span>
+        <span class="font-semibold text-text-primary-light"
+          >{{ donation.donationMethod }}</span
+        >
+      </div>
+      <div class="flex justify-between">
+        <span class="text-text-secondary-light">Pontuação:</span>
+        <span class="font-semibold text-text-primary-light">
+          + {{ donation.pointsEarned }} pontos
+        </span>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-text-secondary-light">Bônus:</span>
+        <div class="flex flex-col items-end">
+          @for (bonus of donation.bonus; track $index) {
+          <span class="font-semibold text-text-primary-light"
+            >+ {{ bonus.points }} pontos por {{ bonus.description }}</span
+          >
+          }
+        </div>
+      </div>
+      <div class="flex justify-between">
+        <span class="text-text-secondary-light">Sequência:</span>
+        <span class="font-semibold text-text-primary-light"
+          >🔥 {{ donation.sequence }}x</span
+        >
+      </div>
+    </div>
+  </div>
+</mat-expansion-panel>

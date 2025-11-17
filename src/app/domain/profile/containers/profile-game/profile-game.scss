@@ -1,0 +1,13 @@
+@use "@angular/material" as mat;
+
+:root {
+  @include mat.slider-overrides(
+    (
+      disabled-active-track-color: orange,
+      disabled-handle-color: orange,
+      disabled-inactive-track-color: orange,
+      active-track-shape: 340px,
+      inactive-track-shape: 340px,
+    )
+  );
+}

@@ -83,6 +83,14 @@ export const routes: Routes = [
             './domain/transparency/containers/transparency/transparency'
           ).then((m) => m.Transparency),
       },
+      {
+        path: 'perfil-historico',
+        title: 'Perfil e Histórico - Oficina das Meninas',
+        loadComponent: () =>
+          import('./domain/profile/containers/profile-game/profile-game').then(
+            (m) => m.ProfileGame
+          ),
+      },
     ],
   },
 
