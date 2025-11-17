@@ -27,7 +27,7 @@
     target="_blank"
     rel="noopener"
     aria-label="Participar do evento {{ event()?.title }}"
-    class="!max-w-fit !min-w-fit">
+    class="!max-w-fit !min-h-fit !min-w-fit">
     Quero Participar
   </a>
   } @else if (event()) {
@@ -37,7 +37,7 @@
     disabledInteractive
     matTooltip="Evento já realizado"
     aria-label="Evento {{ event()?.title }} já foi realizado"
-    class="!max-w-fit !min-w-fit">
+    class="!max-w-fit !min-h-fit !min-w-fit">
     Quero Participar
   </button>
   }

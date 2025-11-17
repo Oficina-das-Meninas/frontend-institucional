@@ -1,12 +1,12 @@
 @if (
   link
 ) {<a [href]="link" target="_blank" class="flex gap-1 link">
-  <mat-icon class="min-w-fit" fontSet="material-symbols-rounded" class="!text-[var(--mat-sys-primary)]">{{ icon }}</mat-icon>
-  <p>{{ text }}</p>
+  <mat-icon fontSet="material-symbols-rounded" class="!min-w-fit !text-[var(--mat-sys-primary)] ">{{ icon }}</mat-icon>
+  <p class="break-all">{{ text }}</p>
 </a>
 } @else {
   <div class="flex gap-1">
-  <mat-icon class="min-w-fit" fontSet="material-symbols-rounded" class="!text-[var(--mat-sys-primary)]">{{ icon }}</mat-icon>
-  <p>{{ text }}</p>
+  <mat-icon fontSet="material-symbols-rounded" class=" !min-h-fit !text-[var(--mat-sys-primary)]">{{ icon }}</mat-icon>
+  <p class="break-all">{{ text }}</p>
   </div>
 }
