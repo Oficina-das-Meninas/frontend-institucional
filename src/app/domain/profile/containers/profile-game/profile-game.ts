@@ -1,8 +1,9 @@
-import { Component } from '@angular/core';
+import { Component, inject, signal, Signal } from '@angular/core';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DonationDescriptionCard } from '../../components/donation-description-card/donation-description-card';
 import { DonationDescriptionCardType } from '../../model/donation-description';
+import { UserDonations } from '../../services/user-donations';
 @Component({
   selector: 'app-profile-game',
   imports: [MatSliderModule, MatExpansionModule, DonationDescriptionCard],
@@ -11,37 +12,21 @@ import { DonationDescriptionCardType } from '../../model/donation-description';
 })
 export class ProfileGame {
   totalPoints: number = 0;
-  donations!: DonationDescriptionCardType[];
+  donations = signal<DonationDescriptionCardType[]>([]);
+  userDonationServices = inject(UserDonations);
 
   constructor() {}
 
   ngOnInit() {
-    this.donations = [
-      {
-        donationMethod: 'Credit Card',
-        value: 100,
-        pointsEarned: 50,
-        bonus: [
-          { description: 'First Donation Bonus', points: 10 },
-          { description: 'Loyalty Bonus', points: 5 },
-        ],
-        sequence: 1,
-      },
-      {
-        donationMethod: 'Bank Transfer',
-        value: 200,
-        pointsEarned: 100,
-        bonus: [{ description: 'High Value Donation Bonus', points: 20 }],
-        sequence: 2,
-      },
-    ];
+    this.userDonationServices
+      .getDonationPointsByUser('039cb804-e62b-4a04-9147-d7fb5e46ec95')
+      .subscribe({
+        next: (res) => {
+          console.log(res.data.contents);
+          this.donations.set([...res.data.contents]);
+        },
+      });
 
-    this.totalPoints = this.donations.reduce(
-      (acc, donation) =>
-        acc +
-        donation.pointsEarned +
-        donation.bonus.reduce((bAcc, b) => bAcc + b.points, 0),
-      0
-    );
+    this.totalPoints = 10;
   }
 }

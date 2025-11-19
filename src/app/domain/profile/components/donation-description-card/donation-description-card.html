@@ -15,10 +15,10 @@
         </div>
         <div>
           <p class="font-bold text-lg text-text-primary-light">
-            {{ donation.value | currency }}
+            {{ donation.donatedValue | currency: 'BRL' }}
           </p>
           <p class="text-sm font-medium text-green-600">
-            + {{ donation.pointsEarned }} pontos
+            + {{ donation.earnedPoints }} pontos
           </p>
         </div>
       </div>
@@ -37,29 +37,38 @@
       <div class="flex justify-between">
         <span class="text-text-secondary-light">Método de pagamento:</span>
         <span class="font-semibold text-text-primary-light"
-          >{{ donation.donationMethod }}</span
+          >{{ donation.paymentMethod }}</span
         >
       </div>
       <div class="flex justify-between">
         <span class="text-text-secondary-light">Pontuação:</span>
         <span class="font-semibold text-text-primary-light">
-          + {{ donation.pointsEarned }} pontos
+          + {{ donation.earnedPoints }} pontos
         </span>
       </div>
       <div class="flex justify-between">
         <span class="text-text-secondary-light">Bônus:</span>
         <div class="flex flex-col items-end">
-          @for (bonus of donation.bonus; track $index) {
-          <span class="font-semibold text-text-primary-light"
-            >+ {{ bonus.points }} pontos por {{ bonus.description }}</span
-          >
+          @if(donation.bonuses.firstDonationBonus) {
+          <span class="font-semibold text-text-primary-light">
+            + {{ donation.bonuses.firstDonationBonus }} pontos por primeira
+            doação
+          </span>
+          } @if(donation.bonuses.recurrenceBonus) {
+          <span class="font-semibold text-text-primary-light">
+            + {{ donation.bonuses.recurrenceBonus }} pontos por recorrência
+          </span>
+          } @if(donation.bonuses.donatedBonus) {
+          <span class="font-semibold text-text-primary-light">
+            + {{ donation.bonuses.donatedBonus }} pontos pelo valor doado
+          </span>
           }
         </div>
       </div>
       <div class="flex justify-between">
         <span class="text-text-secondary-light">Sequência:</span>
         <span class="font-semibold text-text-primary-light"
-          >🔥 {{ donation.sequence }}x</span
+          >🔥 {{ donation.recurrenceSequence }}x</span
         >
       </div>
     </div>
