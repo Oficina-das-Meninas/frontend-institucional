@@ -91,7 +91,7 @@
 
     <div>
       <div class="flex flex-col gap-4">
-        @for (donation of donations(); track donation.id) {
+        @for (donation of donations(); track $index) {
         <app-donation-description-card [donation]="donation" />
         }
       </div>

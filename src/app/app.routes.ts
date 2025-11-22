@@ -84,14 +84,25 @@ export const routes: Routes = [
           ).then((m) => m.Transparency),
       },
       {
-        path: 'perfil-historico',
-        title: 'Perfil e Histórico - Oficina das Meninas',
-        loadComponent: () =>
-          import('./domain/profile/containers/profile-game/profile-game').then(
-            (m) => m.ProfileGame
-          ),
+        path: 'usuario',
+        children: [
+          {
+            path: 'historico',
+            title: 'Perfil e Histórico - Oficina das Meninas',
+            loadComponent: () =>
+              import('./domain/user/containers/profile-game/profile-game').then(
+                (m) => m.ProfileGame
+              ),
+          },
+        ],
       },
     ],
+  },
+  {
+    path: 'login',
+    title: 'Login Usuário',
+    loadComponent: () =>
+      import('./domain/user/containers/login/login').then((m) => m.Login),
   },
 
   { path: '**', redirectTo: '' },
