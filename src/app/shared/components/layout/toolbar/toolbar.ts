@@ -1,4 +1,10 @@
-import { Component, ElementRef, ViewChild, ViewEncapsulation } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  inject,
+  ViewChild,
+  ViewEncapsulation,
+} from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -9,6 +15,7 @@ import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RouterLink } from '@angular/router';
 import { DropdownComponent } from '../../dropdown/dropdown';
+import { UserService } from '../../../../domain/user/services/user';
 
 @Component({
   selector: 'app-toolbar',
@@ -30,13 +37,24 @@ import { DropdownComponent } from '../../dropdown/dropdown';
   encapsulation: ViewEncapsulation.None,
 })
 export class Toolbar {
-  @ViewChild('drawerContainer', { static: false, read: ElementRef }) drawerContainerRef?: ElementRef;
+  @ViewChild('drawerContainer', { static: false, read: ElementRef })
+  drawerContainerRef?: ElementRef;
   @ViewChild('drawer') drawer!: MatSidenav;
+
+  userService = inject(UserService);
 
   toggleDrawer(): void {
     if (this.drawer) {
-      if (!this.drawer.opened && this.drawerContainerRef && this.drawerContainerRef.nativeElement) {
-        this.drawerContainerRef.nativeElement.style.setProperty('z-index', '51', 'important');
+      if (
+        !this.drawer.opened &&
+        this.drawerContainerRef &&
+        this.drawerContainerRef.nativeElement
+      ) {
+        this.drawerContainerRef.nativeElement.style.setProperty(
+          'z-index',
+          '51',
+          'important'
+        );
       }
       this.drawer.toggle();
 
@@ -61,5 +79,4 @@ export class Toolbar {
       this.drawer.close();
     }
   }
-
 }

@@ -4,7 +4,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { DonationDescriptionCard } from '../../components/donation-description-card/donation-description-card';
 import { DonationDescriptionCardType } from '../../model/donation-description';
-import { UserDonations } from '../../services/user-donations';
+import { UserService } from '../../services/user';
 
 @Component({
   selector: 'app-profile-game',
@@ -24,7 +24,7 @@ export class ProfileGame implements OnInit {
   hasMorePages = signal(true);
 
   donations = signal<DonationDescriptionCardType[]>([]);
-  userDonationServices = inject(UserDonations);
+  userService = inject(UserService);
 
   userId = '039cb804-e62b-4a04-9147-d7fb5e46ec95';
 
@@ -82,7 +82,7 @@ export class ProfileGame implements OnInit {
   }
 
   loadDonations() {
-    this.userDonationServices
+    this.userService
       .getDonationPointsByUser(this.userId, this.currentPage(), this.pageSize)
       .subscribe({
         next: (res) => {

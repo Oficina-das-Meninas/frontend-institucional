@@ -1,5 +1,6 @@
 import { Routes } from '@angular/router';
 import { eventDetailsResolver } from './domain/events/guards/event-details-resolver';
+import { authGuard } from './shared/guards/auth-guard';
 
 export const routes: Routes = [
   {
@@ -84,23 +85,20 @@ export const routes: Routes = [
           ).then((m) => m.Transparency),
       },
       {
-        path: 'usuario',
-        children: [
-          {
-            path: 'historico',
-            title: 'Perfil e Histórico - Oficina das Meninas',
-            loadComponent: () =>
-              import('./domain/user/containers/profile-game/profile-game').then(
-                (m) => m.ProfileGame
-              ),
-          },
-        ],
+        path: 'perfil',
+        canActivate: [authGuard],
+        title: 'Perfil e Histórico - Oficina das Meninas',
+        loadComponent: () =>
+          import('./domain/user/containers/profile-game/profile-game').then(
+            (m) => m.ProfileGame
+          ),
       },
     ],
   },
   {
     path: 'login',
     title: 'Login Usuário',
+    canActivate: [authGuard],
     loadComponent: () =>
       import('./domain/user/containers/login/login').then((m) => m.Login),
   },
