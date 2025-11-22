@@ -1,0 +1,99 @@
+<mat-expansion-panel
+  hideToggle
+  #panel
+  class="!bg-surface-light !rounded-lg !shadow-sm !mb-0 overflow-hidden"
+>
+  <mat-expansion-panel-header class="!h-auto !py-5 !px-4 md:!py-6 md:!px-6">
+    <div class="flex justify-between items-start w-full">
+      <div class="flex items-center gap-3 md:gap-4">
+        <div
+          style="background-color: #fce5e6; border-radius: 100%"
+          class="p-2 md:p-3 flex justify-center align-center rounded"
+        >
+          <span
+            class="material-icons text-primary text-xl md:text-2xl"
+            style="color: #ba005c"
+            >credit_card</span
+          >
+        </div>
+        <div>
+          <p
+            class="font-bold text-base md:text-lg text-text-light leading-tight"
+          >
+            {{ donation.donatedValue | currency : 'BRL' }}
+          </p>
+          <p class="text-xs md:text-sm text-green-600 font-semibold">
+            + {{ donation.earnedPoints }} pontos
+          </p>
+        </div>
+      </div>
+
+      <button class="text-subtext-light p-1">
+        <span
+          class="material-icons transition-transform duration-300"
+          [class.rotate-180]="panel.expanded"
+        >
+          expand_more
+        </span>
+      </button>
+    </div>
+  </mat-expansion-panel-header>
+
+  <div
+    class="border-t border-gray-200 pt-4 mx-4 md:mx-6 mb-4 md:mb-6 space-y-3 text-sm"
+  >
+    <div class="flex justify-between items-center">
+      <span class="text-subtext-light text-xs md:text-sm">Método:</span>
+      <span class="font-semibold text-text-light text-right text-xs md:text-sm">
+        {{ paymentLabels[donation.paymentMethod] || donation.paymentMethod }}
+      </span>
+    </div>
+
+    <div class="flex justify-between items-center">
+      <span class="text-subtext-light text-xs md:text-sm">Pontuação:</span>
+      <span class="font-semibold text-text-light text-right text-xs md:text-sm text-green-600">
+        + {{ donation.earnedPoints }} pontos
+      </span>
+    </div>
+
+    <div class="flex justify-between items-start gap-2">
+      <span class="text-subtext-light text-xs md:text-sm shrink-0">Bônus:</span>
+      <div class="text-right flex flex-col text-xs md:text-sm">
+        @if(donation.bonuses.firstDonationBonus) {
+        <span class="font-semibold text-text-light">
+          <span class="text-green-600"
+            >+ {{ donation.bonuses.firstDonationBonus }}</span
+          >
+          (1ª doação)
+        </span>
+        } @if(donation.bonuses.recurrenceBonus) {
+        <span class="font-semibold text-text-light">
+          <span class="text-green-600"
+            >+ {{ donation.bonuses.recurrenceBonus }}</span
+          >
+          (Recorrência)
+        </span>
+        } @if(donation.bonuses.donatedBonus) {
+        <span class="font-semibold text-text-light">
+          <span class="text-green-600">
+            + {{ donation.bonuses.donatedBonus }}
+          </span>
+          (Valor)
+        </span>
+        }
+      </div>
+    </div>
+
+    <div class="flex justify-between items-center">
+      <span class="text-subtext-light text-xs md:text-sm">Sequência:</span>
+      <div
+        class="flex items-center gap-1 font-semibold text-text-light text-xs md:text-sm"
+      >
+        <span class="material-icons text-orange-500 text-sm md:text-base"
+          >local_fire_department</span
+        >
+        <span>{{ donation.recurrenceSequence }}x</span>
+      </div>
+    </div>
+  </div>
+</mat-expansion-panel>
