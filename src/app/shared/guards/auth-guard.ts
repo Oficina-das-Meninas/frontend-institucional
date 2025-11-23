@@ -7,30 +7,33 @@ export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
   const authService = inject(UserService);
 
-  const isLoginPage = state.url.includes('/login');
+  const publicOnlyRoutes = ['/login', '/cadastro'];
+
+  const isPublicAuthRoute = publicOnlyRoutes.some((path) =>
+    state.url.includes(path)
+  );
 
   return authService.getSession().pipe(
     map((response) => {
       const user = response?.data?.username;
 
       if (user) {
-        if (isLoginPage) {
+        if (isPublicAuthRoute) {
           return router.parseUrl('/');
         }
         return true;
       }
 
-      if (isLoginPage) {
+      if (isPublicAuthRoute) {
         return true;
       }
 
       return router.parseUrl('/login');
     }),
     catchError(() => {
-      if (isLoginPage) {
+      if (isPublicAuthRoute) {
         return of(true);
       }
-
       return of(router.parseUrl('/login'));
     })
   );

@@ -3,7 +3,12 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { DonationDescriptionCardType } from '../model/donation-description';
 import { Observable, tap } from 'rxjs';
-import { LoginRequest, LoginResponse } from '../model/user-login';
+import {
+  CreateUserRequest,
+  LoginRequest,
+  LoginResponse,
+  UserResponse,
+} from '../model/user-login';
 import { ApiResponse } from '../../../shared/models/api-response';
 
 @Injectable({
@@ -48,6 +53,15 @@ export class UserService {
           this.userName.set(response.data.user.name);
         })
       );
+  }
+
+  createUserAccount(
+    data: CreateUserRequest
+  ): Observable<ApiResponse<UserResponse>> {
+    return this.httpClient.post<ApiResponse<UserResponse>>(
+      `${this.AUTH_URL}/signup`,
+      data
+    );
   }
 
   logout(): Observable<void> {

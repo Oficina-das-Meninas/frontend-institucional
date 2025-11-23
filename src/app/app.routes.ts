@@ -102,6 +102,13 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./domain/user/containers/login/login').then((m) => m.Login),
   },
+  {
+    path: 'cadastro',
+    title: 'Cadastro de Usuário',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./domain/user/containers/signup/signup').then((m) => m.SignUp),
+  },
 
   { path: '**', redirectTo: '' },
 ];
