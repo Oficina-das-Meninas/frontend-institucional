@@ -43,6 +43,13 @@ export class UserService {
     });
   }
 
+  getInfoLoggedUser(): Observable<ApiResponse<UserResponse>> {
+    return this.httpClient.get<ApiResponse<UserResponse>>(
+      `${this.API_URL}/me`,
+      { withCredentials: true }
+    );
+  }
+
   login(data: LoginRequest): Observable<ApiResponse<LoginResponse>> {
     return this.httpClient
       .post<ApiResponse<LoginResponse>>(`${this.AUTH_URL}/login`, data, {
