@@ -1,6 +1,6 @@
 export const environment = {
   production: false,
-  apiUrl: 'https://api-dev.apollomusic.com.br/api',
-  bucketUrl: 'https://files.apollomusic.com.br/oficinadasmeninasteste',
+  apiUrl: 'http://api-dev.oficinadasmeninas.com.br/api',
+  bucketUrl: 'http://files.oficinadasmeninas.org.br/oficinadasmeninasteste',
   captchaSiteKey: '6LdbC-grAAAAANM6iLnFAGJyJE1aOgq8Ba83gEeZ',
 };
