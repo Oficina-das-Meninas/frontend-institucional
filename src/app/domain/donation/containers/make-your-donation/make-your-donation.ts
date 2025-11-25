@@ -1,4 +1,10 @@
-import { AfterViewInit, Component, inject, OnInit } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  inject,
+  OnInit,
+  signal,
+} from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
@@ -13,7 +19,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { NgxMaskDirective } from 'ngx-mask';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { DonationService } from '../../service/donation.service';
 import { cpfValidator } from '../../../../shared/validators/document.validator';
 import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
@@ -22,6 +28,8 @@ import { environment } from '../../../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogSubscription } from '../../components/alert-dialog-subscription/alert-dialog-subscription';
 import { phoneValidator } from '../../../../shared/validators/phone.validator';
+import { UserService } from '../../../../domain/user/services/user';
+import { UserResponse } from '../../../../domain/user/model/user-login';
 
 @Component({
   selector: 'app-make-your-donation',
@@ -31,6 +39,7 @@ import { phoneValidator } from '../../../../shared/validators/phone.validator';
     ReactiveFormsModule,
     MatInputModule,
     NgxMaskDirective,
+    NgxMaskPipe, // Importante para usar o pipe no HTML (ex: user.phone | mask:...)
     MatButtonModule,
     CommonModule,
     FormsModule,
@@ -45,13 +54,19 @@ import { phoneValidator } from '../../../../shared/validators/phone.validator';
 export class MakeYourDonation implements AfterViewInit, OnInit {
   selectedAmount: number | null = null;
   captchaKey = environment.captchaSiteKey;
+
   userAuthenticated = false;
+  currentUser = signal<UserResponse | null>(null);
+
   form!: FormGroup;
+
   donationService = inject(DonationService);
+  userService = inject(UserService);
   route = inject(ActivatedRoute);
   formHelper = inject(FormHelperService);
-  loadingRequest = false;
   readonly dialog = inject(MatDialog);
+
+  loadingRequest = false;
 
   constructor() {
     this.form = new FormGroup({
@@ -75,6 +90,8 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
   }
 
   ngOnInit() {
+    this.checkUserSession();
+
     this.form.get('amount')?.valueChanges.subscribe((val) => {
       if (val !== null && val !== '' && Number(val) > 0) {
         this.selectedAmount = null;
@@ -91,9 +108,30 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
     }
   }
 
+  checkUserSession() {
+    this.userService.getInfoLoggedUser().subscribe({
+      next: (response) => {
+        if (response.data) {
+          this.userAuthenticated = true;
+          this.currentUser.set(response.data);
+
+          this.form.patchValue({
+            name: response.data.name,
+            email: response.data.email,
+            document: response.data.document,
+            phone: response.data.phone,
+          });
+        }
+      },
+      error: () => {
+        this.userAuthenticated = false;
+        this.currentUser.set(null);
+      },
+    });
+  }
+
   setSelectedAmount(value: number) {
     let currentAmount = Number(this.form.get('amount')?.value) || 0;
-
     const newAmount = currentAmount + value;
 
     this.form.patchValue({ amount: newAmount });
@@ -102,28 +140,12 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
     this.form.get('amount')?.markAsUntouched();
   }
 
-  onAmountInput(event: Event) {
-    const input = event.target as HTMLInputElement;
-    let value = input.value.replace(/\D/g, '');
-
-    while (value.length < 3) value = '0' + value;
-
-    const inteiro = value.slice(0, -2);
-    const decimais = value.slice(-2);
-
-    const newValue = `${inteiro},${decimais}`;
-
-    input.value = newValue;
-    this.form.get('amount')?.setValue(newValue, { emitEvent: false });
-  }
-
   onSubmit() {
     if (this.form.invalid) {
       this.form.markAllAsTouched();
       return;
     }
     const rawValue = this.form.getRawValue();
-
     const amountToSend = rawValue.amount ?? this.selectedAmount;
 
     if (!amountToSend || amountToSend <= 0) {
@@ -131,16 +153,19 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
       return;
     }
 
+    const rawPhone = rawValue.phone ? rawValue.phone.replace(/\D/g, '') : '';
+    const formattedPhone = '+55' + rawPhone;
+
+    // Correção do erro de TypeScript: Garante string, mesmo se undefined
+    const userId = this.currentUser()?.id ?? '';
+
     const donationRequest = {
       donor: {
         name: rawValue.name,
         email: rawValue.email,
         document: rawValue.document,
-        id: '',
-        phone:
-          '+55' +
-          rawValue.phone.substring(0, 2) +
-          rawValue.phone.substring(2).replace(/\D/g, ''),
+        id: userId,
+        phone: formattedPhone,
       },
       donation: {
         value: amountToSend,
@@ -183,7 +208,10 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
 
   openDialog() {
     if (!this.userAuthenticated) {
-      const modalRef = this.dialog.open(AlertDialogSubscription);
+      const modalRef = this.dialog.open(AlertDialogSubscription, {
+        autoFocus: false,
+      });
+
       modalRef.afterClosed().subscribe(() => {
         this.form.patchValue({ frequency: 'once' });
       });

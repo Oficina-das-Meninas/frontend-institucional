@@ -26,7 +26,7 @@ export const authInterceptor: HttpInterceptorFn = (
         !req.url.includes('/auth/logout') &&
         !req.url.includes('/sessions')
       ) {
-        if (router.url !== '/login') {
+        if (router.url.includes('/perfil')) {
           snackBar.open(
             'Sessão expirada ou acesso negado. Por favor, faça login novamente.',
             'Fechar',

@@ -98,10 +98,28 @@
 
       <div class="flex justify-end lg:justify-start lg:order-last">
         @if (userService.userName()) {
-        <a routerLink="/perfil" matButton="filled" class="text-center">
-          <span class="lg:hidden">Perfil</span>
-          <span class="hidden lg:inline">Acessar perfil</span>
-        </a>
+        <button
+          matButton="filled"
+          [matMenuTriggerFor]="profileMenu"
+          class="text-center flex items-center gap-2"
+        >
+          <span>Perfil</span>
+        </button>
+
+        <mat-menu
+          #profileMenu="matMenu"
+          yPosition="below"
+          class="text-sm glassy mdc-menu-panel toolbar-menu"
+        >
+          <a routerLink="/perfil" mat-menu-item>
+            <mat-icon>person</mat-icon>
+            <span>Acessar perfil</span>
+          </a>
+          <button (click)="logout()" mat-menu-item>
+            <mat-icon>logout</mat-icon>
+            <span>Sair</span>
+          </button>
+        </mat-menu>
         } @else {
         <a routerLink="/login" matButton="filled" class="text-center">
           <span class="lg:hidden">Entrar</span>

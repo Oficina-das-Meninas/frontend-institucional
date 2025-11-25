@@ -23,7 +23,6 @@ export class UserService {
   userName = signal<string | null>(null);
 
   getDonationPointsByUser(
-    userId: string,
     page: number = 0,
     pageSize: number = 5
   ) {
@@ -37,7 +36,7 @@ export class UserService {
         totalElements: number;
         totalPages: number;
       };
-    }>(`${this.API_URL}/${userId}/pontuations`, {
+    }>(`${this.API_URL}/pontuations`, {
       params,
       withCredentials: true,
     });

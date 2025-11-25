@@ -1,27 +1,47 @@
-import { Component } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
-
 import {
+  MatDialogActions,
   MatDialogClose,
   MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
 } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-alert-dialog-subscripition',
-  imports: [MatButtonModule, MatDialogContent, MatDialogClose],
+  selector: 'app-alert-dialog-subscription',
+  standalone: true,
+  imports: [
+    MatButtonModule,
+    MatDialogTitle,
+    MatDialogContent,
+    MatDialogActions,
+    MatDialogClose,
+  ],
   template: `
+    <h2 mat-dialog-title>Aviso</h2>
     <mat-dialog-content>
-      <h2 class="text-lg font-semibold">Aviso</h2>
-
-      <p class="dialog-message mt-4">
-        Para fazer uma doação recorrente, é necessário estar logado em uma
-        conta.
+      <p class="dialog-message">
+        Para fazer uma doação recorrente (mensal), é necessário estar logado em
+        uma conta.
       </p>
-      <div class="mt-4">
-        <button mat-button mat-dialog-close>Fechar</button>
-      </div>
     </mat-dialog-content>
+    <mat-dialog-actions align="end">
+      <button mat-button mat-dialog-close>Cancelar</button>
+      <button mat-flat-button color="primary" (click)="goToLogin()">
+        Fazer Login
+      </button>
+    </mat-dialog-actions>
   `,
   styleUrls: ['./alert-dialog-subscription.scss'],
 })
-export class AlertDialogSubscription {}
+export class AlertDialogSubscription {
+  readonly dialogRef = inject(MatDialogRef<AlertDialogSubscription>);
+  private router = inject(Router);
+
+  goToLogin() {
+    this.dialogRef.close();
+    this.router.navigate(['/login']);
+  }
+}

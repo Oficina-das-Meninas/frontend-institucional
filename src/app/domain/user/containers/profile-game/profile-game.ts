@@ -48,7 +48,6 @@ export class ProfileGame implements OnInit {
   pageSize = 5;
   hasMorePages = signal(true);
   donations = signal<DonationDescriptionCardType[]>([]);
-  userId = '039cb804-e62b-4a04-9147-d7fb5e46ec95';
 
   profileForm!: FormGroup;
   passwordForm!: FormGroup;
@@ -64,7 +63,6 @@ export class ProfileGame implements OnInit {
     this.userService.getInfoLoggedUser().subscribe({
       next: (res) => {
         const user = res.data;
-        this.userId = user.id;
         this.profileForm.patchValue({
           name: user.name,
           email: user.email,
@@ -147,7 +145,7 @@ export class ProfileGame implements OnInit {
 
   loadDonations() {
     this.userService
-      .getDonationPointsByUser(this.userId, this.currentPage(), this.pageSize)
+      .getDonationPointsByUser(this.currentPage(), this.pageSize)
       .subscribe({
         next: (res) => {
           this.donations.update((current) => [
