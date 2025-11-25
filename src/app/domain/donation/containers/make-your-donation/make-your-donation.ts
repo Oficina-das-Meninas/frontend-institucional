@@ -29,7 +29,7 @@ import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogSubscription } from '../../components/alert-dialog-subscription/alert-dialog-subscription';
 import { phoneValidator } from '../../../../shared/validators/phone.validator';
 import { UserService } from '../../../../domain/user/services/user';
-import { UserResponse } from '../../../../domain/user/model/user-login';
+import { UserResponse } from '../../../user/model/user-models';
 
 @Component({
   selector: 'app-make-your-donation',

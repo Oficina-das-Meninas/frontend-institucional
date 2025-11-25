@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { eventDetailsResolver } from './domain/events/guards/event-details-resolver';
 import { authGuard } from './shared/guards/auth-guard';
+import { ConfirmEmail } from './domain/user/containers/login/confirm-email/confirm-email';
 
 export const routes: Routes = [
   {
@@ -94,6 +95,23 @@ export const routes: Routes = [
           ),
       },
     ],
+  },
+  {
+    path: 'confirmar-email',
+    loadComponent: () =>
+      import('./domain/user/containers/login/confirm-email/confirm-email').then(
+        (m) => m.ConfirmEmail
+      ),
+  },
+  {
+    path: 'confirmacao-email',
+    canActivate: [authGuard],
+
+    title: 'Confirmação de Email',
+    loadComponent: () =>
+      import(
+        './domain/user/containers/signup/email-confirmation/email-confirmation'
+      ).then((m) => m.EmailConfirmation),
   },
   {
     path: 'login',

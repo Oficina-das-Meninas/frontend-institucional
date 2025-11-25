@@ -20,6 +20,7 @@ import { DonationDescriptionCard } from '../../components/donation-description-c
 import { DonationDescriptionCardType } from '../../model/donation-description';
 import { UserService } from '../../services/user';
 import { cpfValidator } from '../../../../shared/validators/document.validator';
+import { SponsorshipDto } from '../../model/user-models';
 
 @Component({
   selector: 'app-profile-game',
@@ -48,6 +49,10 @@ export class ProfileGame implements OnInit {
   pageSize = 5;
   hasMorePages = signal(true);
   donations = signal<DonationDescriptionCardType[]>([]);
+  subscription = signal<SponsorshipDto | null>(null);
+
+  showCancelModal = signal(false);
+  isCancelling = signal(false);
 
   profileForm!: FormGroup;
   passwordForm!: FormGroup;
@@ -60,17 +65,8 @@ export class ProfileGame implements OnInit {
 
   ngOnInit() {
     this.loadDonations();
-    this.userService.getInfoLoggedUser().subscribe({
-      next: (res) => {
-        const user = res.data;
-        this.profileForm.patchValue({
-          name: user.name,
-          email: user.email,
-          phone: user.phone,
-          cpf: user.document,
-        });
-      },
-    });
+    this.loadUserData();
+    this.loadSubscription();
   }
 
   initForms() {
@@ -143,6 +139,34 @@ export class ProfileGame implements OnInit {
     return `Faltam ${missing} pontos para o próximo nível`;
   });
 
+  loadUserData() {
+    this.userService.getInfoLoggedUser().subscribe({
+      next: (res) => {
+        const user = res.data;
+        this.profileForm.patchValue({
+          name: user.name,
+          email: user.email,
+          phone: user.phone,
+          cpf: user.document,
+        });
+      },
+    });
+  }
+
+  loadSubscription() {
+    this.userService.getRecurringSubscription().subscribe({
+      next: (res) => {
+        if (res.data) {
+          this.subscription.set(res.data);
+        }
+      },
+      error: (err) => {
+        console.log('Nenhuma assinatura encontrada ou erro ao buscar.', err);
+        this.subscription.set(null);
+      },
+    });
+  }
+
   loadDonations() {
     this.userService
       .getDonationPointsByUser(this.currentPage(), this.pageSize)
@@ -161,6 +185,30 @@ export class ProfileGame implements OnInit {
   onLoadMore() {
     this.currentPage.update((p) => p + 1);
     this.loadDonations();
+  }
+
+  onCancelSubscriptionClick() {
+    this.showCancelModal.set(true);
+  }
+
+  closeCancelModal() {
+    this.showCancelModal.set(false);
+  }
+
+  confirmCancellation() {
+    this.isCancelling.set(true);
+    this.userService.cancelRecurringSubscription().subscribe({
+      next: () => {
+        this.isCancelling.set(false);
+        this.closeCancelModal();
+        this.loadSubscription();
+      },
+      error: (err) => {
+        console.error('Erro ao cancelar assinatura', err);
+        this.isCancelling.set(false);
+        this.closeCancelModal();
+      },
+    });
   }
 
   private passwordMatchValidator(

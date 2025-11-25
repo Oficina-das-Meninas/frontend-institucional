@@ -380,11 +380,9 @@
           </div>
 
           <div
-            class="mt-8 flex flex-col md:flex-row justify-between items-center gap-4"
+            class="mt-8 flex flex-col md:flex-row justify-end items-center gap-4"
           >
-            <!-- <button mat-button color="warn" class="hover:underline">
-              Cancelar Assinatura
-            </button> -->
+            <!-- Cancel Button Removed from here -->
             <button
               mat-flat-button
               color="primary"
@@ -395,6 +393,137 @@
           </div>
         </div>
       </mat-tab>
+
+      <mat-tab label="Minha Assinatura">
+        <div class="mt-8 w-full max-w-4xl mx-auto">
+          <div class="mb-6">
+            <h1 class="text-3xl font-bold text-text-light">Minha Assinatura</h1>
+            <p class="text-subtext-light mt-2">
+              Aqui estão os detalhes da sua assinatura e apadrinhamento.
+            </p>
+          </div>
+
+          @if (subscription()) {
+          <div class="bg-surface-light rounded-lg shadow-sm p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+              <div>
+                <h3 class="text-sm font-medium text-subtext-light">
+                  Status da Assinatura
+                </h3>
+                <p
+                  class="text-lg font-medium flex items-center mt-1"
+                  [class]="subscription()?.isActive ? 'text-green-600' : 'text-red-600'"
+                >
+                  @if (subscription()?.isActive) {
+                  <mat-icon class="mr-2 text-xl align-middle"
+                    >check_circle</mat-icon
+                  >
+                  Ativa } @else {
+                  <mat-icon class="mr-2 text-xl align-middle">cancel</mat-icon>
+                  Cancelada }
+                </p>
+              </div>
+
+              <div>
+                <h3 class="text-sm font-medium text-subtext-light">
+                  Dia de Cobrança
+                </h3>
+                <p class="text-lg font-medium text-text-light mt-1">
+                  {{ subscription()?.billingDay }}
+                </p>
+              </div>
+
+              <div>
+                <h3 class="text-sm font-medium text-subtext-light">
+                  Data de Início
+                </h3>
+                <p class="text-lg font-medium text-text-light mt-1">
+                  {{ subscription()?.startDate | date : 'dd/MM/yyyy HH:mm' }}
+                </p>
+              </div>
+
+              <div>
+                <h3 class="text-sm font-medium text-subtext-light">
+                  Data de Cancelamento
+                </h3>
+                <p class="text-lg font-medium text-subtext-light mt-1">
+                  {{ (subscription()?.cancelDate | date : 'dd/MM/yyyy HH:mm') ||
+                  '--' }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 flex justify-start">
+            @if (subscription()?.isActive) {
+            <button
+              mat-button
+              color="warn"
+              class="font-medium hover:underline text-lg px-0"
+              (click)="onCancelSubscriptionClick()"
+            >
+              Cancelar Assinatura
+            </button>
+            }
+          </div>
+          } @else {
+          <div class="text-center py-12 bg-surface-light rounded-lg shadow-sm">
+            <mat-icon class="text-subtext-light text-5xl h-12 w-12 mb-4"
+              >sentiment_dissatisfied</mat-icon
+            >
+            <p class="text-lg text-subtext-light">
+              Nenhuma assinatura ativa encontrada.
+            </p>
+          </div>
+          }
+        </div>
+      </mat-tab>
     </mat-tab-group>
   </div>
+
+  @if (showCancelModal()) {
+  <div
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn"
+  >
+    <div
+      class="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 transform transition-all scale-100"
+    >
+      <div class="flex flex-col items-center text-center">
+        <div
+          class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-4"
+        >
+          <mat-icon class="text-red-600">sentiment_dissatisfied</mat-icon>
+        </div>
+        <h3 class="text-xl font-bold text-gray-900 mb-2">
+          Cancelar Assinatura?
+        </h3>
+        <p class="text-gray-500 mb-6">
+          Tem certeza que deseja cancelar? Sua doação recorrente fará muita
+          falta na instituição.
+        </p>
+        <div class="flex gap-3 w-full">
+          <button
+            (click)="closeCancelModal()"
+            [disabled]="isCancelling()"
+            class="flex-1 px-4 py-2 bg-[#C81E71] text-white rounded-lg hover:bg-[#A9125B] font-medium transition-colors shadow-sm disabled:opacity-50"
+          >
+            Não, voltar
+          </button>
+
+          <button
+            (click)="confirmCancellation()"
+            [disabled]="isCancelling()"
+            class="flex-1 px-4 py-2 border border-red-600 text-red-600 rounded-lg hover:bg-red-50 font-medium transition-colors disabled:opacity-50 flex items-center justify-center bg-transparent"
+          >
+            @if(isCancelling()) {
+            <span
+              class="mr-2 h-4 w-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin"
+            ></span>
+            } Sim, cancelar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  }
 </div>

@@ -29,3 +29,12 @@ export interface UserResponse {
   document: string;
   phone: string;
 }
+
+
+export interface SponsorshipDto {
+  id: string;
+  billingDay: number;
+  startDate: string;
+  isActive: boolean;
+  cancelDate?: string;
+}

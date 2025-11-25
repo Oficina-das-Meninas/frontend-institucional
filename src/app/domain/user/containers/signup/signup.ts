@@ -84,7 +84,7 @@ export class SignUp {
 
     this.userService.createUserAccount(payload).subscribe({
       next: () => {
-        this.router.navigate(['/login']);
+        this.router.navigate(['/confirmacao-email']);
       },
       error: () => {
         this.loadingRequest = false;
