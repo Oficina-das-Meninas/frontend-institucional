@@ -156,7 +156,6 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
     const rawPhone = rawValue.phone ? rawValue.phone.replace(/\D/g, '') : '';
     const formattedPhone = '+55' + rawPhone;
 
-    // Correção do erro de TypeScript: Garante string, mesmo se undefined
     const userId = this.currentUser()?.id ?? '';
 
     const donationRequest = {
@@ -178,7 +177,7 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
 
     this.donationService.sendDonation(donationRequest).subscribe({
       next: (response) => {
-        window.open(response.data.checkoutLink, '_blank');
+        window.location.href = response.data.checkoutLink;
       },
       error: (error) => {
         console.error('Error processing donation:', error);
