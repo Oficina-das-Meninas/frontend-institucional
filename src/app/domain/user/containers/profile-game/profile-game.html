@@ -42,7 +42,9 @@
                     >local_fire_department</span
                   >
                   <span class="font-bold text-orange-700">
-                    {{ donations()[0]?.recurrenceSequence || 0 }} meses
+                    {{ donations()[0]?.recurrenceSequence || 0 }} {{
+                    donations()[0]?.recurrenceSequence === 1 ? 'mês' : 'meses'
+                    }}
                   </span>
                 </div>
                 <div

@@ -156,9 +156,7 @@ export class ProfileGame implements OnInit {
   loadSubscription() {
     this.userService.getRecurringSubscription().subscribe({
       next: (res) => {
-        if (res.data) {
-          this.subscription.set(res.data);
-        }
+        this.subscription.set(res.data || null);
       },
       error: (err) => {
         console.log('Nenhuma assinatura encontrada ou erro ao buscar.', err);
@@ -201,12 +199,14 @@ export class ProfileGame implements OnInit {
       next: () => {
         this.isCancelling.set(false);
         this.closeCancelModal();
-        this.loadSubscription();
       },
       error: (err) => {
         console.error('Erro ao cancelar assinatura', err);
         this.isCancelling.set(false);
         this.closeCancelModal();
+      },
+      complete: () => {
+        this.loadSubscription();
       },
     });
   }
