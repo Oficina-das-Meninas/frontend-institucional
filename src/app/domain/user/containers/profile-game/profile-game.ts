@@ -71,10 +71,10 @@ export class ProfileGame implements OnInit {
 
   initForms() {
     this.profileForm = this.fb.group({
-      name: ['Ana da Silva', [Validators.required, Validators.minLength(3)]],
-      email: ['ana.silva@email.com', [Validators.required, Validators.email]],
-      phone: ['(16) 99123-4567', [Validators.required]],
-      cpf: ['123.456.789-00', [Validators.required, cpfValidator()]],
+      name: ['', [Validators.required, Validators.minLength(3)]],
+      email: ['', [Validators.required, Validators.email]],
+      phone: ['', [Validators.required]],
+      cpf: ['', [Validators.required, cpfValidator()]],
     });
 
     this.passwordForm = this.fb.group(
