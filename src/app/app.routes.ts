@@ -110,6 +110,23 @@ export const routes: Routes = [
     loadComponent: () =>
       import('./domain/user/containers/signup/signup').then((m) => m.SignUp),
   },
-
+  {
+    path: 'esqueci-senha',
+    title: 'Recuperar Senha - Oficina das Meninas',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./domain/user/containers/forgot-password/forgot-password').then(
+        (m) => m.ForgotPassword
+      ),
+  },
+  {
+    path: 'alterar-senha',
+    title: 'Redefinir Senha - Oficina das Meninas',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./domain/user/containers/reset-password/reset-password').then(
+        (m) => m.ResetPassword
+      ),
+  },
   { path: '**', redirectTo: '' },
 ];
