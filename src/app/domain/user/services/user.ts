@@ -2,7 +2,7 @@ import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { DonationDescriptionCardType } from '../model/donation-description';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, of, tap } from 'rxjs';
 import {
   CreateUserRequest,
   LoginRequest,
@@ -19,7 +19,7 @@ export class UserService {
   private readonly API_URL = `${environment.apiUrl}/users`;
   private readonly AUTH_URL = `${environment.apiUrl}/auth`;
   private readonly SESSION_URL = `${environment.apiUrl}/sessions`;
-  private readonly DONATION_URL = `${environment.apiUrl}/donations`; // Endpoint for donations
+  private readonly DONATION_URL = `${environment.apiUrl}/donations`;
   private httpClient = inject(HttpClient);
 
   userName = signal<string | null>(null);
@@ -79,7 +79,7 @@ export class UserService {
       );
   }
 
-  getSession(): Observable<ApiResponse<{ username: string }>> {
+  getSession(): Observable<ApiResponse<{ username: string }> | null> {
     return this.httpClient
       .get<ApiResponse<{ username: string }>>(this.SESSION_URL, {
         withCredentials: true,
@@ -87,6 +87,10 @@ export class UserService {
       .pipe(
         tap((response) => {
           this.userName.set(response.data.username);
+        }),
+        catchError(() => {
+          this.userName.set(null);
+          return of(null);
         })
       );
   }

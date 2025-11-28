@@ -12,10 +12,13 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { CommonModule } from '@angular/common';
 import {
+  AbstractControl,
   FormControl,
   FormGroup,
   FormsModule,
   ReactiveFormsModule,
+  ValidationErrors,
+  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
@@ -31,6 +34,18 @@ import { phoneValidator } from '../../../../shared/validators/phone.validator';
 import { UserService } from '../../../../domain/user/services/user';
 import { UserResponse } from '../../../user/model/user-models';
 
+// Validador customizado para valor mínimo em moeda string
+function minCurrencyValue(min: number): ValidatorFn {
+  return (control: AbstractControl): ValidationErrors | null => {
+    if (!control.value) return null;
+    // Remove pontos e substitui vírgula por ponto para converter
+    const numericValue = Number(
+      control.value.toString().replace(/\./g, '').replace(',', '.')
+    );
+    return numericValue >= min ? null : { min: { min, actual: numericValue } };
+  };
+}
+
 @Component({
   selector: 'app-make-your-donation',
   standalone: true,
@@ -39,7 +54,7 @@ import { UserResponse } from '../../../user/model/user-models';
     ReactiveFormsModule,
     MatInputModule,
     NgxMaskDirective,
-    NgxMaskPipe, // Importante para usar o pipe no HTML (ex: user.phone | mask:...)
+    NgxMaskPipe,
     MatButtonModule,
     CommonModule,
     FormsModule,
@@ -83,7 +98,7 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
         Validators.required,
         phoneValidator(),
       ]),
-      amount: new FormControl<number | null>(null, [Validators.min(1)]),
+      amount: new FormControl<string | null>(null, [minCurrencyValue(1)]),
       frequency: new FormControl<string>('once', [Validators.required]),
       recaptcha: new FormControl<string>(null!, [Validators.required]),
     });
@@ -93,7 +108,10 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
     this.checkUserSession();
 
     this.form.get('amount')?.valueChanges.subscribe((val) => {
-      if (val !== null && val !== '' && Number(val) > 0) {
+      const numericVal = val
+        ? Number(val.replace(/\./g, '').replace(',', '.'))
+        : 0;
+      if (val !== null && val !== '' && numericVal > 0) {
         this.selectedAmount = null;
       }
     });
@@ -104,8 +122,30 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
 
     if (valor) {
       this.selectedAmount = null;
-      this.form.patchValue({ amount: valor });
+      const formatted = Number(valor).toLocaleString('pt-BR', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2,
+      });
+      this.form.patchValue({ amount: formatted });
     }
+  }
+
+  formatCurrency(event: any) {
+    let value = event.target.value.replace(/\D/g, '');
+
+    if (!value) {
+      this.form.get('amount')?.setValue(null);
+      return;
+    }
+
+    const numericValue = Number(value) / 100;
+
+    const formatted = numericValue.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+    this.form.get('amount')?.setValue(formatted);
   }
 
   checkUserSession() {
@@ -131,10 +171,19 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
   }
 
   setSelectedAmount(value: number) {
-    let currentAmount = Number(this.form.get('amount')?.value) || 0;
+    const currentString = this.form.get('amount')?.value || '0';
+    const currentAmount = Number(
+      currentString.toString().replace(/\./g, '').replace(',', '.')
+    );
+
     const newAmount = currentAmount + value;
 
-    this.form.patchValue({ amount: newAmount });
+    const formatted = newAmount.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+    this.form.patchValue({ amount: formatted });
     this.selectedAmount = null;
     this.form.get('amount')?.markAsPristine();
     this.form.get('amount')?.markAsUntouched();
@@ -146,7 +195,15 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
       return;
     }
     const rawValue = this.form.getRawValue();
-    const amountToSend = rawValue.amount ?? this.selectedAmount;
+
+    let amountToSend = 0;
+    if (rawValue.amount) {
+      amountToSend = Number(
+        rawValue.amount.toString().replace(/\./g, '').replace(',', '.')
+      );
+    } else if (this.selectedAmount) {
+      amountToSend = this.selectedAmount;
+    }
 
     if (!amountToSend || amountToSend <= 0) {
       this.form.get('amount')?.setErrors({ required: true });

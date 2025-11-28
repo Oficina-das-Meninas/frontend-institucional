@@ -46,7 +46,9 @@
               class="flex items-center justify-center text-white tracking-tight"
             >
               <span class="text-lg font-bold">Quanto puder</span>
-              <mat-icon class="text-4xl! w-[5rem]! h-[3.5rem]! mt-2">favorite</mat-icon>
+              <mat-icon class="text-4xl! w-[5rem]! h-[3.5rem]! mt-2"
+                >favorite</mat-icon
+              >
             </span>
           </div>
         </div>
@@ -59,12 +61,10 @@
             <span matTextPrefix class="text-white">R$&nbsp;</span>
             <input
               matInput
-              type="text"
-              mask="separator.2"
-              thousandSeparator="."
-              decimalMarker=","
+              type="tel"
               [value]="inputValue()"
-              (input)="inputValue.set($event.target.value)"
+              (input)="formatCurrency($event)"
+              maxlength="18"
             />
           </mat-form-field>
         </span>
@@ -105,13 +105,16 @@
         Como as doações são utilizadas
       </h2>
       <p class="text-white text-base lg:text-xl leading-relaxed mb-6 px-6">
-        As doações sustentam as principais ações do Centro Cultural e Assistencial
-        Oficina das Meninas. Os recursos são aplicados em transporte, alimentação,
-        materiais pedagógicos e atividades culturais, além de apoiar projetos
-        educativos, parcerias com voluntários e o trabalho de nossos colaboradores,
-        que tornam possível o funcionamento e o impacto social da instituição.
+        As doações sustentam as principais ações do Centro Cultural e
+        Assistencial Oficina das Meninas. Os recursos são aplicados em
+        transporte, alimentação, materiais pedagógicos e atividades culturais,
+        além de apoiar projetos educativos, parcerias com voluntários e o
+        trabalho de nossos colaboradores, que tornam possível o funcionamento e
+        o impacto social da instituição.
       </p>
-      <button matButton="filled" routerLink="/transparencia">Ir para o portal da transparência</button>
+      <button matButton="filled" routerLink="/transparencia">
+        Ir para o portal da transparência
+      </button>
     </div>
   </div>
 </div>

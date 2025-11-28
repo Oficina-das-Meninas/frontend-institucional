@@ -153,14 +153,14 @@
       <mat-form-field appearance="outline" class="w-full" floatLabel="always">
         <mat-label>Ou digite um valor</mat-label>
         <span matPrefix class="px-4">R$&nbsp;</span>
+
         <input
           formControlName="amount"
           matInput
           placeholder="0,00"
-          type="text"
-          mask="separator.2"
-          thousandSeparator="."
-          decimalMarker=","
+          type="tel"
+          (input)="formatCurrency($event)"
+          maxlength="18"
         />
         @if(formHelper.getErrorMessage(form, 'amount')) {
         <mat-error>{{ formHelper.getErrorMessage(form, 'amount') }}</mat-error>
