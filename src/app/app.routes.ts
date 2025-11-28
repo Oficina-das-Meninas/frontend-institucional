@@ -98,7 +98,7 @@ export const routes: Routes = [
   {
     path: 'confirmar-email',
     loadComponent: () =>
-      import('./domain/user/containers/login/confirm-email/confirm-email').then(
+      import('./domain/user/containers/confirm-email/confirm-email').then(
         (m) => m.ConfirmEmail
       ),
   },
@@ -109,7 +109,7 @@ export const routes: Routes = [
     title: 'Confirmação de Email',
     loadComponent: () =>
       import(
-        './domain/user/containers/signup/email-confirmation/email-confirmation'
+        './domain/user/containers/email-confirmation/email-confirmation'
       ).then((m) => m.EmailConfirmation),
   },
   {

@@ -5,7 +5,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
-import { AuthService } from '../../../../../shared/services/auth/auth';
+import { AuthService } from '../../../../shared/services/auth/auth';
 
 @Component({
   selector: 'app-confirm-email',
