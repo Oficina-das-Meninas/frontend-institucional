@@ -16,6 +16,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { Router, RouterLink } from '@angular/router';
 import { DropdownComponent } from '../../dropdown/dropdown';
 import { UserService } from '../../../../domain/user/services/user';
+import { AuthService } from '../../../services/auth/auth';
 
 @Component({
   selector: 'app-toolbar',
@@ -41,7 +42,7 @@ export class Toolbar {
   drawerContainerRef?: ElementRef;
   @ViewChild('drawer') drawer!: MatSidenav;
 
-  userService = inject(UserService);
+  authService = inject(AuthService);
   router = inject(Router);
 
   toggleDrawer(): void {
@@ -82,14 +83,13 @@ export class Toolbar {
   }
 
   logout(): void {
-    this.userService.logout().subscribe({
+    this.authService.logout().subscribe({
       next: () => {
-        this.router.navigate(['/login']); // Redireciona para login ou home após sair
+        this.router.navigate(['/login']);
       },
       error: (err) => {
         console.error('Erro ao fazer logout', err);
-        // Mesmo com erro, força o redirecionamento local se necessário
-        this.userService.userName.set(null);
+        this.authService.userName.set(null);
         this.router.navigate(['/login']);
       },
     });

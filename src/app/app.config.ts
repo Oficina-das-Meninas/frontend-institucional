@@ -15,9 +15,10 @@ import { routes } from './app.routes';
 import { authInterceptor } from './shared/interceptors/auth-interceptor';
 import { UserService } from './domain/user/services/user';
 import { lastValueFrom } from 'rxjs';
+import { AuthService } from './shared/services/auth/auth';
 
-function initializeUser(userService: UserService) {
-  return () => lastValueFrom(userService.getSession());
+function initializeUser(authService: AuthService) {
+  return () => lastValueFrom(authService.getSession());
 }
 
 export const appConfig: ApplicationConfig = {

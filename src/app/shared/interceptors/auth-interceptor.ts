@@ -8,14 +8,14 @@ import {
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { UserService } from '../../domain/user/services/user';
+import { AuthService } from '../services/auth/auth';
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<any>,
   next: HttpHandlerFn
 ) => {
   const router = inject(Router);
-  const userService = inject(UserService);
+  const authService = inject(AuthService);
   const snackBar = inject(MatSnackBar);
 
   return next(req).pipe(
@@ -38,13 +38,13 @@ export const authInterceptor: HttpInterceptorFn = (
             }
           );
 
-          userService.logout().subscribe({
+          authService.logout().subscribe({
             complete: () => {
-              userService.userName.set(null);
+              authService.userName.set(null);
               router.navigate(['/login']);
             },
             error: () => {
-              userService.userName.set(null);
+              authService.userName.set(null);
               router.navigate(['/login']);
             },
           });

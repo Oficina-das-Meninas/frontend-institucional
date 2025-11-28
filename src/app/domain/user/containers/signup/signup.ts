@@ -17,6 +17,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { cpfValidator } from '../../../../shared/validators/document.validator';
+import { AuthService } from '../../../../shared/services/auth/auth';
 
 @Component({
   selector: 'app-signup',
@@ -40,7 +41,7 @@ import { cpfValidator } from '../../../../shared/validators/document.validator';
 export class SignUp {
   form!: FormGroup;
   formHelper = inject(FormHelperService);
-  userService = inject(UserService);
+  authService = inject(AuthService);
   router = inject(Router);
   snackBar = inject(MatSnackBar);
 
@@ -82,7 +83,7 @@ export class SignUp {
       password: rawValue.password,
     };
 
-    this.userService.createUserAccount(payload).subscribe({
+    this.authService.createUserAccount(payload).subscribe({
       next: () => {
         this.router.navigate(['/confirmacao-email']);
       },

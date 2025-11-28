@@ -6,6 +6,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { UserService } from '../../../services/user';
+import { AuthService } from '../../../../../shared/services/auth/auth';
 
 @Component({
   selector: 'app-confirm-email',
@@ -23,7 +24,7 @@ import { UserService } from '../../../services/user';
 export class ConfirmEmail implements OnInit {
   private route = inject(ActivatedRoute);
   private router = inject(Router);
-  private userService = inject(UserService);
+  private authService = inject(AuthService);
   private snackBar = inject(MatSnackBar);
 
   status = signal<'loading' | 'success' | 'error'>('loading');
@@ -42,7 +43,7 @@ export class ConfirmEmail implements OnInit {
   }
 
   verifyToken(token: string) {
-    this.userService.verifyUserEmail(token).subscribe({
+    this.authService.verifyUserEmail(token).subscribe({
       next: () => {
         this.status.set('success');
 

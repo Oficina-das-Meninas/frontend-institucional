@@ -97,7 +97,7 @@
       </div>
 
       <div class="flex justify-end lg:justify-start lg:order-last">
-        @if (userService.userName()) {
+        @if (authService.userName()) {
         <button
           matButton="filled"
           [matMenuTriggerFor]="profileMenu"
