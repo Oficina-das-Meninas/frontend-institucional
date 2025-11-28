@@ -86,7 +86,7 @@ export class ForgotPassword {
           } else if (status === 400) {
             message = 'E-mail inválido. Verifique e tente novamente.';
           } else if (status === 401) {
-            message = 'Não autenticado. Por favor, faça login primeiro.';
+            message = 'Erro de autenticação. Tente novamente mais tarde.';
           }
         }
 
