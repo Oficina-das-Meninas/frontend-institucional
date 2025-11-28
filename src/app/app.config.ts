@@ -38,7 +38,7 @@ export const appConfig: ApplicationConfig = {
       provide: APP_INITIALIZER,
       useFactory: initializeUser,
       multi: true,
-      deps: [UserService],
+      deps: [AuthService],
     },
   ],
 };
