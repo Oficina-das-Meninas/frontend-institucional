@@ -34,11 +34,9 @@ import { phoneValidator } from '../../../../shared/validators/phone.validator';
 import { UserService } from '../../../../domain/user/services/user';
 import { UserResponse } from '../../../user/model/user-models';
 
-// Validador customizado para valor mínimo em moeda string
 function minCurrencyValue(min: number): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
     if (!control.value) return null;
-    // Remove pontos e substitui vírgula por ponto para converter
     const numericValue = Number(
       control.value.toString().replace(/\./g, '').replace(',', '.')
     );
