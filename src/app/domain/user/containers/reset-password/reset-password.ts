@@ -154,6 +154,7 @@ export class ResetPassword implements OnInit {
             }
           );
 
+          this.loadingRequest.set(false);
           setTimeout(() => {
             this.router.navigate(['/login']);
           }, 2000);
