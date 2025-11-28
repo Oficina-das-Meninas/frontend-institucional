@@ -87,8 +87,13 @@ export class SignUp {
       next: () => {
         this.router.navigate(['/confirmacao-email']);
       },
-      error: () => {
+      error: (err) => {
         this.loadingRequest = false;
+        this.snackBar.open(
+          'Não foi possível realizar o cadastro. Verifique os dados e tente novamente.',
+          'Fechar',
+          { duration: 5000 }
+        );
       },
       complete: () => {
         this.loadingRequest = false;
