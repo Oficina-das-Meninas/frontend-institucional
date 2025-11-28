@@ -1,7 +1,6 @@
 import { Routes } from '@angular/router';
 import { eventDetailsResolver } from './domain/events/guards/event-details-resolver';
 import { authGuard } from './shared/guards/auth-guard';
-import { ConfirmEmail } from './domain/user/containers/login/confirm-email/confirm-email';
 
 export const routes: Routes = [
   {
