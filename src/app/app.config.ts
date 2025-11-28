@@ -13,7 +13,6 @@ import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { routes } from './app.routes';
 import { authInterceptor } from './shared/interceptors/auth-interceptor';
-import { UserService } from './domain/user/services/user';
 import { lastValueFrom } from 'rxjs';
 import { AuthService } from './shared/services/auth/auth';
 
