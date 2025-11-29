@@ -16,7 +16,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../services/user';
+import { AuthService } from '../../../../shared/services/auth/auth';
 
 @Component({
   selector: 'app-reset-password',
@@ -37,7 +37,7 @@ import { UserService } from '../../services/user';
 export class ResetPassword implements OnInit {
   form!: FormGroup;
   formHelper = inject(FormHelperService);
-  userService = inject(UserService);
+  authService = inject(AuthService);
   router = inject(Router);
   snackBar = inject(MatSnackBar);
   route = inject(ActivatedRoute);
@@ -79,7 +79,7 @@ export class ResetPassword implements OnInit {
         return;
       }
 
-      this.userService.verifyEmail(this.token).subscribe({
+      this.authService.verifyEmail(this.token).subscribe({
         next: () => {
           this.tokenValid.set(true);
           this.validatingToken.set(false);
@@ -111,9 +111,7 @@ export class ResetPassword implements OnInit {
     });
   }
 
-  passwordMatchValidator(
-    control: AbstractControl
-  ): ValidationErrors | null {
+  passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
 
@@ -139,7 +137,7 @@ export class ResetPassword implements OnInit {
     this.loadingRequest.set(true);
     const { password } = this.form.getRawValue();
 
-    this.userService
+    this.authService
       .resetPassword(this.token, { newPassword: password })
       .subscribe({
         next: () => {
@@ -162,7 +160,8 @@ export class ResetPassword implements OnInit {
         error: (err: unknown) => {
           console.error('Erro ao resetar senha:', err);
 
-          let message = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
+          let message =
+            'Ocorreu um erro inesperado. Tente novamente mais tarde.';
 
           if (err instanceof Object && 'status' in err) {
             const status = (err as Record<string, unknown>)['status'];

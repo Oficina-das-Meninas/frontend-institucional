@@ -15,6 +15,7 @@ import { Router, RouterLink } from '@angular/router';
 import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user';
+import { AuthService } from '../../../../shared/services/auth/auth';
 
 @Component({
   selector: 'app-forgot-password',
@@ -35,7 +36,7 @@ import { UserService } from '../../services/user';
 export class ForgotPassword {
   form!: FormGroup;
   formHelper = inject(FormHelperService);
-  userService = inject(UserService);
+  authService = inject(AuthService);
   router = inject(Router);
   snackBar = inject(MatSnackBar);
 
@@ -60,7 +61,7 @@ export class ForgotPassword {
     this.loadingRequest.set(true);
     const { email } = this.form.getRawValue();
 
-    this.userService.forgotPassword(email).subscribe({
+    this.authService.forgotPassword(email).subscribe({
       next: () => {
         this.emailSent.set(true);
         this.snackBar.open(

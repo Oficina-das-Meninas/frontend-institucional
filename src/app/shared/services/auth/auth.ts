@@ -74,4 +74,38 @@ export class AuthService {
       params,
     });
   }
+
+  forgotPassword(email: string): Observable<ApiResponse<void>> {
+    return this.httpClient.get<ApiResponse<void>>(
+      `${this.AUTH_URL}/forgot-password`,
+      {
+        params: { email },
+        withCredentials: true,
+      }
+    );
+  }
+
+  verifyEmail(token: string): Observable<ApiResponse<void>> {
+    return this.httpClient.get<ApiResponse<void>>(
+      `${this.AUTH_URL}/verify-email`,
+      {
+        params: { token },
+        withCredentials: true,
+      }
+    );
+  }
+
+  resetPassword(
+    token: string,
+    resetPasswordDto: { newPassword: string }
+  ): Observable<ApiResponse<void>> {
+    return this.httpClient.post<ApiResponse<void>>(
+      `${this.AUTH_URL}/reset-password`,
+      resetPasswordDto,
+      {
+        params: { token },
+        withCredentials: true,
+      }
+    );
+  }
 }

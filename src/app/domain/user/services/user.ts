@@ -14,7 +14,6 @@ export class UserService {
   private readonly DONATION_URL = `${environment.apiUrl}/donations`;
   private httpClient = inject(HttpClient);
 
-
   getInfoLoggedUser(): Observable<ApiResponse<UserResponse>> {
     return this.httpClient.get<ApiResponse<UserResponse>>(
       `${this.API_URL}/me`,
@@ -50,39 +49,5 @@ export class UserService {
     return this.httpClient.delete<void>(`${this.DONATION_URL}/recurring`, {
       withCredentials: true,
     });
-  }
-
-  forgotPassword(email: string): Observable<ApiResponse<void>> {
-    return this.httpClient.get<ApiResponse<void>>(
-      `${this.AUTH_URL}/forgot-password`,
-      {
-        params: { email },
-        withCredentials: true,
-      }
-    );
-  }
-
-  verifyEmail(token: string): Observable<ApiResponse<void>> {
-    return this.httpClient.get<ApiResponse<void>>(
-      `${this.AUTH_URL}/verify-email`,
-      {
-        params: { token },
-        withCredentials: true,
-      }
-    );
-  }
-
-  resetPassword(
-    token: string,
-    resetPasswordDto: { newPassword: string }
-  ): Observable<ApiResponse<void>> {
-    return this.httpClient.post<ApiResponse<void>>(
-      `${this.AUTH_URL}/reset-password`,
-      resetPasswordDto,
-      {
-        params: { token },
-        withCredentials: true,
-      }
-    );
   }
 }
