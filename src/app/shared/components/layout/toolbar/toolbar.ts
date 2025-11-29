@@ -13,9 +13,10 @@ import { MatMenuModule } from '@angular/material/menu';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSidenav, MatSidenavModule } from '@angular/material/sidenav';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { DropdownComponent } from '../../dropdown/dropdown';
 import { UserService } from '../../../../domain/user/services/user';
+import { AuthService } from '../../../services/auth/auth';
 
 @Component({
   selector: 'app-toolbar',
@@ -41,7 +42,8 @@ export class Toolbar {
   drawerContainerRef?: ElementRef;
   @ViewChild('drawer') drawer!: MatSidenav;
 
-  userService = inject(UserService);
+  authService = inject(AuthService);
+  router = inject(Router);
 
   toggleDrawer(): void {
     if (this.drawer) {
@@ -78,5 +80,18 @@ export class Toolbar {
     if (this.drawer && this.drawer.opened) {
       this.drawer.close();
     }
+  }
+
+  logout(): void {
+    this.authService.logout().subscribe({
+      next: () => {
+        this.router.navigate(['/login']);
+      },
+      error: (err) => {
+        console.error('Erro ao fazer logout', err);
+        this.authService.userName.set(null);
+        this.router.navigate(['/login']);
+      },
+    });
   }
 }

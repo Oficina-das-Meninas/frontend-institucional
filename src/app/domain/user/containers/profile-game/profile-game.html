@@ -1,113 +1,530 @@
-<div
-  class="flex flex-col gap-8 md:gap-12 justify-center items-center bg-gradient py-12 md:py-35 px-4 mt-20"
->
+<div class="flex flex-col min-h-screen bg-gradient pt-24 pb-12 w-full">
+  <div class="container mx-auto px-4 md:px-6 w-full max-w-5xl">
+    <mat-tab-group
+      animationDuration="300ms"
+      mat-stretch-tabs="false"
+      mat-align-tabs="start"
+      class="w-full profile-tabs mt-25"
+    >
+      <mat-tab label="Histórico de Doações">
+        <div class="mt-8 w-full animate-fadeIn">
+          <div
+            class="bg-surface-light rounded-lg shadow-md p-5 md:p-8 mb-8 w-full"
+          >
+            <div
+              class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6"
+            >
+              <div class="flex items-center gap-6">
+                <div
+                  class="bg-[#fce5e6] rounded-lg p-2 flex items-center justify-center shrink-0"
+                >
+                  <img
+                    [alt]="'Imagem do nível ' + levelData().name"
+                    class="w-20 h-20 md:w-28 md:h-28 object-contain"
+                    [src]="levelData().image"
+                  />
+                </div>
+                <div>
+                  <p class="text-xs md:text-sm text-subtext-light">Padrinho</p>
+                  <h1
+                    class="text-3xl md:text-4xl font-bold text-text-light break-words"
+                  >
+                    {{ levelData().name }}
+                  </h1>
+                </div>
+              </div>
+
+              <div class="w-full md:w-auto flex gap-4">
+                <div
+                  class="flex items-center justify-center gap-2 bg-orange-50 border border-orange-200 p-3 rounded-xl shadow-sm"
+                >
+                  <span class="material-icons text-orange-500"
+                    >local_fire_department</span
+                  >
+                  <span class="font-bold text-orange-700">
+                    {{ donations()[0]?.recurrenceSequence || 0 }} {{
+                    donations()[0]?.recurrenceSequence === 1 ? 'mês' : 'meses'
+                    }}
+                  </span>
+                </div>
+                <div
+                  class="flex items-center justify-center gap-2 bg-yellow-50 border border-yellow-300 p-3 rounded-xl"
+                >
+                  <span class="material-icons text-yellow-500">star</span>
+                  <span class="font-semibold text-yellow-700">
+                    {{ currentScore() }} pontos
+                  </span>
+                </div>
+              </div>
+            </div>
+
+            <div class="mt-8">
+              <div
+                class="flex justify-between mb-2 text-xs font-medium text-subtext-light"
+              >
+                <span>Progresso do Nível</span>
+                <span>{{ currentScore() }} / {{ nextLevelScore() }}</span>
+              </div>
+              <div
+                class="relative pt-1 cursor-pointer"
+                [matTooltip]="tooltipText()"
+                matTooltipPosition="above"
+              >
+                <div class="overflow-hidden h-3 mb-2 flex rounded bg-gray-200">
+                  <div
+                    class="flex flex-col justify-center transition-all duration-500 ease-out bg-[#ba005c]"
+                    [style.width]="progressPercentage()"
+                  ></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="space-y-6 w-full">
+            <h2 class="text-2xl font-bold text-text-light">
+              Histórico de doações
+            </h2>
+            <div class="flex flex-col gap-4">
+              @for (donation of donations(); track $index) {
+              <app-donation-description-card [donation]="donation" />
+              }
+            </div>
+            @if (hasMorePages()) {
+            <div class="text-center mt-6">
+              <button
+                (click)="onLoadMore()"
+                class="text-primary font-semibold hover:underline bg-transparent border-none text-lg p-2 cursor-pointer"
+              >
+                Ver mais
+              </button>
+            </div>
+            }
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Meu Perfil">
+        <div class="mt-8 w-full max-w-4xl mx-auto">
+          <div class="mb-6">
+            <h1 class="text-3xl font-bold text-text-light">Meu Perfil</h1>
+            <p class="text-subtext-light mt-2">
+              Atualize suas informações pessoais e gerencie sua conta.
+            </p>
+          </div>
+
+          <div
+            class="bg-surface-light rounded-lg shadow-sm border border-gray-100 overflow-hidden"
+          >
+            <mat-accordion displayMode="flat" multi="false">
+              <mat-expansion-panel
+                [expanded]="step() === 0"
+                (opened)="setStep(0)"
+                hideToggle
+                class="border-b border-gray-100 last:border-0 shadow-none"
+              >
+                <mat-expansion-panel-header class="h-auto py-6 px-6">
+                  <div
+                    class="flex flex-col md:flex-row md:items-center w-full justify-between pr-4"
+                  >
+                    <mat-panel-title
+                      class="text-sm font-medium text-subtext-light mb-1 md:mb-0"
+                    >
+                      Nome
+                    </mat-panel-title>
+                    @if (step() !== 0) {
+                    <mat-panel-description
+                      class="text-lg font-medium text-text-light m-0 grow-0"
+                    >
+                      {{ profileForm.get('name')?.value }}
+                    </mat-panel-description>
+                    }
+                  </div>
+                  <mat-icon class="text-subtext-light">expand_more</mat-icon>
+                </mat-expansion-panel-header>
+
+                <div [formGroup]="profileForm" class="px-0 pb-2">
+                  <mat-form-field appearance="outline" class="w-full">
+                    <input
+                      matInput
+                      formControlName="name"
+                      placeholder="Seu nome completo"
+                    />
+                    @if(profileForm.get('name')?.hasError('required')) {
+                    <mat-error>Obrigatório</mat-error> }
+                  </mat-form-field>
+                  <div class="mt-2">
+                    <button
+                      mat-flat-button
+                      color="primary"
+                      class="rounded-full bg-primary/10 text-primary shadow-none hover:bg-primary/20"
+                      [disabled]="profileForm.get('name')?.invalid"
+                      (click)="saveField('name')"
+                    >
+                      Confirmar Alteração
+                    </button>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel
+                [expanded]="step() === 1"
+                (opened)="setStep(1)"
+                hideToggle
+                class="border-b border-gray-100 last:border-0 shadow-none"
+              >
+                <mat-expansion-panel-header class="h-auto py-6 px-6">
+                  <div
+                    class="flex flex-col md:flex-row md:items-center w-full justify-between pr-4"
+                  >
+                    <mat-panel-title
+                      class="text-sm font-medium text-subtext-light mb-1 md:mb-0"
+                    >
+                      E-mail
+                    </mat-panel-title>
+                    @if (step() !== 1) {
+                    <mat-panel-description
+                      class="text-lg font-medium text-text-light m-0 grow-0"
+                    >
+                      {{ profileForm.get('email')?.value }}
+                    </mat-panel-description>
+                    }
+                  </div>
+                  <mat-icon class="text-subtext-light">expand_more</mat-icon>
+                </mat-expansion-panel-header>
+
+                <div [formGroup]="profileForm" class="px-0 pb-2">
+                  <mat-form-field appearance="outline" class="w-full">
+                    <input matInput formControlName="email" type="email" />
+                    @if(profileForm.get('email')?.hasError('email')) {
+                    <mat-error>E-mail inválido</mat-error> }
+                  </mat-form-field>
+                  <div class="mt-2">
+                    <button
+                      mat-flat-button
+                      color="primary"
+                      class="rounded-full bg-primary/10 text-primary shadow-none hover:bg-primary/20"
+                      [disabled]="profileForm.get('email')?.invalid"
+                      (click)="saveField('email')"
+                    >
+                      Confirmar Alteração
+                    </button>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel
+                [expanded]="step() === 2"
+                (opened)="setStep(2)"
+                hideToggle
+                class="border-b border-gray-100 last:border-0 shadow-none"
+              >
+                <mat-expansion-panel-header class="h-auto py-6 px-6">
+                  <div
+                    class="flex flex-col md:flex-row md:items-center w-full justify-between pr-4"
+                  >
+                    <mat-panel-title
+                      class="text-sm font-medium text-subtext-light mb-1 md:mb-0"
+                    >
+                      Telefone
+                    </mat-panel-title>
+                    @if (step() !== 2) {
+                    <mat-panel-description
+                      class="text-lg font-medium text-text-light m-0 grow-0"
+                    >
+                      {{ profileForm.get('phone')?.value }}
+                    </mat-panel-description>
+                    }
+                  </div>
+                  <mat-icon class="text-subtext-light">expand_more</mat-icon>
+                </mat-expansion-panel-header>
+
+                <div [formGroup]="profileForm" class="px-0 pb-2">
+                  <mat-form-field appearance="outline" class="w-full">
+                    <input matInput formControlName="phone" type="tel" />
+                  </mat-form-field>
+                  <div class="mt-2">
+                    <button
+                      mat-flat-button
+                      color="primary"
+                      class="rounded-full bg-primary/10 text-primary shadow-none hover:bg-primary/20"
+                      [disabled]="profileForm.get('phone')?.invalid"
+                      (click)="saveField('phone')"
+                    >
+                      Confirmar Alteração
+                    </button>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel
+                [expanded]="step() === 3"
+                (opened)="setStep(3)"
+                hideToggle
+                class="border-b border-gray-100 last:border-0 shadow-none"
+              >
+                <mat-expansion-panel-header class="h-auto py-6 px-6">
+                  <div
+                    class="flex flex-col md:flex-row md:items-center w-full justify-between pr-4"
+                  >
+                    <mat-panel-title
+                      class="text-sm font-medium text-subtext-light mb-1 md:mb-0"
+                    >
+                      CPF
+                    </mat-panel-title>
+                    @if (step() !== 3) {
+                    <mat-panel-description
+                      class="text-lg font-medium text-text-light m-0 grow-0"
+                    >
+                      {{ profileForm.get('cpf')?.value }}
+                    </mat-panel-description>
+                    }
+                  </div>
+                  <mat-icon class="text-subtext-light">expand_more</mat-icon>
+                </mat-expansion-panel-header>
+
+                <div [formGroup]="profileForm" class="px-0 pb-2">
+                  <mat-form-field appearance="outline" class="w-full">
+                    <input matInput formControlName="cpf" />
+                  </mat-form-field>
+                  <div class="mt-2">
+                    <button
+                      mat-flat-button
+                      color="primary"
+                      class="rounded-full bg-primary/10 text-primary shadow-none hover:bg-primary/20"
+                      [disabled]="profileForm.get('cpf')?.invalid"
+                      (click)="saveField('cpf')"
+                    >
+                      Confirmar Alteração
+                    </button>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+
+              <mat-expansion-panel
+                [expanded]="step() === 4"
+                (opened)="setStep(4)"
+                hideToggle
+                class="border-b border-gray-100 last:border-0 shadow-none"
+              >
+                <mat-expansion-panel-header class="h-auto py-6 px-6">
+                  <div
+                    class="flex flex-col md:flex-row md:items-center w-full justify-between pr-4"
+                  >
+                    <mat-panel-title
+                      class="text-sm font-medium text-subtext-light mb-1 md:mb-0"
+                    >
+                      Senha
+                    </mat-panel-title>
+                    @if (step() !== 4) {
+                    <mat-panel-description
+                      class="text-lg font-medium text-text-light m-0 grow-0 tracking-widest"
+                    >
+                      ••••••••••••
+                    </mat-panel-description>
+                    }
+                  </div>
+                  <mat-icon class="text-subtext-light">expand_more</mat-icon>
+                </mat-expansion-panel-header>
+
+                <div
+                  [formGroup]="passwordForm"
+                  class="px-0 pb-2 flex flex-col gap-4"
+                >
+                  <mat-form-field appearance="outline" class="w-full">
+                    <mat-label>Senha Atual</mat-label>
+                    <input
+                      matInput
+                      formControlName="currentPassword"
+                      type="password"
+                    />
+                    @if(passwordForm.get('currentPassword')?.hasError('required'))
+                    { <mat-error>Obrigatório</mat-error> }
+                  </mat-form-field>
+
+                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <mat-form-field appearance="outline" class="w-full">
+                      <mat-label>Nova Senha</mat-label>
+                      <input
+                        matInput
+                        formControlName="newPassword"
+                        type="password"
+                      />
+                      @if(passwordForm.get('newPassword')?.hasError('minlength'))
+                      { <mat-error>Mínimo 6 caracteres</mat-error> }
+                    </mat-form-field>
+
+                    <mat-form-field appearance="outline" class="w-full">
+                      <mat-label>Confirmar Nova Senha</mat-label>
+                      <input
+                        matInput
+                        formControlName="confirmNewPassword"
+                        type="password"
+                      />
+                      @if(passwordForm.errors?.['passwordMismatch']) {
+                      <mat-error>Senhas não conferem</mat-error> }
+                    </mat-form-field>
+                  </div>
+
+                  <div class="mt-2">
+                    <button
+                      mat-flat-button
+                      color="primary"
+                      class="rounded-full bg-primary/10 text-primary shadow-none hover:bg-primary/20"
+                      [disabled]="passwordForm.invalid"
+                      (click)="changePassword()"
+                    >
+                      Confirmar Alteração de Senha
+                    </button>
+                  </div>
+                </div>
+              </mat-expansion-panel>
+            </mat-accordion>
+          </div>
+
+          <div
+            class="mt-8 flex flex-col md:flex-row justify-end items-center gap-4"
+          >
+            <button
+              mat-flat-button
+              color="primary"
+              class="rounded-full px-8 py-6 text-base font-medium"
+            >
+              Salvar Alterações
+            </button>
+          </div>
+        </div>
+      </mat-tab>
+
+      <mat-tab label="Minha Assinatura">
+        <div class="mt-8 w-full max-w-4xl mx-auto">
+          <div class="mb-6">
+            <h1 class="text-3xl font-bold text-text-light">Minha Assinatura</h1>
+            <p class="text-subtext-light mt-2">
+              Aqui estão os detalhes da sua assinatura e apadrinhamento.
+            </p>
+          </div>
+
+          @if (subscription()) {
+          <div class="bg-surface-light rounded-lg shadow-sm p-8">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-x-8 gap-y-6">
+              <div>
+                <h3 class="text-sm font-medium text-subtext-light">
+                  Status da Assinatura
+                </h3>
+                <p
+                  class="text-lg font-medium flex items-center mt-1"
+                  [class]="subscription()?.isActive ? 'text-green-600' : 'text-red-600'"
+                >
+                  @if (subscription()?.isActive) {
+                  <mat-icon class="mr-2 text-xl align-middle"
+                    >check_circle</mat-icon
+                  >
+                  Ativa } @else {
+                  <mat-icon class="mr-2 text-xl align-middle">cancel</mat-icon>
+                  Cancelada }
+                </p>
+              </div>
+
+              <div>
+                <h3 class="text-sm font-medium text-subtext-light">
+                  Dia de Cobrança
+                </h3>
+                <p class="text-lg font-medium text-text-light mt-1">
+                  {{ subscription()?.billingDay }}
+                </p>
+              </div>
+
+              <div>
+                <h3 class="text-sm font-medium text-subtext-light">
+                  Data de Início
+                </h3>
+                <p class="text-lg font-medium text-text-light mt-1">
+                  {{ subscription()?.startDate | date : 'dd/MM/yyyy HH:mm' }}
+                </p>
+              </div>
+
+              <div>
+                <h3 class="text-sm font-medium text-subtext-light">
+                  Data de Cancelamento
+                </h3>
+                <p class="text-lg font-medium text-subtext-light mt-1">
+                  {{ (subscription()?.cancelDate | date : 'dd/MM/yyyy HH:mm') ||
+                  '--' }}
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-8 flex justify-start">
+            @if (subscription()?.isActive) {
+            <button
+              mat-button
+              color="warn"
+              class="font-medium hover:underline text-lg px-0"
+              (click)="onCancelSubscriptionClick()"
+            >
+              Cancelar Assinatura
+            </button>
+            }
+          </div>
+          } @else {
+          <div class="text-center py-12 bg-surface-light rounded-lg shadow-sm">
+            <mat-icon class="text-subtext-light text-5xl h-12 w-12 mb-4"
+              >sentiment_dissatisfied</mat-icon
+            >
+            <p class="text-lg text-subtext-light">
+              Nenhuma assinatura ativa encontrada.
+            </p>
+          </div>
+          }
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
+  @if (showCancelModal()) {
   <div
-    class="bg-surface-light rounded-lg shadow-md p-5 md:p-8 mb-4 md:mb-12 w-full max-w-4xl"
+    class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fadeIn"
   >
     <div
-      class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6 md:gap-8"
+      class="bg-white rounded-2xl shadow-xl max-w-md w-full p-6 transform transition-all scale-100"
     >
-      <div class="flex items-center gap-4 md:gap-6">
+      <div class="flex flex-col items-center text-center">
         <div
-          class="bg-[#fce5e6] rounded-lg p-2 flex items-center justify-center shrink-0"
+          class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center mb-4"
         >
-          <img
-            [alt]="'Imagem do nível ' + levelData().name"
-            class="w-20 h-20 md:w-28 md:h-28 object-contain"
-            [src]="levelData().image"
-          />
+          <mat-icon class="text-red-600">sentiment_dissatisfied</mat-icon>
         </div>
-        <div>
-          <p class="text-xs md:text-sm text-subtext-light">Padrinho</p>
-          <h1
-            class="text-3xl md:text-4xl font-bold text-text-light break-words"
+        <h3 class="text-xl font-bold text-gray-900 mb-2">
+          Cancelar Assinatura?
+        </h3>
+        <p class="text-gray-500 mb-6">
+          Tem certeza que deseja cancelar? Sua doação recorrente fará muita
+          falta na instituição.
+        </p>
+        <div class="flex gap-3 w-full">
+          <button
+            (click)="closeCancelModal()"
+            [disabled]="isCancelling()"
+            class="flex-1 px-4 py-2 bg-[#C81E71] text-white rounded-lg hover:bg-[#A9125B] font-medium transition-colors shadow-sm disabled:opacity-50"
           >
-            {{ levelData().name }}
-          </h1>
-        </div>
-      </div>
+            Não, voltar
+          </button>
 
-      <div
-        class="w-full md:w-auto flex flex-col sm:flex-row items-stretch sm:items-center gap-3 md:gap-6"
-      >
-        <div
-          class="flex items-center justify-center gap-2 bg-orange-50 border border-orange-200 p-3 rounded-xl shadow-sm transition-colors"
-        >
-          <span class="material-icons text-orange-500"
-            >local_fire_department</span
+          <button
+            (click)="confirmCancellation()"
+            [disabled]="isCancelling()"
+            class="flex-1 px-4 py-2 border border-red-600 text-red-600 rounded-lg hover:bg-red-50 font-medium transition-colors disabled:opacity-50 flex items-center justify-center bg-transparent"
           >
-          <span class="font-bold text-orange-700 text-sm md:text-base">
-            {{ donations()[0]?.recurrenceSequence || 0 }} meses
-          </span>
-        </div>
-
-        <div
-          class="flex items-center justify-center gap-2 bg-yellow-50 border border-yellow-300 p-3 rounded-xl transition-colors"
-        >
-          <span class="material-icons text-yellow-500">star</span>
-          <span class="font-semibold text-yellow-700 text-sm md:text-base">
-            {{ currentScore() }} pontos
-          </span>
+            @if(isCancelling()) {
+            <span
+              class="mr-2 h-4 w-4 border-2 border-red-600 border-t-transparent rounded-full animate-spin"
+            ></span>
+            } Sim, cancelar
+          </button>
         </div>
       </div>
-    </div>
-
-    <div class="mt-8">
-      <div class="flex justify-between mb-2">
-        <span class="text-xs font-medium text-subtext-light">
-          Progresso do Nível
-        </span>
-        <span class="text-xs font-medium text-subtext-light">
-          {{ currentScore() }} / {{ nextLevelScore() }}
-        </span>
-      </div>
-
-      <div
-        class="relative pt-1 cursor-pointer group"
-        [matTooltip]="tooltipText()"
-        matTooltipPosition="above"
-      >
-        <div class="overflow-hidden h-3 mb-2 text-xs flex rounded bg-gray-200">
-          <div
-            class="shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center transition-all duration-500 ease-out"
-            [style.width]="progressPercentage()"
-            style="background-color: #ba005c"
-          ></div>
-        </div>
-      </div>
-
-      <p class="text-sm text-subtext-light text-right font-bold">
-        {{ nextLevelScore() }} Pontos
-      </p>
     </div>
   </div>
-
-  <div class="space-y-6 md:space-y-8 w-full max-w-4xl">
-    <h2
-      class="text-2xl md:text-3xl font-bold text-text-light text-center md:text-left"
-    >
-      Histórico de doações
-    </h2>
-
-    <div>
-      <div class="flex flex-col gap-4">
-        @for (donation of donations(); track $index) {
-        <app-donation-description-card [donation]="donation" />
-        }
-      </div>
-    </div>
-
-    @if (hasMorePages()) {
-    <div class="text-center mt-6 pb-8">
-      <button
-        (click)="onLoadMore()"
-        class="text-primary font-semibold hover:underline cursor-pointer bg-transparent border-none text-lg p-2"
-        type="button"
-        aria-label="Carregar mais doações"
-      >
-        Ver mais
-      </button>
-    </div>
-    }
-  </div>
+  }
 </div>

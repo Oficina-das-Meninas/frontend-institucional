@@ -14,7 +14,7 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../services/user';
+import { AuthService } from '../../../../shared/services/auth/auth';
 
 @Component({
   selector: 'app-login',
@@ -36,7 +36,7 @@ import { UserService } from '../../services/user';
 export class Login {
   form!: FormGroup;
   formHelper = inject(FormHelperService);
-  userService = inject(UserService);
+  authService = inject(AuthService);
   router = inject(Router);
   snackBar = inject(MatSnackBar);
 
@@ -61,7 +61,7 @@ export class Login {
     this.loadingRequest = true;
     const { email, password } = this.form.getRawValue();
 
-    this.userService.login({ email, password }).subscribe({
+    this.authService.login({ email, password }).subscribe({
       next: () => {
         this.router.navigate(['/']);
       },

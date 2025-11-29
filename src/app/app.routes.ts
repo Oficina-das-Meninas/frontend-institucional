@@ -97,6 +97,23 @@ export const routes: Routes = [
     ],
   },
   {
+    path: 'confirmar-email',
+    loadComponent: () =>
+      import('./domain/user/containers/confirm-email/confirm-email').then(
+        (m) => m.ConfirmEmail
+      ),
+  },
+  {
+    path: 'confirmacao-email',
+    canActivate: [authGuard],
+
+    title: 'Confirmação de Email',
+    loadComponent: () =>
+      import(
+        './domain/user/containers/email-confirmation/email-confirmation'
+      ).then((m) => m.EmailConfirmation),
+  },
+  {
     path: 'login',
     title: 'Login - Oficina das Meninas',
     canActivate: [authGuard],

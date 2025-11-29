@@ -21,7 +21,7 @@ export class Home {
   partnerImages$: Observable<{ path: string; alt: string }[]> | null = null;
   partnerCount: number = 0;
 
-  yearOfFoundation = new Date('03-23-2002').getFullYear();
+  yearOfFoundation = new Date('2002-03-23').getFullYear();
   today = new Date().getFullYear();
 
   private eventService = inject(EventService);
