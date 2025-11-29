@@ -1,0 +1,23 @@
+<div class="flex flex-col gap-4 items-center">
+  <app-logo cssClass="size-20 lg:size-16" />
+
+  <ul class="text-[#BA005C] flex gap-8">
+    @for (socialLink of socialLinks; track $index) {
+    <li>
+      <a [href]="socialLink.link" target="_blank" class="link" [attr.aria-label]="socialLink.label">
+        @if (socialLink.icon === 'instagram') {
+        <app-instagram-icon />
+        } @if (socialLink.icon === 'facebook') {
+        <app-facebook-icon />
+        } @if (socialLink.icon === 'youtube') {
+        <app-youtube-icon />
+        }
+      </a>
+    </li>
+    }
+  </ul>
+
+  <p class="max-w-80 text-center">
+    O Centro Cultural e Assistencial Oficina das Meninas atende meninas de 6 a 17 anos em situação de vulnerabilidade.
+  </p>
+</div>

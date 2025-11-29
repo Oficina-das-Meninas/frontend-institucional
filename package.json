@@ -3,10 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
-    "build": "ng build",
+    "start": "ng serve --configuration development",
+    "build": "ng build --configuration production",
+    "build:dev": "ng build --configuration development",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test",
+    "test:ci": "ng test --no-watch --no-progress --browsers=ChromeHeadless"
   },
   "private": true,
   "dependencies": {
@@ -18,7 +20,13 @@
     "@angular/material": "^20.2.1",
     "@angular/platform-browser": "^20.0.0-next.0",
     "@angular/router": "^20.0.0-next.0",
+    "@tailwindcss/postcss": "^4.1.13",
+    "ngx-captcha": "^14.0.0",
+    "ngx-mask": "^20.0.3",
+    "postcss": "^8.5.6",
     "rxjs": "~7.8.0",
+    "swiper": "^11.2.10",
+    "tailwindcss": "^4.1.13",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"
   },

@@ -1,0 +1,27 @@
+<div class="relative w-full max-w-sm max-h-[18rem] aspect-[4/3] overflow-hidden
+  rounded-lg bg-white shadow hover:scale-[1.02] transition duration-300"
+  [class.cursor-pointer]="!isLoading()"
+  [routerLink]="['/eventos', eventId]"
+  (click)="onCardClick()"
+  >
+  <img [src]="imageUrl" class="h-full object-cover" [alt]="eventTitle" />
+  <div class="absolute inset-0 z-10 bg-gradient-to-t from-black"></div>
+  <div class="absolute inset-x-0 bottom-0 z-20 p-4">
+    <p class="mb-1 text-sm text-gray-300 w-fit">
+      <time>{{ date | date:"dd 'de' MMMM 'de' yyyy" }}</time>
+    </p>
+    <h3 class="text-xl font-bold text-white w-fit max-w-full truncate" [matTooltip]="eventTitle">{{ eventTitle }}</h3>
+    <p class="text-md mt-1 text-gray-200 ml-[0.2rem] w-fit line-clamp-2 text-ellipsis max-w-full"
+    [matTooltip]="cleanDescription()"
+    matTooltipClass="max-h-[8rem]"
+    >
+      {{ cleanDescription() }}
+    </p>
+  </div>
+
+  @if (isLoading()) {
+    <div class="absolute inset-0 z-30 rounded-lg flex items-center justify-center" style="background: rgba(0, 0, 0, 0.5);">
+      <mat-spinner diameter="40" color="accent"></mat-spinner>
+    </div>
+  }
+</div>

@@ -1,0 +1,19 @@
+<div class="ep-root" [class.ep-disabled]="disabled" [class.ep-open]="expanded">
+  <button
+    type="button"
+    class="ep-header link"
+    [class]="headerClass"
+    [attr.aria-expanded]="expanded"
+    [disabled]="disabled"
+    (click)="toggle()"
+  >
+    <ng-content select="[ep-title]"></ng-content>
+    <mat-icon class="ep-indicator" [class.ep-indicator-open]="expanded">keyboard_arrow_up</mat-icon>
+  </button>
+
+  <div class="ep-content-wrapper">
+    <div class="ep-content" [class]="contentClass">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

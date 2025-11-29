@@ -1,0 +1,42 @@
+<div class="min-h-screen flex items-center justify-center bg-[#FFF9F6] p-4">
+  <div
+    class="w-full max-w-md bg-white rounded-2xl border border-gray-100 shadow-sm p-8 sm:p-12 text-center"
+  >
+    @if (status() === 'loading') {
+    <div class="flex flex-col items-center justify-center py-8">
+      <mat-spinner diameter="50" class="mb-6"></mat-spinner>
+      <h2 class="text-xl font-bold text-gray-900">Verificando seu e-mail</h2>
+      <p class="text-gray-500 mt-2">Por favor, aguarde um momento...</p>
+    </div>
+    } @if (status() === 'success') {
+    <div class="flex flex-col items-center justify-center py-8 animate-fadeIn">
+      <div class="bg-green-100 p-4 rounded-full mb-6">
+        <mat-icon
+          class="text-green-600 !text-4xl !w-9 !h-9 flex items-center justify-center"
+          >check_circle</mat-icon
+        >
+      </div>
+      <h2 class="text-xl font-bold text-gray-900">E-mail verificado!</h2>
+      <p class="text-gray-500 mt-2">Redirecionando para o login...</p>
+    </div>
+    } @if (status() === 'error') {
+    <div class="flex flex-col items-center justify-center py-4 animate-fadeIn">
+      <div class="bg-red-100 p-4 rounded-full mb-6">
+        <mat-icon
+          class="text-red-600 !text-4xl !w-9 !h-9 flex items-center justify-center"
+          >error_outline</mat-icon
+        >
+      </div>
+      <h2 class="text-xl font-bold text-gray-900">Falha na verificação</h2>
+      <p class="text-gray-500 mt-2 mb-8">{{ errorMessage() }}</p>
+
+      <a
+        routerLink="/login"
+        class="w-full inline-flex justify-center items-center px-6 py-3 border border-transparent text-base font-medium rounded-full shadow-sm text-white bg-[#C81E71] hover:bg-[#A9125B] focus:outline-none transition-colors cursor-pointer no-underline"
+      >
+        Voltar para o Login
+      </a>
+    </div>
+    }
+  </div>
+</div>

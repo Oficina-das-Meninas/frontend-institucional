@@ -1,0 +1,171 @@
+<section
+  class="relative overflow-y-hidden w-full h-screen bg-[#f5f7f8] opacity-100 bg-[length:35px_35px] [background-image:repeating-linear-gradient(0deg,#d9e2eb,#d9e2eb_2px,#f5f7f8_2px,#f5f7f8)]"
+>
+  <img
+    src="/estrela2.svg"
+    alt="Estrelinha"
+    class="absolute size-16 top-30 left-10 z-20 md:top-20 md:left-20 md:size-40 brightness-125 -rotate-30 hover:animate-spin hover:brightness-200"
+  />
+  <img
+    src="/estrela2.svg"
+    alt="Estrelinha"
+    class="absolute size-16 top-35 z-20 md:top-40 md:size-36 brightness-125 hover:animate-spin hover:brightness-200"
+  />
+
+  <div class="relative z-10 text-center pt-50 px-12">
+    <h1 class="font-bold text-5xl lg:text-8xl text-zinc-500 send-flowers drop-shadow-md">
+      Oficina das Meninas
+    </h1>
+    <p class="text-base lg:text-2xl sniglet text-zinc-500 drop-shadow-md">
+      AMOR E ACOLHIMENTO
+    </p>
+  </div>
+  <img
+    src="/flor1.svg"
+    alt="Flor"
+    class="absolute hidden sm:block bottom-0 left-10 size-40 hover:skew-12"
+  />
+  <img
+    src="/flor2.svg"
+    alt="Flor"
+    class="absolute hidden sm:block bottom-0 left-32 size-32 hover:skew-12"
+  />
+  <img
+    src="/two-red-paper-dolls-holding-hands-cut-out-stock.png"
+    alt="Meninas de papel"
+    class="absolute h-64 md:h-72 object-cover bottom-0 left-1/2 -translate-x-1/2 sm:left-auto sm:translate-x-0 sm:right-10 hover:animate-bounce"
+  />
+</section>
+
+<section class="bg-[#B9B885] w-full px-4 lg:px-20 xl:px-40 py-14 space-y-12">
+  <div class="flex flex-col md:flex-row items-center gap-5">
+    <div
+      class="flex flex-col items-center text-center space-y-5 md:w-1/2 md:pr-16 lg:flex-grow lg:pr-24 md:items-start md:text-left md:mb-0"
+    >
+      <h2 class="text-3xl lg:text-5xl font-bold">
+        Centro Cultural e Assistencial
+      </h2>
+      <p class="text-base lg:text-xl leading-relaxed">
+        Fundada em 2002 por Adélia Bellodi Privato, a ONG nasceu do sonho de
+        oferecer acolhimento e oportunidades a meninas de 6 a 17 anos em
+        situação de vulnerabilidade social.
+      </p>
+      <button matButton="filled" routerLink="/sobre">Conheça nossa história</button>
+    </div>
+    <div class="w-full md:w-1/2 lg:max-w-xl lg:w-full">
+      <img
+        src="./meninas_reunidas.webp"
+        alt="Meninas reunidas"
+        class="object-cover object-center rounded-3xl shadow-md hover:scale-105 transition-transform duration-300"
+      />
+    </div>
+  </div>
+
+  <div class="grid grid-cols-1 sm:grid-cols-3 gap-10 justify-center">
+    <app-flower-stat
+      [value]="60"
+      label="Meninas assistidas"
+      flowerColor="#BC7C7C"
+      valueColor="#B9B885"
+      class="h-full hover:scale-105 transition-transform duration-300"
+    />
+
+    <app-flower-stat
+      [value]="partnerCount"
+      label="Parceiros"
+      flowerColor="#F6EFBD"
+      valueColor="#B9B885"
+      class="h-full hover:scale-105 transition-transform duration-300"
+    />
+
+    <app-flower-stat
+      [value]="today - yearOfFoundation"
+      label="Anos de ONG"
+      flowerColor="#5EA1C6"
+      valueColor="#B9B885"
+      class="h-full hover:scale-105 transition-transform duration-300"
+    />
+  </div>
+</section>
+
+<section class="w-full bg-[#737373] events-section relative overflow-hidden">
+  <div class="flex flex-col items-center relative z-10">
+    <div class="text-white text-center px-4 max-w-xl py-14">
+      <h2 class="font-bold text-3xl md:text-5xl mb-4">Eventos</h2>
+      <p class="text-base lg:text-xl leading-relaxed">
+        Promovemos atividades culturais e esportivas que fortalecem a comunidade
+        e apoiam o desenvolvimento das meninas.
+      </p>
+      <button matButton="filled" class="mt-6" routerLink="/eventos">
+        Ver eventos
+      </button>
+    </div>
+  </div>
+  <div class="pb-14 relative z-10">
+    @if (eventImages$ | async; as eventImages) {
+      <app-carousel
+        [slides]="eventImages"
+        [spaceBetween]=20
+        [aspectRatio]="'16 / 10'"
+        slideClass="bg-white p-2 rounded-xl shadow-lg border-2 border-white w-full"
+        imgClass="object-cover rounded-md size-full"
+      />
+    }
+  </div>
+</section>
+
+<section class="w-full bg-zinc-100 px-4 lg:px-25 py-14">
+  <div class="text-center mb-14">
+    <h2 class="font-bold text-3xl md:text-5xl mb-4">Ajude a instituição</h2>
+    <p class="text-base lg:text-xl leading-relaxed">
+      Contribuir com a Oficina das Meninas nunca foi tão simples.
+    </p>
+    <div class="flex justify-center mt-6">
+      <div
+        class="w-16 h-1 rounded-full bg-[var(--mat-sys-primary)] inline-flex"
+      ></div>
+    </div>
+  </div>
+  <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+    <app-support-card
+      image="/padrinho_icon.png"
+      title="Seja um padrinho"
+      description="Apoio mensal que garante cuidado, acompanhamento e oportunidades para as meninas."
+      buttonText="Tornar-se padrinho"
+      link="/seja-um-padrinho"
+      class="hover:scale-105 transition-transform duration-300"
+    />
+
+    <app-support-card
+      image="/pig_icon.png"
+      title="Faça uma doação"
+      description="Contribuição única para manter nossos projetos e atividades em funcionamento."
+      buttonText="Fazer doação"
+      link="/faca-sua-doacao"
+      class="hover:scale-105 transition-transform duration-300"
+    />
+
+    <app-support-card
+      image="/nf_icon.webp"
+      title="Doe sua nota fiscal"
+      description="Sem custo, você ajuda a fortalecer a instituição e nossos programas."
+      buttonText="Doar nota fiscal"
+      link="/doar-nota-fiscal"
+      class="hover:scale-105 transition-transform duration-300"
+    />
+  </div>
+</section>
+
+<section class="w-full bg-white py-14" id="parceiros">
+  <h2 class="font-bold text-3xl md:text-5xl text-center mb-14 px-4 md:px-25">Nossos parceiros</h2>
+  @if (partnerImages$ | async; as partnerImages) {
+    <app-carousel
+      [slides]="partnerImages"
+      [withTitle]="true"
+      [spaceBetween]=25
+      [slidesPerView]=3
+      slideClass="flex justify-center items-center h-30 md:h-36 w-full hover:scale-105 transition-transform duration-300"
+      imgClass="!object-contain w-auto h-full"
+    />
+  }
+</section>

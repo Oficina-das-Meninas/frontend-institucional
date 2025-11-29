@@ -1,0 +1,9 @@
+@for (event of events; track $index) {
+  <app-event-card
+    [eventId]="event.id"
+    [eventTitle]="event.title"
+    [description]="event.description"
+    [imageUrl]="event.previewImageUrl"
+    [date]="event.eventDate"
+  />
+}

@@ -1,0 +1,16 @@
+<div class="flex flex-col gap-4">
+  <h2 class="font-bold font-size text-sm">{{ title }}</h2>
+
+  <ul class="flex flex-col gap-2">
+    @for (link of links; track $index) {
+
+    <li>
+      @if (link.route != '') {
+      <a [routerLink]="link.route" (click)="link.onClick?.()" class="link">{{ link.label }}</a>
+      } @else {
+      <a  (click)="link.onClick?.()" class="link">{{ link.label }}</a>
+      }
+    </li>
+    }
+  </ul>
+</div>

@@ -1,0 +1,148 @@
+<div class="flex min-h-screen bg-[#FFF9F6]">
+  <div class="w-full lg:w-1/2 flex flex-col bg-white">
+    <div
+      class="flex-grow flex items-center justify-center p-6 sm:p-12 relative"
+    >
+      <a
+        routerLink="/"
+        class="absolute top-6 left-6 flex items-center text-gray-500 hover:text-gray-900 transition-colors cursor-pointer"
+      >
+        <mat-icon class="mr-1 text-sm leading-none">arrow_back</mat-icon>
+        <span class="text-sm font-medium">Voltar</span>
+      </a>
+
+      <div class="w-full max-w-md">
+        <div class="text-center mb-8 flex flex-col items-center">
+          <div class="mb-6 p-2 rounded-full shadow-sm bg-white inline-block">
+            <app-logo cssClass="size-50" />
+          </div>
+          <h1 class="text-3xl font-bold text-gray-900">Crie sua conta</h1>
+          <p class="text-gray-500 mt-2">Junte-se a nós! É rápido e fácil.</p>
+        </div>
+
+        <div class="bg-white sm:p-8 rounded-2xl sm:border border-gray-100">
+          <form
+            [formGroup]="form"
+            (ngSubmit)="onSubmit()"
+            class="flex flex-col gap-4"
+          >
+            <div>
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Nome completo</mat-label>
+                <input
+                  matInput
+                  formControlName="name"
+                  placeholder="Digite seu nome"
+                  type="text"
+                />
+                @if(formHelper.getErrorMessage(form, 'name')) {
+                <mat-error
+                  >{{ formHelper.getErrorMessage(form, 'name') }}</mat-error
+                >
+                }
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>CPF</mat-label>
+                <input
+                  matInput
+                  formControlName="document"
+                  placeholder="000.000.000-00"
+                  mask="000.000.000-00"
+                />
+                @if(formHelper.getErrorMessage(form, 'document')) {
+                <mat-error
+                  >{{ formHelper.getErrorMessage(form, 'document') }}</mat-error
+                >
+                }
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>E-mail</mat-label>
+                <input
+                  matInput
+                  formControlName="email"
+                  placeholder="exemplo@email.com"
+                  type="email"
+                />
+                @if(formHelper.getErrorMessage(form, 'email')) {
+                <mat-error
+                  >{{ formHelper.getErrorMessage(form, 'email') }}</mat-error
+                >
+                }
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Telefone</mat-label>
+                <input
+                  matInput
+                  formControlName="phone"
+                  placeholder="(00) 00000-0000"
+                  mask="(00) 00000-0000"
+                  type="tel"
+                />
+                @if(formHelper.getErrorMessage(form, 'phone')) {
+                <mat-error
+                  >{{ formHelper.getErrorMessage(form, 'phone') }}</mat-error
+                >
+                }
+              </mat-form-field>
+            </div>
+
+            <div>
+              <mat-form-field appearance="outline" class="w-full">
+                <mat-label>Senha</mat-label>
+                <input matInput formControlName="password" type="password" />
+                @if(formHelper.getErrorMessage(form, 'password')) {
+                <mat-error
+                  >{{ formHelper.getErrorMessage(form, 'password') }}</mat-error
+                >
+                }
+              </mat-form-field>
+            </div>
+
+            <button
+              class="w-full mt-4 rounded-full bg-[#C81E71] py-3 px-4 text-base font-bold text-white shadow-sm transition-all hover:bg-[#A9125B] hover:shadow-md focus:outline-none focus:ring-2 focus:ring-[#C81E71] focus:ring-offset-2 cursor-pointer disabled:opacity-50 disabled:cursor-not-allowed"
+              type="submit"
+              [disabled]="loadingRequest"
+            >
+              @if(loadingRequest) {
+              <span>Criando conta...</span>
+              } @else {
+              <span>Criar conta</span>
+              }
+            </button>
+          </form>
+        </div>
+
+        <div class="text-center mt-8">
+          <p class="text-sm text-gray-500">
+            Já tem uma conta?
+            <a
+              routerLink="/login"
+              class="font-medium text-[#C81E71] hover:underline cursor-pointer"
+            >
+              Acesse agora
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div
+    class="hidden lg:flex lg:w-1/2 relative items-center justify-center p-12 bg-[#FFF9F6] overflow-hidden"
+  >
+    <img
+      alt="Meninas abraçando"
+      class="relative z-10 h-full w-full object-cover rounded-2xl shadow-xl"
+      src="./meninas-abraco.webp"
+    />
+  </div>
+</div>
