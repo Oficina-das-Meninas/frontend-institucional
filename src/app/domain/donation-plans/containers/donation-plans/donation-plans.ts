@@ -11,8 +11,6 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { DonationPlanCard } from '../../components/donation-plan-card/donation-plan-card';
 import { Router, RouterLink } from '@angular/router';
-import { NgxMaskDirective } from 'ngx-mask';
-import { normalizeCurrencyValue } from '../../../../shared/utils/value-utils';
 
 @Component({
   selector: 'app-donation-plans',
@@ -22,7 +20,6 @@ import { normalizeCurrencyValue } from '../../../../shared/utils/value-utils';
     MatInputModule,
     MatButtonModule,
     DonationPlanCard,
-    NgxMaskDirective,
     RouterLink,
   ],
   templateUrl: './donation-plans.html',
@@ -44,11 +41,29 @@ export class DonationPlans {
       this.redirectToDonationPage();
     }
   }
+
+  formatCurrency(event: any) {
+    let value = event.target.value.replace(/\D/g, '');
+
+    if (!value) {
+      this.inputValue.set('');
+      return;
+    }
+
+    const numericValue = Number(value) / 100;
+    const formatted = numericValue.toLocaleString('pt-BR', {
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+
+    this.inputValue.set(formatted);
+  }
+
   redirectToDonationPage() {
-    const value = normalizeCurrencyValue(this.inputValue(), true);
+    const rawValue = this.inputValue().replace(/\./g, '').replace(',', '.');
 
     this.router.navigate(['/faca-sua-doacao'], {
-      queryParams: { valor: value },
+      queryParams: { valor: rawValue },
     });
   }
 

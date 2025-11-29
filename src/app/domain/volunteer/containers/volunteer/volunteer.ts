@@ -8,6 +8,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
+import { cpfValidator } from '../../../../shared/validators/document.validator';
 
 @Component({
   selector: 'app-volunteer',
@@ -54,7 +55,7 @@ export class Volunteer {
   ngOnInit() {
     this.volunteerForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
-      cpf: ['', [Validators.required, Validators.maxLength(14)]],
+      cpf: ['', [Validators.required, Validators.maxLength(14)], cpfValidator()],
       proposal: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(500)]],
       availability: this.formBuilder.group(
         {

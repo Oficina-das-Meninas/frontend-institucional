@@ -1,13 +1,13 @@
 import { inject } from '@angular/core';
 import { CanActivateFn, Router } from '@angular/router';
 import { map, catchError, of } from 'rxjs';
-import { UserService } from '../../domain/user/services/user';
+import { AuthService } from '../services/auth/auth';
 
 export const authGuard: CanActivateFn = (route, state) => {
   const router = inject(Router);
-  const authService = inject(UserService);
+  const authService = inject(AuthService);
 
-  const publicOnlyRoutes = ['/login', '/cadastro'];
+  const publicOnlyRoutes = ['/login', '/cadastro', '/confirmacao-email'];
 
   const isPublicAuthRoute = publicOnlyRoutes.some((path) =>
     state.url.includes(path)

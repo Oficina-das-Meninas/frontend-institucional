@@ -16,6 +16,8 @@ import { FormHelperService } from '../../../../shared/services/form/form-helper-
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../services/user';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
+import { cpfValidator } from '../../../../shared/validators/document.validator';
+import { AuthService } from '../../../../shared/services/auth/auth';
 
 @Component({
   selector: 'app-signup',
@@ -39,7 +41,7 @@ import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 export class SignUp {
   form!: FormGroup;
   formHelper = inject(FormHelperService);
-  userService = inject(UserService);
+  authService = inject(AuthService);
   router = inject(Router);
   snackBar = inject(MatSnackBar);
 
@@ -48,7 +50,10 @@ export class SignUp {
   constructor() {
     this.form = new FormGroup({
       name: new FormControl<string>(null!, [Validators.required]),
-      document: new FormControl<string>(null!, [Validators.required]), // CPF
+      document: new FormControl<string>(null!, [
+        Validators.required,
+        cpfValidator(),
+      ]),
       email: new FormControl<string>(null!, [
         Validators.required,
         Validators.email,
@@ -78,31 +83,17 @@ export class SignUp {
       password: rawValue.password,
     };
 
-    this.userService.createUserAccount(payload).subscribe({
+    this.authService.createUserAccount(payload).subscribe({
       next: () => {
-        this.snackBar.open(
-          'Conta criada com sucesso! Faça login para continuar.',
-          'Fechar',
-          {
-            duration: 5000,
-            horizontalPosition: 'center',
-            verticalPosition: 'bottom',
-            panelClass: ['snackbar-success'],
-          }
-        );
-        this.router.navigate(['/login']);
+        this.router.navigate(['/confirmacao-email']);
       },
       error: (err) => {
         this.loadingRequest = false;
-        console.error('Erro ao criar conta:', err);
-
-        let message = 'Ocorreu um erro ao criar sua conta. Tente novamente.';
-
-        if (err.status === 409) {
-          message = 'Este e-mail ou CPF já está cadastrado.';
-        } else if (err.error && err.error.message) {
-          message = err.error.message;
-        }
+        this.snackBar.open(
+          'Não foi possível realizar o cadastro. Verifique os dados e tente novamente.',
+          'Fechar',
+          { duration: 5000 }
+        );
       },
       complete: () => {
         this.loadingRequest = false;

@@ -1,0 +1,20 @@
+:host {
+  ::ng-deep .mat-expansion-panel {
+    background: transparent !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+  }
+
+  ::ng-deep .mat-expansion-panel-body {
+    padding: 0 24px 24px 24px !important;
+  }
+
+  ::ng-deep .mdc-tab-indicator--active .mdc-tab-indicator__content--underline {
+    border-color: #c81e71 !important;
+  }
+
+  ::ng-deep .mdc-tab__text-label {
+    font-size: 1.125rem;
+    font-weight: 500;
+  }
+}
