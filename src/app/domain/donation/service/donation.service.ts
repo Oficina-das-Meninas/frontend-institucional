@@ -11,6 +11,9 @@ export class DonationService {
   private http = inject(HttpClient);
 
   public sendDonation(donationData: DonationRequest) {
-    return this.http.post<{ data: { checkoutLink: string }  }>(`${this.apiUrl}`, donationData);
+    return this.http.post<{ data: { checkoutLink: string } }>(
+      `${this.apiUrl}`,
+      donationData
+    );
   }
 }

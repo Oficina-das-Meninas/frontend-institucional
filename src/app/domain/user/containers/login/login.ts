@@ -63,7 +63,7 @@ export class Login {
 
     this.authService.login({ email, password }).subscribe({
       next: () => {
-        this.router.navigate(['/']);
+        this.router.navigate(['/perfil']);
       },
       error: (err) => {
         this.loadingRequest = false;
