@@ -46,6 +46,7 @@ export const routes: Routes = [
       },
       {
         path: 'faca-sua-doacao',
+        title: 'Faça sua doação - Oficina das Meninas',
         loadComponent: () =>
           import(
             './domain/donation/containers/make-your-donation/make-your-donation'
@@ -114,18 +115,35 @@ export const routes: Routes = [
   },
   {
     path: 'login',
-    title: 'Login Usuário',
+    title: 'Login - Oficina das Meninas',
     canActivate: [authGuard],
     loadComponent: () =>
       import('./domain/user/containers/login/login').then((m) => m.Login),
   },
   {
     path: 'cadastro',
-    title: 'Cadastro de Usuário',
+    title: 'Cadastro - Oficina das Meninas',
     canActivate: [authGuard],
     loadComponent: () =>
       import('./domain/user/containers/signup/signup').then((m) => m.SignUp),
   },
-
+  {
+    path: 'esqueci-senha',
+    title: 'Recuperar Senha - Oficina das Meninas',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./domain/user/containers/forgot-password/forgot-password').then(
+        (m) => m.ForgotPassword
+      ),
+  },
+  {
+    path: 'alterar-senha',
+    title: 'Redefinir Senha - Oficina das Meninas',
+    canActivate: [authGuard],
+    loadComponent: () =>
+      import('./domain/user/containers/reset-password/reset-password').then(
+        (m) => m.ResetPassword
+      ),
+  },
   { path: '**', redirectTo: '' },
 ];
