@@ -222,13 +222,11 @@ export class ProfileGame implements OnInit {
       next: () => {
         this.isCancelling.set(false);
         this.closeCancelModal();
+        this.subscription.set(null);
       },
       error: () => {
         this.isCancelling.set(false);
         this.closeCancelModal();
-      },
-      complete: () => {
-        this.loadSubscription();
       },
     });
   }
