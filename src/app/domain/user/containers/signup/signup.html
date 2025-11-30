@@ -104,7 +104,24 @@
             <div>
               <mat-form-field appearance="outline" class="w-full">
                 <mat-label>Senha</mat-label>
-                <input matInput formControlName="password" type="password" />
+                <input
+                  matInput
+                  formControlName="password"
+                  [type]="hidePassword() ? 'password' : 'text'"
+                />
+                <button
+                  mat-icon-button
+                  matSuffix
+                  (click)="hidePassword.set(!hidePassword())"
+                  [attr.aria-label]="'Alternar visibilidade da senha'"
+                  [attr.aria-pressed]="hidePassword()"
+                  type="button"
+                >
+                  <mat-icon
+                    >{{ hidePassword() ? 'visibility_off' : 'visibility'
+                    }}</mat-icon
+                  >
+                </button>
                 @if(formHelper.getErrorMessage(form, 'password')) {
                 <mat-error
                   >{{ formHelper.getErrorMessage(form, 'password') }}</mat-error

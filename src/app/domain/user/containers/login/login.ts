@@ -38,6 +38,7 @@ export class Login {
   router = inject(Router);
 
   loadingRequest = signal(false);
+  hidePassword = signal(true);
 
   constructor() {
     this.form = new FormGroup({
