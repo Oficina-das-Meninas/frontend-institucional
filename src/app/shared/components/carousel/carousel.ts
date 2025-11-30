@@ -15,6 +15,7 @@ export class CarouselComponent {
   @Input() slides!: { path: string; alt: string }[];
   @Input() withTitle: boolean = false;
   @Input() slideClass: string = '';
+  @Input() swiperSlideClass: string = '';
   @Input() imgClass: string = '';
   @Input() slidesPerView: number = 0;
   @Input() spaceBetween: number = 30;
