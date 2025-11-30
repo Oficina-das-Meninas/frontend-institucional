@@ -26,9 +26,7 @@
                 </div>
                 <div>
                   <p class="text-xs md:text-sm text-subtext-light">Padrinho</p>
-                  <h1
-                    class="text-3xl md:text-4xl font-bold break-words"
-                  >
+                  <h1 class="text-3xl md:text-4xl font-bold break-words">
                     {{ levelData().name }}
                   </h1>
                 </div>
@@ -85,9 +83,7 @@
             <div
               class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
             >
-              <h2 class="text-2xl font-bold m-0">
-                Histórico de doações
-              </h2>
+              <h2 class="text-2xl font-bold m-0">Histórico de doações</h2>
               @if(donations().length > 0) {
               <a
                 routerLink="/faca-sua-doacao"
@@ -96,7 +92,7 @@
                 class="rounded-full"
               >
                 <mat-icon class="mr-2">volunteer_activism</mat-icon>
-                Fazer Nova Doação
+                Nova doação
               </a>
               }
             </div>
@@ -124,9 +120,7 @@
                     >volunteer_activism</mat-icon
                   >
                 </div>
-                <h3 class="text-lg font-bold mb-2">
-                  Ainda não há doações
-                </h3>
+                <h3 class="text-lg font-bold mb-2">Ainda não há doações</h3>
                 <p class="text-subtext-light mb-6 max-w-md">
                   Sua jornada de solidariedade começa aqui. Faça sua primeira
                   doação para apoiar nossa causa e ganhar pontos.
@@ -214,9 +208,10 @@
                       (click)="saveField('name')"
                     >
                       @if(isSaving()) {
-                        <span class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"></span>
-                      }
-                      Salvar
+                      <span
+                        class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"
+                      ></span>
+                      } Salvar
                     </button>
                   </div>
                 </div>
@@ -262,9 +257,10 @@
                       (click)="saveField('email')"
                     >
                       @if(isSaving()) {
-                        <span class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"></span>
-                      }
-                      Salvar
+                      <span
+                        class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"
+                      ></span>
+                      } Salvar
                     </button>
                   </div>
                 </div>
@@ -289,7 +285,8 @@
                     <mat-panel-description
                       class="text-lg font-medium m-0 grow-0"
                     >
-                      {{ profileForm.get('phone')?.value }}
+                      {{ profileForm.get('phone')?.value | mask:'(00)
+                      00000-0000' }}
                     </mat-panel-description>
                     }
                   </div>
@@ -297,7 +294,12 @@
 
                 <div [formGroup]="profileForm" class="px-0 pb-2">
                   <mat-form-field appearance="outline" class="w-full">
-                    <input matInput formControlName="phone" type="tel" />
+                    <input
+                      matInput
+                      formControlName="phone"
+                      type="tel"
+                      mask="(00) 00000-0000"
+                    />
                   </mat-form-field>
                   <div class="mt-2">
                     <button
@@ -308,9 +310,10 @@
                       (click)="saveField('phone')"
                     >
                       @if(isSaving()) {
-                        <span class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"></span>
-                      }
-                      Salvar
+                      <span
+                        class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"
+                      ></span>
+                      } Salvar
                     </button>
                   </div>
                 </div>
@@ -335,7 +338,8 @@
                     <mat-panel-description
                       class="text-lg font-medium m-0 grow-0"
                     >
-                      {{ profileForm.get('cpf')?.value }}
+                      {{ profileForm.get('cpf')?.value | mask:'000.000.000-00'
+                      }}
                     </mat-panel-description>
                     }
                   </div>
@@ -343,7 +347,11 @@
 
                 <div [formGroup]="profileForm" class="px-0 pb-2">
                   <mat-form-field appearance="outline" class="w-full">
-                    <input matInput formControlName="cpf" />
+                    <input
+                      matInput
+                      formControlName="cpf"
+                      mask="000.000.000-00"
+                    />
                   </mat-form-field>
                   <div class="mt-2">
                     <button
@@ -354,9 +362,10 @@
                       (click)="saveField('cpf')"
                     >
                       @if(isSaving()) {
-                        <span class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"></span>
-                      }
-                      Salvar
+                      <span
+                        class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"
+                      ></span>
+                      } Salvar
                     </button>
                   </div>
                 </div>
@@ -379,7 +388,7 @@
                     </mat-panel-title>
                     @if (step() !== 4) {
                     <mat-panel-description
-                      class="text-lg font-medium text-light m-0 grow-0 tracking-widest"
+                      class="text-lg font-medium m-0 grow-0 tracking-widest"
                     >
                       ••••••••••••
                     </mat-panel-description>
@@ -389,42 +398,49 @@
 
                 <div
                   [formGroup]="passwordForm"
-                  class="px-0 pb-2 flex flex-col gap-4"
+                  class="px-0 pb-2 flex flex-col"
                 >
                   <mat-form-field appearance="outline" class="w-full">
-                    <mat-label>Senha Atual</mat-label>
+                    <mat-label>Senha atual</mat-label>
                     <input
                       matInput
                       formControlName="currentPassword"
-                      type="password"
+                      [type]="showPasswords() ? 'text' : 'password'"
                     />
                     @if(passwordForm.get('currentPassword')?.hasError('required'))
                     { <mat-error>Obrigatório</mat-error> }
                   </mat-form-field>
 
-                  <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                  <div class="grid grid-cols-1 md:grid-cols-2 md:gap-4">
                     <mat-form-field appearance="outline" class="w-full">
-                      <mat-label>Nova Senha</mat-label>
+                      <mat-label>Nova senha</mat-label>
                       <input
                         matInput
                         formControlName="newPassword"
-                        type="password"
+                        [type]="showPasswords() ? 'text' : 'password'"
                       />
                       @if(passwordForm.get('newPassword')?.hasError('minlength'))
                       { <mat-error>Mínimo 6 caracteres</mat-error> }
                     </mat-form-field>
 
                     <mat-form-field appearance="outline" class="w-full">
-                      <mat-label>Confirmar Nova Senha</mat-label>
+                      <mat-label>Confirmar nova senha</mat-label>
                       <input
                         matInput
                         formControlName="confirmNewPassword"
-                        type="password"
+                        [type]="showPasswords() ? 'text' : 'password'"
                       />
                       @if(passwordForm.errors?.['passwordMismatch']) {
                       <mat-error>Senhas não conferem</mat-error> }
                     </mat-form-field>
                   </div>
+
+                  <mat-checkbox
+                    [checked]="showPasswords()"
+                    (change)="toggleShowPasswords()"
+                  >
+                    Mostrar senhas
+                  </mat-checkbox>
 
                   <div class="mt-2">
                     <button
@@ -435,9 +451,11 @@
                       (click)="changePassword()"
                     >
                       @if(isSaving()) {
-                        <span class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"></span>
+                      <span
+                        class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"
+                      ></span>
                       }
-                      Alterar Senha
+                      Alterar senha
                     </button>
                   </div>
                 </div>

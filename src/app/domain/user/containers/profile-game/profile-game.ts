@@ -9,6 +9,7 @@ import {
   Validators,
 } from '@angular/forms';
 import { MatButtonModule } from '@angular/material/button';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
@@ -17,6 +18,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
+import { NgxMaskDirective } from 'ngx-mask';
+import { MaskPipe } from '../../../../shared/pipes/mask.pipe';
 import { ToastService } from '../../../../shared/services/toast';
 import { cpfValidator } from '../../../../shared/validators/document.validator';
 import { DonationDescriptionCard } from '../../components/donation-description-card/donation-description-card';
@@ -40,6 +43,9 @@ import { UserService } from '../../services/user';
     ReactiveFormsModule,
     RouterModule,
     DonationDescriptionCard,
+    MaskPipe,
+    NgxMaskDirective,
+    MatCheckboxModule,
   ],
   templateUrl: './profile-game.html',
   styleUrl: './profile-game.scss',
@@ -59,6 +65,8 @@ export class ProfileGame implements OnInit {
   isCancelling = signal(false);
   isSaving = signal(false);
   userId = signal<string | null>(null);
+
+  showPasswords = signal(false);
 
   profileForm!: FormGroup;
   passwordForm!: FormGroup;
@@ -121,7 +129,7 @@ export class ProfileGame implements OnInit {
           );
           this.step.set(-1);
         },
-        error: (err) => {
+        error: () => {
           this.isSaving.set(false);
           this.toastService.show(
             `Erro ao atualizar ${this.getFieldLabel(fieldName).toLowerCase()}`,
@@ -310,5 +318,9 @@ export class ProfileGame implements OnInit {
     const confirm = control.get('confirmNewPassword');
     if (!password || !confirm) return null;
     return password.value === confirm.value ? null : { passwordMismatch: true };
+  }
+
+  toggleShowPasswords() {
+    this.showPasswords.update((val) => !val);
   }
 }

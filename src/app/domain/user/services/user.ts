@@ -65,7 +65,7 @@ export class UserService {
 
   verifyPassword(password: string): Observable<void> {
     return this.httpClient.post<void>(
-      `${this.API_URL}/verify-password`,
+      `${this.API_URL}/me/verify-password`,
       { password },
       { withCredentials: true }
     );
