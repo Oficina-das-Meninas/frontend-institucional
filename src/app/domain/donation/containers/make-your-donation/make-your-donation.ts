@@ -23,7 +23,7 @@ import {
 } from '@angular/forms';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
-import { DonationService } from '../../service/donation.service';
+import { DonationService } from '../../service/donation';
 import { cpfValidator } from '../../../../shared/validators/document.validator';
 import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
 import { NgxCaptchaModule } from 'ngx-captcha';
