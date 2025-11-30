@@ -22,6 +22,15 @@ export interface CreateUserRequest {
   phone: string;
 }
 
+export interface UpdateUserDto {
+  id: string;
+  name?: string;
+  email?: string;
+  document?: string;
+  password?: string;
+  phone?: string;
+}
+
 export interface UserResponse {
   id: string;
   name: string;
@@ -29,7 +38,6 @@ export interface UserResponse {
   document: string;
   phone: string;
 }
-
 
 export interface SponsorshipDto {
   id: string;

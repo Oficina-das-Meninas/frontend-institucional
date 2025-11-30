@@ -87,7 +87,6 @@ export class ResetPassword implements OnInit {
         error: (err: unknown) => {
           this.validatingToken.set(false);
           this.tokenValid.set(false);
-          console.error('Erro ao validar token:', err);
 
           let message = 'Token inválido ou expirado. Solicite um novo link.';
 
@@ -158,8 +157,6 @@ export class ResetPassword implements OnInit {
           }, 2000);
         },
         error: (err: unknown) => {
-          console.error('Erro ao resetar senha:', err);
-
           let message =
             'Ocorreu um erro inesperado. Tente novamente mais tarde.';
 

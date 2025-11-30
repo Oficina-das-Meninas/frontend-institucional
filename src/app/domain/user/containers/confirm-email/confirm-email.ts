@@ -62,7 +62,6 @@ export class ConfirmEmail implements OnInit {
         }, 1500);
       },
       error: (err) => {
-        console.error('Erro na verificação de email', err);
         this.status.set('error');
         this.errorMessage.set(
           'O link de verificação é inválido ou já expirou. Tente solicitar um novo.'

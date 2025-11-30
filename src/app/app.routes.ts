@@ -88,7 +88,7 @@ export const routes: Routes = [
       {
         path: 'perfil',
         canActivate: [authGuard],
-        title: 'Perfil e Histórico - Oficina das Meninas',
+        title: 'Perfil - Oficina das Meninas',
         loadComponent: () =>
           import('./domain/user/containers/profile-game/profile-game').then(
             (m) => m.ProfileGame

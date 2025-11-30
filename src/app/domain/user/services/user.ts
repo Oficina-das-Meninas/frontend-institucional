@@ -3,7 +3,11 @@ import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { DonationDescriptionCardType } from '../model/donation-description';
 import { Observable } from 'rxjs';
-import { SponsorshipDto, UserResponse } from '../model/user-models';
+import {
+  SponsorshipDto,
+  UpdateUserDto,
+  UserResponse,
+} from '../model/user-models';
 import { ApiResponse } from '../../../shared/models/api-response';
 
 @Injectable({
@@ -49,5 +53,21 @@ export class UserService {
     return this.httpClient.delete<void>(`${this.DONATION_URL}/recurring`, {
       withCredentials: true,
     });
+  }
+
+  updateUser(updateData: UpdateUserDto): Observable<ApiResponse<UserResponse>> {
+    return this.httpClient.put<ApiResponse<UserResponse>>(
+      `${this.API_URL}/${updateData.id}`,
+      updateData,
+      { withCredentials: true }
+    );
+  }
+
+  verifyPassword(password: string): Observable<void> {
+    return this.httpClient.post<void>(
+      `${this.API_URL}/me/verify-password`,
+      { password },
+      { withCredentials: true }
+    );
   }
 }
