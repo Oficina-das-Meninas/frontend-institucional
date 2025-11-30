@@ -43,6 +43,7 @@ export class SignUp {
   router = inject(Router);
 
   loadingRequest = signal(false);
+  hidePassword = signal(true);
 
   constructor() {
     this.form = new FormGroup({
@@ -59,7 +60,10 @@ export class SignUp {
         Validators.email,
         Validators.maxLength(255),
       ]),
-      phone: new FormControl<string>(null!, [Validators.required, phoneValidator()]),
+      phone: new FormControl<string>(null!, [
+        Validators.required,
+        phoneValidator(),
+      ]),
       password: new FormControl<string>(null!, [
         Validators.required,
         Validators.minLength(6),
