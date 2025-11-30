@@ -1,5 +1,11 @@
-<div class="flex min-h-screen bg-[#FFF9F6]">
-  <div class="w-full lg:w-1/2 flex flex-col bg-white">
+<div class="flex min-h-screen">
+  <img
+    alt="Meninas abraçando"
+    class="lg:flex lg:w-2/3 relative items-center justify-center overflow-hidden object-cover hidden"
+    src="./meninas-abraco.webp"
+  />
+
+  <div class="w-full lg:w-1/3 flex flex-col bg-white">
     <div
       class="flex-grow flex items-center justify-center p-6 sm:p-12 relative"
     >
@@ -13,14 +19,14 @@
 
       <div class="w-full max-w-md">
         <div class="text-center mb-8 flex flex-col items-center">
-          <div class="mb-6 p-2 rounded-full shadow-sm bg-white inline-block">
-            <app-logo cssClass="size-50" />
+          <div class="mb-6 p-2 rounded-full bg-white inline-block">
+            <app-logo cssClass="size-35" />
           </div>
           <h1 class="text-3xl font-bold text-gray-900">Crie sua conta</h1>
           <p class="text-gray-500 mt-2">Junte-se a nós! É rápido e fácil.</p>
         </div>
 
-        <div class="bg-white sm:p-8 rounded-2xl sm:border border-gray-100">
+        <div class="bg-white sm:p-8 rounded-2xl">
           <form
             [formGroup]="form"
             (ngSubmit)="onSubmit()"
@@ -134,15 +140,5 @@
         </div>
       </div>
     </div>
-  </div>
-
-  <div
-    class="hidden lg:flex lg:w-1/2 relative items-center justify-center p-12 bg-[#FFF9F6] overflow-hidden"
-  >
-    <img
-      alt="Meninas abraçando"
-      class="relative z-10 h-full w-full object-cover rounded-2xl shadow-xl"
-      src="./meninas-abraco.webp"
-    />
   </div>
 </div>
