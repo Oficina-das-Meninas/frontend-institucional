@@ -49,7 +49,10 @@ export class SignUp {
 
   constructor() {
     this.form = new FormGroup({
-      name: new FormControl<string>(null!, [Validators.required]),
+      name: new FormControl<string>(null!, [
+        Validators.required,
+        Validators.maxLength(255),
+      ]),
       document: new FormControl<string>(null!, [
         Validators.required,
         cpfValidator(),
@@ -57,11 +60,13 @@ export class SignUp {
       email: new FormControl<string>(null!, [
         Validators.required,
         Validators.email,
+        Validators.maxLength(255),
       ]),
       phone: new FormControl<string>(null!, [Validators.required]),
       password: new FormControl<string>(null!, [
         Validators.required,
         Validators.minLength(6),
+        Validators.maxLength(255),
       ]),
     });
   }
