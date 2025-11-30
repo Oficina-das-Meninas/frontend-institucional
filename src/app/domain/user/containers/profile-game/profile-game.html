@@ -1,4 +1,4 @@
-<div class="flex flex-col  bg-gradient pt-24 pb-12 w-full">
+<div class="flex flex-col bg-gradient pt-24 pb-12 w-full">
   <div class="container mx-auto px-4 md:px-6 w-full max-w-5xl">
     <mat-tab-group
       animationDuration="300ms"
@@ -43,8 +43,8 @@
                   >
                   <span class="font-bold text-orange-700">
                     {{ donations()[0]?.recurrenceSequence || 0 }} {{
-                    donations()[0]?.recurrenceSequence === 1 ? 'mês' : 'meses'
-                    }}
+                    (donations()[0]?.recurrenceSequence || 0) <= 1 ? 'mês' :
+                    'meses' }}
                   </span>
                 </div>
                 <div
@@ -52,7 +52,8 @@
                 >
                   <span class="material-icons text-yellow-500">star</span>
                   <span class="font-semibold text-yellow-700">
-                    {{ currentScore() }} pontos
+                    {{ currentScore() }} {{ currentScore() <= 1 ? 'ponto' :
+                    'pontos' }}
                   </span>
                 </div>
               </div>
@@ -104,7 +105,7 @@
       </mat-tab>
 
       <mat-tab label="Meu Perfil">
-        <div class="mt-8 w-full  max-w-4xl mx-auto">
+        <div class="mt-8 w-full max-w-4xl mx-auto">
           <div class="mb-6">
             <h1 class="text-3xl font-bold text-text-light">Meu Perfil</h1>
             <p class="text-subtext-light mt-2">
