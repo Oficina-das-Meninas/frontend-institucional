@@ -22,7 +22,6 @@ export class Footer {
   constructor(private router: Router, private location: Location) {}
 
   navigateToPartners() {
-    console.log('navigating to partners', this.location.path());
     if (this.location.path() == '') return;
 
     this.router.navigate(['/'], { fragment: 'parceiros' });

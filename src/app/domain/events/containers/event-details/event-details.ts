@@ -71,7 +71,6 @@ export class EventDetails implements OnInit {
           this.renderer.addClass(headerElement, 'color-extracted');
         }
       } catch (error) {
-        console.warn('Erro ao extrair cor da imagem, usando cor padrão:', error);
         const headerElement = this.elementRef.nativeElement.querySelector('.event-header');
         if (headerElement) {
           this.renderer.addClass(headerElement, 'color-extracted');

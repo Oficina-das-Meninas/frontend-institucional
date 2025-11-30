@@ -14,7 +14,6 @@ export class ColorExtractorService {
   }
 
   if (hex.length !== 6) {
-    console.error('Formato de cor hexadecimal inválido.');
     return false;
   }
 

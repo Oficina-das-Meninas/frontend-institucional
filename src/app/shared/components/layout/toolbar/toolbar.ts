@@ -88,7 +88,6 @@ export class Toolbar {
         this.router.navigate(['/login']);
       },
       error: (err) => {
-        console.error('Erro ao fazer logout', err);
         this.authService.userName.set(null);
         this.router.navigate(['/login']);
       },
