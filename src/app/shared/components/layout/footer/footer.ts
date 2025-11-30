@@ -46,8 +46,8 @@ export class Footer {
   ];
 
   accountLinks: NavigationLink[] = [
-    { label: 'Acessar conta', route: '/' },
-    { label: 'Criar uma conta', route: '/' },
+    { label: 'Acessar conta', route: '/login' },
+    { label: 'Criar uma conta', route: '/cadastro' },
   ];
 
   helpLinks: NavigationLink[] = [

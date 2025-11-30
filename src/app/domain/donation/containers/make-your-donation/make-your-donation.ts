@@ -4,6 +4,7 @@ import {
   inject,
   OnInit,
   signal,
+  ViewChild,
 } from '@angular/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
@@ -26,13 +27,14 @@ import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { DonationService } from '../../service/donation';
 import { cpfValidator } from '../../../../shared/validators/document.validator';
 import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
-import { NgxCaptchaModule } from 'ngx-captcha';
+import { NgxCaptchaModule, ReCaptcha2Component } from 'ngx-captcha';
 import { environment } from '../../../../../environments/environment';
 import { MatDialog } from '@angular/material/dialog';
 import { AlertDialogSubscription } from '../../components/alert-dialog-subscription/alert-dialog-subscription';
 import { phoneValidator } from '../../../../shared/validators/phone.validator';
 import { UserService } from '../../../../domain/user/services/user';
 import { UserResponse } from '../../../user/model/user-models';
+import { AuthService } from '../../../../shared/services/auth/auth';
 
 function minCurrencyValue(min: number): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -65,21 +67,25 @@ function minCurrencyValue(min: number): ValidatorFn {
   styleUrls: ['./make-your-donation.scss'],
 })
 export class MakeYourDonation implements AfterViewInit, OnInit {
+  @ViewChild('captchaElem') captchaElem!: ReCaptcha2Component;
+
   selectedAmount: number | null = null;
   captchaKey = environment.captchaSiteKey;
 
   userAuthenticated = false;
+  checkingSession = signal(true);
   currentUser = signal<UserResponse | null>(null);
 
   form!: FormGroup;
 
   donationService = inject(DonationService);
   userService = inject(UserService);
+  authService = inject(AuthService);
   route = inject(ActivatedRoute);
   formHelper = inject(FormHelperService);
   readonly dialog = inject(MatDialog);
 
-  loadingRequest = false;
+  loadingRequest = signal(false);
 
   constructor() {
     this.form = new FormGroup({
@@ -147,24 +153,37 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
   }
 
   checkUserSession() {
-    this.userService.getInfoLoggedUser().subscribe({
-      next: (response) => {
-        if (response.data) {
-          this.userAuthenticated = true;
-          this.currentUser.set(response.data);
+    this.checkingSession.set(true);
 
-          this.form.patchValue({
-            name: response.data.name,
-            email: response.data.email,
-            document: response.data.document,
-            phone: response.data.phone,
-          });
-        }
-      },
-      error: () => {
+    this.authService.checkSession().subscribe((hasSession) => {
+      if (!hasSession) {
         this.userAuthenticated = false;
         this.currentUser.set(null);
-      },
+        this.checkingSession.set(false);
+        return;
+      }
+
+      this.userService.getInfoLoggedUser().subscribe({
+        next: (response) => {
+          if (response.data) {
+            this.userAuthenticated = true;
+            this.currentUser.set(response.data);
+
+            this.form.patchValue({
+              name: response.data.name,
+              email: response.data.email,
+              document: response.data.document,
+              phone: response.data.phone,
+            });
+          }
+          this.checkingSession.set(false);
+        },
+        error: () => {
+          this.userAuthenticated = false;
+          this.currentUser.set(null);
+          this.checkingSession.set(false);
+        },
+      });
     });
   }
 
@@ -228,20 +247,24 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
       captchaToken: rawValue.recaptcha,
     };
 
-    this.loadingRequest = true;
+    this.loadingRequest.set(true);
 
-    this.donationService.sendDonation(donationRequest).subscribe({
-      next: (response) => {
-        window.location.href = response.data.checkoutLink;
-      },
-      error: (error) => {
-        console.error('Error processing donation:', error);
-        this.loadingRequest = false;
-      },
-      complete: () => {
-        this.loadingRequest = false;
-      },
-    });
+    this.donationService
+      .sendDonation(donationRequest)
+      .subscribe({
+        next: (response) => {
+          window.location.href = response.data.checkoutLink;
+        },
+        error: (error) => {
+          console.error('Error processing donation:', error);
+          this.captchaElem.resetCaptcha();
+        },
+      })
+      .add(() => {
+        setTimeout(() => {
+          this.loadingRequest.set(false);
+        });
+      });
   }
 
   handleReset() {

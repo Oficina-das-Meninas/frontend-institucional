@@ -9,6 +9,4 @@ import { Toolbar } from './toolbar/toolbar';
   templateUrl: './layout.html',
   styleUrl: './layout.scss',
 })
-export class Layout {
-
-}
+export class Layout {}

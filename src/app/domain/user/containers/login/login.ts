@@ -1,10 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Logo } from '../../../../shared/components/logo/logo';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import {
   FormControl,
   FormGroup,
@@ -28,7 +27,6 @@ import { AuthService } from '../../../../shared/services/auth/auth';
     MatIconModule,
     MatButtonModule,
     RouterLink,
-    MatSnackBarModule,
   ],
   templateUrl: './login.html',
   styleUrl: './login.scss',
@@ -38,9 +36,9 @@ export class Login {
   formHelper = inject(FormHelperService);
   authService = inject(AuthService);
   router = inject(Router);
-  snackBar = inject(MatSnackBar);
 
-  loadingRequest = false;
+  loadingRequest = signal(false);
+  hidePassword = signal(true);
 
   constructor() {
     this.form = new FormGroup({
@@ -58,33 +56,20 @@ export class Login {
       return;
     }
 
-    this.loadingRequest = true;
+    this.loadingRequest.set(true);
     const { email, password } = this.form.getRawValue();
 
-    this.authService.login({ email, password }).subscribe({
-      next: () => {
-        this.router.navigate(['/perfil']);
-      },
-      error: (err) => {
-        this.loadingRequest = false;
-        console.error('Erro ao realizar login:', err);
-
-        let message = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
-
-        if (err.status === 401 || err.status === 403) {
-          message = 'E-mail ou senha inválidos.';
-        }
-
-        this.snackBar.open(message, 'Fechar', {
-          duration: 5000,
-          horizontalPosition: 'center',
-          verticalPosition: 'bottom',
-          panelClass: ['snackbar-error'],
+    this.authService
+      .login({ email, password })
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/perfil']);
+        },
+      })
+      .add(() => {
+        setTimeout(() => {
+          this.loadingRequest.set(false);
         });
-      },
-      complete: () => {
-        this.loadingRequest = false;
-      },
-    });
+      });
   }
 }

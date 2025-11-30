@@ -13,17 +13,30 @@ import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { routes } from './app.routes';
 import { authInterceptor } from './shared/interceptors/auth-interceptor';
-import { lastValueFrom } from 'rxjs';
+import { lastValueFrom, of, switchMap } from 'rxjs';
 import { AuthService } from './shared/services/auth/auth';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { errorInterceptor } from './shared/interceptors/error-interceptor';
 
 function initializeUser(authService: AuthService) {
-  return () => lastValueFrom(authService.getSession());
+  return () =>
+    lastValueFrom(
+      authService.checkSession().pipe(
+        switchMap((hasSession) => {
+          if (hasSession) {
+            return authService.getSession();
+          }
+          return of(null);
+        })
+      )
+    );
 }
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideBrowserGlobalErrorListeners(),
     provideZonelessChangeDetection(),
+    provideAnimationsAsync(),
     provideEnvironmentNgxMask(),
     provideRouter(
       routes,
@@ -31,7 +44,10 @@ export const appConfig: ApplicationConfig = {
         scrollPositionRestoration: 'top',
       })
     ),
-    provideHttpClient(withFetch(), withInterceptors([authInterceptor])),
+    provideHttpClient(
+      withFetch(),
+      withInterceptors([authInterceptor, errorInterceptor])
+    ),
 
     {
       provide: APP_INITIALIZER,

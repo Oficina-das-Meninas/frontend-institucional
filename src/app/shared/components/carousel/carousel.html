@@ -3,11 +3,11 @@
   [attr.autoplay-delay]="autoplayDelay"
   [attr.space-between]="spaceBetween"
   grab-cursor="true"
-  mousewheel="true"
+  mousewheel="false"
   keyboard="true"
   autoplay-disable-on-interaction="false"
   autoplay-pause-on-mouse-enter="true"
-  class="w-full">
+  class="w-full max-w-fit">
   @for (slide of slides; track $index) {
   <swiper-slide class="flex justify-center items-center flex-col">
     <div [class]="slideClass" [style]="'--carousel-aspect-ratio: ' + aspectRatio">

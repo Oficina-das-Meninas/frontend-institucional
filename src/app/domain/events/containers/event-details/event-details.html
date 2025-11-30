@@ -55,16 +55,16 @@
                   'float-none ' +
                   'mx-auto ' +
                   'w-full ' +
-                  'max-w-160 ' +
+                  'max-w-140 ' +
                   'lg:max-w-max ' +
                   'lg:aspect-[16/10] ' +
                   'lg:w-auto'
                 "
           [text]="'Imagem do evento ' + event()?.title" />
       }
-      <div class="max-w-180">
+      <div class="max-w-140">
         <img
-          class="h-96 object-cover lg:mr-5 rounded-xl lg:float-left float-none mx-auto hover:scale-105 transition-transform duration-300"
+          class="h-96 w-full object-cover lg:mr-5 rounded-xl lg:float-left float-none mx-auto hover:scale-105 transition-transform duration-300"
           [class.hidden]="!previewImageLoaded()"
           src="{{ event()?.previewImageUrl }}"
           alt="Imagem do evento {{ event()?.title }}"
@@ -78,17 +78,19 @@
 
 @if (event()?.partnersImageUrl) {
 <section class="w-full flex flex-col pl-4 pr-4 lg:pl-20 lg:pr-20 pb-10 pt-8 bg-gray-100">
-  <div class="w-full text-center">
+  <div class="w-full text-center ">
     <h2 class="text-2xl lg:text-4xl font-bold mb-8 text-gray-800">Parceiros</h2>
     @if (!partnersImageLoaded()) {
     <app-skeleton-image [imageCss]="'w-full max-w-250 mx-auto aspect-[16/9]'" [text]="'Parceiros e apoiadores do evento ' + event()?.title" />
     }
-    <img
-      class="w-250 rounded-xl object-contain mx-auto hover:scale-105 transition-transform duration-300"
+    <div class="max-w-250 mx-auto">
+      <img
+      class="rounded-xl h-130 object-contain mx-auto hover:scale-105 transition-transform duration-300"
       [class.hidden]="!partnersImageLoaded()"
       src="{{ event()?.partnersImageUrl }}"
       alt="Parceiros e apoiadores do evento {{ event()?.title }}"
       (load)="onPartnersImageLoad()" />
+    </div>
   </div>
 </section>
 }

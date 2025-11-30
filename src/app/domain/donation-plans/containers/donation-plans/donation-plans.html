@@ -64,6 +64,7 @@
               type="tel"
               [value]="inputValue()"
               (input)="formatCurrency($event)"
+              (keyup.enter)="chooseAction()"
               maxlength="18"
             />
           </mat-form-field>
