@@ -19,11 +19,14 @@ export class CarouselComponent {
   @Input() imgClass: string = '';
   @Input() slidesPerView: number = 0;
   @Input() spaceBetween: number = 30;
-  @Input() autoplayDelay: number = 5000;
+  @Input() autoplayDelay: number = 3000;
   @Input() aspectRatio: string = '16 / 10';
+  @Input() mobileSlidesFraction: number = 1.1;
 
   private readonly breakpoints = [
-    { width: 1920, slides: 4, slidesPerView: 4.7 },
+    { width: 2560, slides: 6, slidesPerView: 5.5 },
+    { width: 1440, slides: 5, slidesPerView: 4.5 },
+    { width: 1920, slides: 4, slidesPerView: 3.9 },
     { width: 1600, slides: 4, slidesPerView: 3.5 },
     { width: 1280, slides: 4, slidesPerView: 2.8 },
     { width: 1024, slides: 4, slidesPerView: 2.2 },
@@ -36,16 +39,21 @@ export class CarouselComponent {
     const slideCount = this.slides.length;
 
     if (width < 768) {
-      this.slidesPerView = 1;
+      this.slidesPerView = Math.min(slideCount, this.mobileSlidesFraction);
+      return;
     }
 
     if (this.slidesPerView === 0) {
+      let selectedSlidesPerView = 1.1;
+
       for (const breakpoint of this.breakpoints) {
-        if (width > breakpoint.width && slideCount > breakpoint.slides) {
-          this.slidesPerView = breakpoint.slidesPerView;
+        if (width >= breakpoint.width) {
+          selectedSlidesPerView = breakpoint.slidesPerView;
           break;
         }
       }
+
+      this.slidesPerView = Math.min(slideCount, selectedSlidesPerView);
     }
   }
 }
