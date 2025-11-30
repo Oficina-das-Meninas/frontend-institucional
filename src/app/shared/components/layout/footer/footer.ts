@@ -54,6 +54,7 @@ export class Footer {
     { label: 'Faça uma doação', route: '/faca-sua-doacao' },
     { label: 'Doe nota fiscal', route: '/doar-nota-fiscal' },
     { label: 'Seja um voluntário', route: '/seja-um-voluntario' },
-    { label: 'Seja um padrinho', route: '/seja-um-padrinho' }
+    { label: 'Seja um padrinho', route: '/seja-um-padrinho' },
+    { label: 'Política de privacidade', route: '/politica-de-privacidade' }
   ];
 }

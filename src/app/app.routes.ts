@@ -94,6 +94,14 @@ export const routes: Routes = [
             (m) => m.ProfileGame
           ),
       },
+      {
+        path: 'politica-de-privacidade',
+        title: 'Política de privacidade - Oficina das Meninas',
+        loadComponent: () =>
+          import('./domain/privacy-policies/containers/privacy-policies').then(
+            (m) => m.PrivacyPolicies
+          ),
+      },
     ],
   },
   {
