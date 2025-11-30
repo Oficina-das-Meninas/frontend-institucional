@@ -85,11 +85,49 @@
             <h2 class="text-2xl font-bold text-text-light">
               Histórico de doações
             </h2>
-            <div class="flex flex-col gap-4">
-              @for (donation of donations(); track $index) {
-              <app-donation-description-card [donation]="donation" />
+
+            <div class="flex flex-col gap-6">
+              @for (group of donationsGrouped(); track group.label) {
+              <div class="flex flex-col gap-4">
+                <h3
+                  class="text-sm font-bold text-subtext-light uppercase tracking-wide border-b border-gray-100 pb-2 mb-0"
+                >
+                  {{ group.label }}
+                </h3>
+                @for (donation of group.items; track $index) {
+                <app-donation-description-card [donation]="donation" />
+                }
+              </div>
+              } @if (donationsGrouped().length === 0) {
+              <div
+                class="flex flex-col items-center justify-center py-12 px-4 text-center border-2 border-dashed border-gray-200 rounded-xl bg-gray-50/50"
+              >
+                <div
+                  class="w-16 h-16 bg-[#ba005c]/10 rounded-full flex items-center justify-center mb-4"
+                >
+                  <mat-icon class="text-[#ba005c] text-3xl scale-125"
+                    >volunteer_activism</mat-icon
+                  >
+                </div>
+                <h3 class="text-lg font-bold text-text-light mb-2">
+                  Ainda não há doações
+                </h3>
+                <p class="text-subtext-light mb-6 max-w-md">
+                  Sua jornada de solidariedade começa aqui. Faça sua primeira
+                  doação para apoiar nossa causa e ganhar pontos.
+                </p>
+                <a
+                  routerLink="/faca-sua-doacao"
+                  mat-flat-button
+                  color="primary"
+                  class="rounded-full px-8"
+                >
+                  Fazer Doação
+                </a>
+              </div>
               }
             </div>
+
             @if (hasMorePages()) {
             <div class="text-center mt-6">
               <button

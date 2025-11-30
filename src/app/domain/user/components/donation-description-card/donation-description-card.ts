@@ -1,4 +1,4 @@
-import { CurrencyPipe, registerLocaleData } from '@angular/common';
+import { CurrencyPipe, DatePipe, registerLocaleData } from '@angular/common'; // Adicionado DatePipe
 import { Component, Input, LOCALE_ID } from '@angular/core';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { DonationDescriptionCardType } from '../../model/donation-description';
@@ -8,7 +8,7 @@ registerLocaleData(localePt);
 
 @Component({
   selector: 'app-donation-description-card',
-  imports: [MatExpansionModule, CurrencyPipe],
+  imports: [MatExpansionModule, CurrencyPipe, DatePipe],
   templateUrl: './donation-description-card.html',
   styleUrl: './donation-description-card.scss',
   providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],

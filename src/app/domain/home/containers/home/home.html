@@ -13,7 +13,9 @@
   />
 
   <div class="relative z-10 text-center pt-50 px-12">
-    <h1 class="font-bold text-5xl lg:text-8xl text-zinc-500 send-flowers drop-shadow-md">
+    <h1
+      class="font-bold text-5xl lg:text-8xl text-zinc-500 send-flowers drop-shadow-md"
+    >
       Oficina das Meninas
     </h1>
     <p class="text-base lg:text-2xl sniglet text-zinc-500 drop-shadow-md">
@@ -50,7 +52,9 @@
         oferecer acolhimento e oportunidades a meninas de 6 a 17 anos em
         situação de vulnerabilidade social.
       </p>
-      <button matButton="filled" routerLink="/sobre">Conheça nossa história</button>
+      <button matButton="filled" routerLink="/sobre">
+        Conheça nossa história
+      </button>
     </div>
     <div class="w-full md:w-1/2 lg:max-w-xl lg:w-full">
       <img
@@ -103,13 +107,13 @@
   </div>
   <div class="pb-14 relative z-10">
     @if (eventImages$ | async; as eventImages) {
-      <app-carousel
-        [slides]="eventImages"
-        [spaceBetween]=20
-        [aspectRatio]="'16 / 10'"
-        slideClass="bg-white p-2 rounded-xl shadow-lg border-2 border-white w-full"
-        imgClass="object-cover rounded-md size-full"
-      />
+    <app-carousel
+      [slides]="eventImages"
+      [spaceBetween]="20"
+      [aspectRatio]="'16 / 10'"
+      slideClass="bg-white p-2 rounded-xl shadow-lg border-2 border-white w-full"
+      imgClass="object-cover rounded-md size-full"
+    />
     }
   </div>
 </section>
@@ -157,15 +161,17 @@
 </section>
 
 <section class="w-full bg-white py-14" id="parceiros">
-  <h2 class="font-bold text-3xl md:text-5xl text-center mb-14 px-4 md:px-25">Nossos parceiros</h2>
+  <h2 class="font-bold text-3xl md:text-5xl text-center mb-14 px-4 md:px-25">
+    Nossos parceiros
+  </h2>
   @if (partnerImages$ | async; as partnerImages) {
-    <app-carousel
-      [slides]="partnerImages"
-      [withTitle]="true"
-      [spaceBetween]=25
-      [slidesPerView]=3
-      slideClass="flex justify-center items-center h-30 md:h-36 w-full hover:scale-105 transition-transform duration-300"
-      imgClass="!object-contain w-auto h-full"
-    />
+  <app-carousel
+    [slides]="partnerImages"
+    [withTitle]="true"
+    [spaceBetween]="25"
+    [slidesPerView]="3"
+    slideClass="flex justify-center items-center h-30 md:h-36 w-full hover:scale-105 transition-transform duration-300"
+    imgClass="!object-contain w-auto h-full"
+  />
   }
 </section>
