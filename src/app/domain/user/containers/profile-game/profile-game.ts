@@ -1,27 +1,28 @@
-import { Component, inject, signal, computed, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { MatSliderModule } from '@angular/material/slider';
-import { MatExpansionModule } from '@angular/material/expansion';
-import { MatTooltipModule } from '@angular/material/tooltip';
-import { MatTabsModule } from '@angular/material/tabs';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { RouterModule } from '@angular/router';
+import { Component, computed, inject, OnInit, signal } from '@angular/core';
 import {
-  ReactiveFormsModule,
+  AbstractControl,
   FormBuilder,
   FormGroup,
-  Validators,
-  AbstractControl,
+  ReactiveFormsModule,
   ValidationErrors,
+  Validators,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatSliderModule } from '@angular/material/slider';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { RouterModule } from '@angular/router';
+import { ToastService } from '../../../../shared/services/toast';
+import { cpfValidator } from '../../../../shared/validators/document.validator';
 import { DonationDescriptionCard } from '../../components/donation-description-card/donation-description-card';
 import { DonationDescriptionCardType } from '../../model/donation-description';
+import { SponsorshipDto, UpdateUserDto } from '../../model/user-models';
 import { UserService } from '../../services/user';
-import { cpfValidator } from '../../../../shared/validators/document.validator';
-import { SponsorshipDto } from '../../model/user-models';
 
 @Component({
   selector: 'app-profile-game',
@@ -46,6 +47,7 @@ import { SponsorshipDto } from '../../model/user-models';
 export class ProfileGame implements OnInit {
   private fb = inject(FormBuilder);
   userService = inject(UserService);
+  toastService = inject(ToastService);
 
   currentPage = signal(0);
   pageSize = 5;
@@ -55,11 +57,13 @@ export class ProfileGame implements OnInit {
 
   showCancelModal = signal(false);
   isCancelling = signal(false);
+  isSaving = signal(false);
+  userId = signal<string | null>(null);
 
   profileForm!: FormGroup;
   passwordForm!: FormGroup;
 
-  step = signal<number | null>(null);
+  step = signal<number>(-1);
 
   constructor() {
     this.initForms();
@@ -94,16 +98,81 @@ export class ProfileGame implements OnInit {
   }
 
   saveField(fieldName: string) {
-    if (this.profileForm.get(fieldName)?.valid) {
-      this.step.set(null);
+    if (this.profileForm.get(fieldName)?.valid && this.userId()) {
+      this.isSaving.set(true);
+
+      const fieldValue = this.profileForm.get(fieldName)?.value;
+      const updateData: UpdateUserDto = {
+        id: this.userId()!,
+      };
+
+      if (fieldName === 'cpf') {
+        updateData.document = fieldValue;
+      } else {
+        (updateData as any)[fieldName] = fieldValue;
+      }
+
+      this.userService.updateUser(updateData).subscribe({
+        next: () => {
+          this.isSaving.set(false);
+          this.toastService.show(
+            `${this.getFieldLabel(fieldName)} atualizado com sucesso!`,
+            'success'
+          );
+          this.step.set(-1);
+        },
+        error: (err) => {
+          this.isSaving.set(false);
+          this.toastService.show(
+            `Erro ao atualizar ${this.getFieldLabel(fieldName).toLowerCase()}`,
+            'error'
+          );
+        },
+      });
     }
   }
 
   changePassword() {
-    if (this.passwordForm.valid) {
-      this.passwordForm.reset();
-      this.step.set(null);
+    if (this.passwordForm.valid && this.userId()) {
+      this.isSaving.set(true);
+      const currentPassword = this.passwordForm.get('currentPassword')?.value;
+
+      this.userService.verifyPassword(currentPassword).subscribe({
+        next: () => {
+          const updateData: UpdateUserDto = {
+            id: this.userId()!,
+            password: this.passwordForm.get('newPassword')?.value,
+          };
+
+          this.userService.updateUser(updateData).subscribe({
+            next: () => {
+              this.isSaving.set(false);
+              this.passwordForm.reset();
+              this.toastService.show('Senha alterada com sucesso!', 'success');
+              this.step.set(-1);
+            },
+            error: () => {
+              this.isSaving.set(false);
+              this.toastService.show('Erro ao alterar senha', 'error');
+            },
+          });
+        },
+        error: (err) => {
+          this.isSaving.set(false);
+          this.toastService.show(err, 'error');
+        },
+      });
     }
+  }
+
+  private getFieldLabel(fieldName: string): string {
+    const labels: { [key: string]: string } = {
+      name: 'Nome',
+      email: 'E-mail',
+      phone: 'Telefone',
+      cpf: 'CPF',
+    };
+    return labels[fieldName] || fieldName;
   }
 
   currentScore = computed(() => {
@@ -167,6 +236,7 @@ export class ProfileGame implements OnInit {
     this.userService.getInfoLoggedUser().subscribe({
       next: (res) => {
         const user = res.data;
+        this.userId.set(user.id);
         this.profileForm.patchValue({
           name: user.name,
           email: user.email,

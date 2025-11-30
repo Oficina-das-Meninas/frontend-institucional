@@ -27,7 +27,7 @@
                 <div>
                   <p class="text-xs md:text-sm text-subtext-light">Padrinho</p>
                   <h1
-                    class="text-3xl md:text-4xl font-bold text-text-light break-words"
+                    class="text-3xl md:text-4xl font-bold break-words"
                   >
                     {{ levelData().name }}
                   </h1>
@@ -85,7 +85,7 @@
             <div
               class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
             >
-              <h2 class="text-2xl font-bold text-text-light m-0">
+              <h2 class="text-2xl font-bold m-0">
                 Histórico de doações
               </h2>
               @if(donations().length > 0) {
@@ -124,7 +124,7 @@
                     >volunteer_activism</mat-icon
                   >
                 </div>
-                <h3 class="text-lg font-bold text-text-light mb-2">
+                <h3 class="text-lg font-bold mb-2">
                   Ainda não há doações
                 </h3>
                 <p class="text-subtext-light mb-6 max-w-md">
@@ -160,7 +160,7 @@
       <mat-tab label="Meu Perfil">
         <div class="mt-8 w-full max-w-4xl mx-auto">
           <div class="mb-6">
-            <h1 class="text-3xl font-bold text-text-light">Meu Perfil</h1>
+            <h1 class="text-3xl font-bold">Meu Perfil</h1>
             <p class="text-subtext-light mt-2">
               Atualize suas informações pessoais e gerencie sua conta.
             </p>
@@ -173,7 +173,7 @@
               <mat-expansion-panel
                 [expanded]="step() === 0"
                 (opened)="setStep(0)"
-                hideToggle
+                (closed)="setStep(-1)"
                 class="border-b border-gray-100 last:border-0 shadow-none"
               >
                 <mat-expansion-panel-header class="h-auto py-6 px-6">
@@ -187,13 +187,12 @@
                     </mat-panel-title>
                     @if (step() !== 0) {
                     <mat-panel-description
-                      class="text-lg font-medium text-text-light m-0 grow-0"
+                      class="text-lg font-medium m-0 grow-0"
                     >
                       {{ profileForm.get('name')?.value }}
                     </mat-panel-description>
                     }
                   </div>
-                  <mat-icon class="text-subtext-light">expand_more</mat-icon>
                 </mat-expansion-panel-header>
 
                 <div [formGroup]="profileForm" class="px-0 pb-2">
@@ -211,10 +210,13 @@
                       mat-flat-button
                       color="primary"
                       class="rounded-full bg-primary/10 text-primary shadow-none hover:bg-primary/20"
-                      [disabled]="profileForm.get('name')?.invalid"
+                      [disabled]="profileForm.get('name')?.invalid || isSaving()"
                       (click)="saveField('name')"
                     >
-                      Confirmar Alteração
+                      @if(isSaving()) {
+                        <span class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"></span>
+                      }
+                      Salvar
                     </button>
                   </div>
                 </div>
@@ -223,7 +225,7 @@
               <mat-expansion-panel
                 [expanded]="step() === 1"
                 (opened)="setStep(1)"
-                hideToggle
+                (closed)="setStep(-1)"
                 class="border-b border-gray-100 last:border-0 shadow-none"
               >
                 <mat-expansion-panel-header class="h-auto py-6 px-6">
@@ -237,13 +239,12 @@
                     </mat-panel-title>
                     @if (step() !== 1) {
                     <mat-panel-description
-                      class="text-lg font-medium text-text-light m-0 grow-0"
+                      class="text-lg font-medium m-0 grow-0"
                     >
                       {{ profileForm.get('email')?.value }}
                     </mat-panel-description>
                     }
                   </div>
-                  <mat-icon class="text-subtext-light">expand_more</mat-icon>
                 </mat-expansion-panel-header>
 
                 <div [formGroup]="profileForm" class="px-0 pb-2">
@@ -257,10 +258,13 @@
                       mat-flat-button
                       color="primary"
                       class="rounded-full bg-primary/10 text-primary shadow-none hover:bg-primary/20"
-                      [disabled]="profileForm.get('email')?.invalid"
+                      [disabled]="profileForm.get('email')?.invalid || isSaving()"
                       (click)="saveField('email')"
                     >
-                      Confirmar Alteração
+                      @if(isSaving()) {
+                        <span class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"></span>
+                      }
+                      Salvar
                     </button>
                   </div>
                 </div>
@@ -269,7 +273,7 @@
               <mat-expansion-panel
                 [expanded]="step() === 2"
                 (opened)="setStep(2)"
-                hideToggle
+                (closed)="setStep(-1)"
                 class="border-b border-gray-100 last:border-0 shadow-none"
               >
                 <mat-expansion-panel-header class="h-auto py-6 px-6">
@@ -283,13 +287,12 @@
                     </mat-panel-title>
                     @if (step() !== 2) {
                     <mat-panel-description
-                      class="text-lg font-medium text-text-light m-0 grow-0"
+                      class="text-lg font-medium m-0 grow-0"
                     >
                       {{ profileForm.get('phone')?.value }}
                     </mat-panel-description>
                     }
                   </div>
-                  <mat-icon class="text-subtext-light">expand_more</mat-icon>
                 </mat-expansion-panel-header>
 
                 <div [formGroup]="profileForm" class="px-0 pb-2">
@@ -301,10 +304,13 @@
                       mat-flat-button
                       color="primary"
                       class="rounded-full bg-primary/10 text-primary shadow-none hover:bg-primary/20"
-                      [disabled]="profileForm.get('phone')?.invalid"
+                      [disabled]="profileForm.get('phone')?.invalid || isSaving()"
                       (click)="saveField('phone')"
                     >
-                      Confirmar Alteração
+                      @if(isSaving()) {
+                        <span class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"></span>
+                      }
+                      Salvar
                     </button>
                   </div>
                 </div>
@@ -313,7 +319,7 @@
               <mat-expansion-panel
                 [expanded]="step() === 3"
                 (opened)="setStep(3)"
-                hideToggle
+                (closed)="setStep(-1)"
                 class="border-b border-gray-100 last:border-0 shadow-none"
               >
                 <mat-expansion-panel-header class="h-auto py-6 px-6">
@@ -327,13 +333,12 @@
                     </mat-panel-title>
                     @if (step() !== 3) {
                     <mat-panel-description
-                      class="text-lg font-medium text-text-light m-0 grow-0"
+                      class="text-lg font-medium m-0 grow-0"
                     >
                       {{ profileForm.get('cpf')?.value }}
                     </mat-panel-description>
                     }
                   </div>
-                  <mat-icon class="text-subtext-light">expand_more</mat-icon>
                 </mat-expansion-panel-header>
 
                 <div [formGroup]="profileForm" class="px-0 pb-2">
@@ -345,10 +350,13 @@
                       mat-flat-button
                       color="primary"
                       class="rounded-full bg-primary/10 text-primary shadow-none hover:bg-primary/20"
-                      [disabled]="profileForm.get('cpf')?.invalid"
+                      [disabled]="profileForm.get('cpf')?.invalid || isSaving()"
                       (click)="saveField('cpf')"
                     >
-                      Confirmar Alteração
+                      @if(isSaving()) {
+                        <span class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"></span>
+                      }
+                      Salvar
                     </button>
                   </div>
                 </div>
@@ -357,7 +365,7 @@
               <mat-expansion-panel
                 [expanded]="step() === 4"
                 (opened)="setStep(4)"
-                hideToggle
+                (closed)="setStep(-1)"
                 class="border-b border-gray-100 last:border-0 shadow-none"
               >
                 <mat-expansion-panel-header class="h-auto py-6 px-6">
@@ -371,13 +379,12 @@
                     </mat-panel-title>
                     @if (step() !== 4) {
                     <mat-panel-description
-                      class="text-lg font-medium text-text-light m-0 grow-0 tracking-widest"
+                      class="text-lg font-medium text-light m-0 grow-0 tracking-widest"
                     >
                       ••••••••••••
                     </mat-panel-description>
                     }
                   </div>
-                  <mat-icon class="text-subtext-light">expand_more</mat-icon>
                 </mat-expansion-panel-header>
 
                 <div
@@ -424,27 +431,18 @@
                       mat-flat-button
                       color="primary"
                       class="rounded-full bg-primary/10 text-primary shadow-none hover:bg-primary/20"
-                      [disabled]="passwordForm.invalid"
+                      [disabled]="passwordForm.invalid || isSaving()"
                       (click)="changePassword()"
                     >
-                      Confirmar Alteração de Senha
+                      @if(isSaving()) {
+                        <span class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"></span>
+                      }
+                      Alterar Senha
                     </button>
                   </div>
                 </div>
               </mat-expansion-panel>
             </mat-accordion>
-          </div>
-
-          <div
-            class="mt-8 flex flex-col md:flex-row justify-end items-center gap-4"
-          >
-            <button
-              mat-flat-button
-              color="primary"
-              class="rounded-full px-8 py-6 text-base font-medium"
-            >
-              Salvar Alterações
-            </button>
           </div>
         </div>
       </mat-tab>
@@ -452,7 +450,7 @@
       <mat-tab label="Minha Assinatura">
         <div class="mt-8 w-full max-w-4xl mx-auto">
           <div class="mb-6">
-            <h1 class="text-3xl font-bold text-text-light">Minha Assinatura</h1>
+            <h1 class="text-3xl font-bold">Minha Assinatura</h1>
             <p class="text-subtext-light mt-2">
               Aqui estão os detalhes da sua assinatura e apadrinhamento.
             </p>
@@ -483,7 +481,7 @@
                 <h3 class="text-sm font-medium text-subtext-light">
                   Dia de Cobrança
                 </h3>
-                <p class="text-lg font-medium text-text-light mt-1">
+                <p class="text-lg font-medium mt-1">
                   {{ subscription()?.billingDay }}
                 </p>
               </div>
@@ -492,7 +490,7 @@
                 <h3 class="text-sm font-medium text-subtext-light">
                   Data de Início
                 </h3>
-                <p class="text-lg font-medium text-text-light mt-1">
+                <p class="text-lg font-medium mt-1">
                   {{ subscription()?.startDate | date : 'dd/MM/yyyy HH:mm' }}
                 </p>
               </div>
