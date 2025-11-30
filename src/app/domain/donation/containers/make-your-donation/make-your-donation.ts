@@ -76,7 +76,7 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
 
   donationService = inject(DonationService);
   userService = inject(UserService);
-  authService = inject(AuthService); // Injeção adicionada
+  authService = inject(AuthService);
   route = inject(ActivatedRoute);
   formHelper = inject(FormHelperService);
   readonly dialog = inject(MatDialog);
