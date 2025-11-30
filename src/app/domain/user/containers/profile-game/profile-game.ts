@@ -8,6 +8,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { RouterModule } from '@angular/router';
 import {
   ReactiveFormsModule,
   FormBuilder,
@@ -36,6 +37,7 @@ import { SponsorshipDto } from '../../model/user-models';
     MatFormFieldModule,
     MatInputModule,
     ReactiveFormsModule,
+    RouterModule,
     DonationDescriptionCard,
   ],
   templateUrl: './profile-game.html',
@@ -93,16 +95,12 @@ export class ProfileGame implements OnInit {
 
   saveField(fieldName: string) {
     if (this.profileForm.get(fieldName)?.valid) {
-      const value = this.profileForm.get(fieldName)?.value;
-      console.log(`Salvando campo ${fieldName}:`, value);
-
       this.step.set(null);
     }
   }
 
   changePassword() {
     if (this.passwordForm.valid) {
-      console.log('Alterando senha...', this.passwordForm.value);
       this.passwordForm.reset();
       this.step.set(null);
     }
@@ -139,6 +137,32 @@ export class ProfileGame implements OnInit {
     return `Faltam ${missing} pontos para o próximo nível`;
   });
 
+  donationsGrouped = computed(() => {
+    const list = this.donations();
+    const groups: { label: string; items: DonationDescriptionCardType[] }[] =
+      [];
+
+    list.forEach((donation) => {
+      const date = new Date(donation.donatedDate);
+
+      let label = date.toLocaleString('pt-BR', {
+        month: 'long',
+        year: 'numeric',
+      });
+      label = label.charAt(0).toUpperCase() + label.slice(1);
+
+      const lastGroup = groups[groups.length - 1];
+
+      if (lastGroup && lastGroup.label === label) {
+        lastGroup.items.push(donation);
+      } else {
+        groups.push({ label, items: [donation] });
+      }
+    });
+
+    return groups;
+  });
+
   loadUserData() {
     this.userService.getInfoLoggedUser().subscribe({
       next: (res) => {
@@ -156,10 +180,9 @@ export class ProfileGame implements OnInit {
   loadSubscription() {
     this.userService.getRecurringSubscription().subscribe({
       next: (res) => {
-        this.subscription.set(res.data || null);
+        this.subscription.set(res?.data || null);
       },
-      error: (err) => {
-        console.log('Nenhuma assinatura encontrada ou erro ao buscar.', err);
+      error: () => {
         this.subscription.set(null);
       },
     });
@@ -200,8 +223,7 @@ export class ProfileGame implements OnInit {
         this.isCancelling.set(false);
         this.closeCancelModal();
       },
-      error: (err) => {
-        console.error('Erro ao cancelar assinatura', err);
+      error: () => {
         this.isCancelling.set(false);
         this.closeCancelModal();
       },
