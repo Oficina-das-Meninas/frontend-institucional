@@ -33,6 +33,7 @@ import { AlertDialogSubscription } from '../../components/alert-dialog-subscript
 import { phoneValidator } from '../../../../shared/validators/phone.validator';
 import { UserService } from '../../../../domain/user/services/user';
 import { UserResponse } from '../../../user/model/user-models';
+import { AuthService } from '../../../../shared/services/auth/auth';
 
 function minCurrencyValue(min: number): ValidatorFn {
   return (control: AbstractControl): ValidationErrors | null => {
@@ -75,6 +76,7 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
 
   donationService = inject(DonationService);
   userService = inject(UserService);
+  authService = inject(AuthService); // Injeção adicionada
   route = inject(ActivatedRoute);
   formHelper = inject(FormHelperService);
   readonly dialog = inject(MatDialog);
@@ -147,24 +149,32 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
   }
 
   checkUserSession() {
-    this.userService.getInfoLoggedUser().subscribe({
-      next: (response) => {
-        if (response.data) {
-          this.userAuthenticated = true;
-          this.currentUser.set(response.data);
-
-          this.form.patchValue({
-            name: response.data.name,
-            email: response.data.email,
-            document: response.data.document,
-            phone: response.data.phone,
-          });
-        }
-      },
-      error: () => {
+    this.authService.checkSession().subscribe((hasSession) => {
+      if (!hasSession) {
         this.userAuthenticated = false;
         this.currentUser.set(null);
-      },
+        return;
+      }
+
+      this.userService.getInfoLoggedUser().subscribe({
+        next: (response) => {
+          if (response.data) {
+            this.userAuthenticated = true;
+            this.currentUser.set(response.data);
+
+            this.form.patchValue({
+              name: response.data.name,
+              email: response.data.email,
+              document: response.data.document,
+              phone: response.data.phone,
+            });
+          }
+        },
+        error: () => {
+          this.userAuthenticated = false;
+          this.currentUser.set(null);
+        },
+      });
     });
   }
 

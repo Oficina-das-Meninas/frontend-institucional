@@ -1,10 +1,9 @@
-import { Component, inject } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { Logo } from '../../../../shared/components/logo/logo';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import {
   FormControl,
   FormGroup,
@@ -14,7 +13,6 @@ import {
 import { Router, RouterLink } from '@angular/router';
 import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
 import { CommonModule } from '@angular/common';
-import { UserService } from '../../services/user';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { cpfValidator } from '../../../../shared/validators/document.validator';
 import { AuthService } from '../../../../shared/services/auth/auth';
@@ -32,7 +30,6 @@ import { AuthService } from '../../../../shared/services/auth/auth';
     MatIconModule,
     MatButtonModule,
     RouterLink,
-    MatSnackBarModule,
     NgxMaskDirective,
   ],
   templateUrl: './signup.html',
@@ -43,9 +40,8 @@ export class SignUp {
   formHelper = inject(FormHelperService);
   authService = inject(AuthService);
   router = inject(Router);
-  snackBar = inject(MatSnackBar);
 
-  loadingRequest = false;
+  loadingRequest = signal(false);
 
   constructor() {
     this.form = new FormGroup({
@@ -77,7 +73,7 @@ export class SignUp {
       return;
     }
 
-    this.loadingRequest = true;
+    this.loadingRequest.set(true);
     const rawValue = this.form.getRawValue();
 
     const payload = {
@@ -88,21 +84,17 @@ export class SignUp {
       password: rawValue.password,
     };
 
-    this.authService.createUserAccount(payload).subscribe({
-      next: () => {
-        this.router.navigate(['/confirmacao-email']);
-      },
-      error: (err) => {
-        this.loadingRequest = false;
-        this.snackBar.open(
-          'Não foi possível realizar o cadastro. Verifique os dados e tente novamente.',
-          'Fechar',
-          { duration: 5000 }
-        );
-      },
-      complete: () => {
-        this.loadingRequest = false;
-      },
-    });
+    this.authService
+      .createUserAccount(payload)
+      .subscribe({
+        next: () => {
+          this.router.navigate(['/confirmacao-email']);
+        },
+      })
+      .add(() => {
+        setTimeout(() => {
+          this.loadingRequest.set(false);
+        });
+      });
   }
 }

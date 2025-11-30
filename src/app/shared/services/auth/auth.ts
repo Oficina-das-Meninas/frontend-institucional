@@ -1,7 +1,7 @@
 import { inject, Injectable, signal } from '@angular/core';
 import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { catchError, Observable, of, tap } from 'rxjs';
+import { catchError, map, Observable, of, tap } from 'rxjs';
 
 import { ApiResponse } from '../../../shared/models/api-response';
 import {
@@ -50,6 +50,17 @@ export class AuthService {
       `${this.AUTH_URL}/signup`,
       data
     );
+  }
+
+  checkSession(): Observable<boolean> {
+    return this.httpClient
+      .get<ApiResponse<boolean>>(`${this.SESSION_URL}/present`, {
+        withCredentials: true,
+      })
+      .pipe(
+        map((response) => response.data),
+        catchError(() => of(false))
+      );
   }
 
   getSession(): Observable<ApiResponse<{ username: string }> | null> {

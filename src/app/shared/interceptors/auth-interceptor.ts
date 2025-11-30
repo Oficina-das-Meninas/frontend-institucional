@@ -7,8 +7,8 @@ import {
 } from '@angular/common/http';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
-import { MatSnackBar } from '@angular/material/snack-bar';
 import { AuthService } from '../services/auth/auth';
+import { ToastService } from '../services/toast';
 
 export const authInterceptor: HttpInterceptorFn = (
   req: HttpRequest<any>,
@@ -16,7 +16,7 @@ export const authInterceptor: HttpInterceptorFn = (
 ) => {
   const router = inject(Router);
   const authService = inject(AuthService);
-  const snackBar = inject(MatSnackBar);
+  const toastService = inject(ToastService);
 
   return next(req).pipe(
     catchError((error: HttpErrorResponse) => {
@@ -27,15 +27,9 @@ export const authInterceptor: HttpInterceptorFn = (
         !req.url.includes('/sessions')
       ) {
         if (router.url.includes('/perfil')) {
-          snackBar.open(
+          toastService.show(
             'Sessão expirada ou acesso negado. Por favor, faça login novamente.',
-            'Fechar',
-            {
-              duration: 5000,
-              horizontalPosition: 'center',
-              verticalPosition: 'bottom',
-              panelClass: ['snackbar-warning'],
-            }
+            'warning'
           );
 
           authService.logout().subscribe({
