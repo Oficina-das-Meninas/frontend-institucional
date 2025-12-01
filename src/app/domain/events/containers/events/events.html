@@ -5,37 +5,50 @@
       Aqui você encontra tudo que acontece na nossa oficina: os próximos
       encontros, o que já passou e as novidades que vêm por aí.
     </p>
-    <div class="flex items-center justify-center gap-2 mb-4">
-      <mat-form-field
-        appearance="outline"
-        class="w-full max-w-md"
-        subscriptSizing="dynamic"
-      >
-        <input
-          matInput
-          placeholder="Busque por eventos..."
-          aria-label="Buscar eventos"
-          [(ngModel)]="searchEvent"
-          (keydown.enter)="refresh()"
-        />
-        <button
-          mat-icon-button
-          matSuffix
-          matTooltip="Buscar evento"
-          aria-label="Buscar evento"
-          (click)="refresh()"
-        >
-          <mat-icon>search</mat-icon>
-        </button>
-      </mat-form-field>
-      <app-calendar-filter
-        [(dateRange)]="dateRange"
-        (apply)="applyDateFilter()"
-        (clear)="clearFilters()"
-        tooltipText="Filtrar eventos por data"
+  <div class="flex flex-col md:flex-row items-center justify-center gap-3 mb-4">
+  
+  <div class="flex flex-col md:flex-row items-center justify-center gap-3 mb-4">
+    <mat-form-field
+      appearance="outline"
+      class="max-w-xs w-full md:max-w-md"
+      subscriptSizing="dynamic"
+    >
+      <input
+        matInput
+        placeholder="Busque por eventos..."
+        aria-label="Buscar eventos"
+        [(ngModel)]="searchEvent"
+        (keydown.enter)="refresh()"
       />
+      <button
+        mat-icon-button
+        matSuffix
+        matTooltip="Buscar evento"
+        aria-label="Buscar evento"
+        (click)="refresh()"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </mat-form-field>
+
+    <div class="flex flex-row gap-3">
+      <app-date-picker
+        label="Data inicial"
+        class="w-[9rem] md:w-full"
+        [(ngModel)]="startDate"
+        [max]="endDate"
+        (ngModelChange)="applyDateFilter()" />
+
+      <app-date-picker
+        label="Data final"
+        class="w-[9rem] md:w-full"
+        [(ngModel)]="endDate"
+        [min]="startDate"
+        (ngModelChange)="applyDateFilter()" />
     </div>
   </div>
+</div>
+</div>
   <div
     class="relative w-full min-h-110 bg-lime-600/70 py-10 px-4 md:px-10 flex flex-col items-center justify-center overflow-hidden"
   >
