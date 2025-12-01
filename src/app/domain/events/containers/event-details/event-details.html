@@ -18,7 +18,10 @@
   class="text-lg w-full flex-col lg:flex-row flex items-start lg:items-center justify-between gap-6 lg:gap-10 px-6 lg:px-10 pt-10 pb-10 mb-10 bg-gray-100">
   <app-event-info icon="location_on" [cssClass]="'w-56'" [text]="event()?.location || ''" />
   <app-event-info icon="calendar_today" [cssClass]="'min-w-max'" [text]="(event()?.eventDate | date:'longDate') || '' " />
-  <app-event-info icon="access_time" [cssClass]="'min-w-max'" [text]="(event()?.eventDate | date:'shortTime') || ''" />
+  
+  @if ((event()?.eventDate | date:'shortTime') != '00:00') {
+    <app-event-info icon="access_time" [cssClass]="'min-w-max'" [text]="(event()?.eventDate | date:'shortTime') || ''" />
+  }
 
   @if (event() && !isEventPast(event()!)) {
   <a
@@ -35,10 +38,9 @@
     matButton="filled"
     disabled
     disabledInteractive
-    matTooltip="Evento já realizado"
     aria-label="Evento {{ event()?.title }} já foi realizado"
     class="!max-w-fit !min-h-fit !min-w-fit">
-    Quero Participar
+    Evento encerrado
   </button>
   }
 </section>
