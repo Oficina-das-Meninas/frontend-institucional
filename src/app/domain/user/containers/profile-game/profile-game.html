@@ -83,7 +83,9 @@
             <div
               class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4"
             >
-              <h2 class="text-2xl font-bold m-0">Histórico de doações</h2>
+              <h2 class="text-2xl font-bold text-text-light m-0">
+                Histórico de doações
+              </h2>
               @if(donations().length > 0) {
               <a
                 routerLink="/faca-sua-doacao"
@@ -92,7 +94,7 @@
                 class="rounded-full"
               >
                 <mat-icon class="mr-2">volunteer_activism</mat-icon>
-                Nova doação
+                Fazer Nova Doação
               </a>
               }
             </div>
