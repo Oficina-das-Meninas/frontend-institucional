@@ -3,7 +3,6 @@ import localePt from '@angular/common/locales/pt';
 import { Component, ElementRef, inject, LOCALE_ID, OnInit, Renderer2, signal } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import { MatTooltip } from '@angular/material/tooltip';
 import { Title } from '@angular/platform-browser';
 import { ActivatedRoute } from '@angular/router';
 import { SkeletonImage } from '../../../../shared/components/skeleton-image/skeleton-image';
@@ -16,7 +15,14 @@ registerLocaleData(localePt);
 
 @Component({
   selector: 'app-event-details',
-  imports: [EventInfo, MatButtonModule, DatePipe, MatProgressSpinnerModule, SkeletonImage, MatTooltip, RenderHtml],
+  imports: [
+    EventInfo, 
+    MatButtonModule, 
+    DatePipe, 
+    MatProgressSpinnerModule, 
+    SkeletonImage, 
+    RenderHtml
+  ],
   templateUrl: './event-details.html',
   styleUrl: './event-details.scss',
   providers: [{ provide: LOCALE_ID, useValue: 'pt-BR' }],
@@ -71,7 +77,6 @@ export class EventDetails implements OnInit {
           this.renderer.addClass(headerElement, 'color-extracted');
         }
       } catch (error) {
-        console.warn('Erro ao extrair cor da imagem, usando cor padrão:', error);
         const headerElement = this.elementRef.nativeElement.querySelector('.event-header');
         if (headerElement) {
           this.renderer.addClass(headerElement, 'color-extracted');

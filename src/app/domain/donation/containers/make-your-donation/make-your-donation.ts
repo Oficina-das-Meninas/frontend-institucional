@@ -256,7 +256,6 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
           window.location.href = response.data.checkoutLink;
         },
         error: (error) => {
-          console.error('Error processing donation:', error);
           this.captchaElem.resetCaptcha();
         },
       })

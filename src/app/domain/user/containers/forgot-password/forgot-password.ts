@@ -76,8 +76,6 @@ export class ForgotPassword {
         );
       },
       error: (err: unknown) => {
-        console.error('Erro ao enviar e-mail de recuperação:', err);
-
         let message = 'Ocorreu um erro inesperado. Tente novamente mais tarde.';
 
         if (err instanceof Object && 'status' in err) {

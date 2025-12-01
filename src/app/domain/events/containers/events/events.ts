@@ -14,12 +14,11 @@ import { PageEvent } from '@angular/material/paginator';
 import { MatProgressSpinner } from '@angular/material/progress-spinner';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { catchError, Observable, of, tap } from 'rxjs';
-import { CalendarFilter } from '../../../../shared/components/calendar-filter/calendar-filter';
-import { DateRange } from '../../../../shared/models/date-range';
 import { EventPaginator } from '../../components/event-paginator/event-paginator';
 import { EventsList } from '../../components/events-list/events-list';
 import { EventPage } from '../../model/event-page';
 import { EventService } from '../../services/event-service';
+import { DatePickerComponent } from "../../../../shared/components/date-picker/date-picker";
 
 @Component({
   selector: 'app-events',
@@ -35,7 +34,7 @@ import { EventService } from '../../services/event-service';
     MatButtonModule,
     MatTooltipModule,
     MatDatepickerModule,
-    CalendarFilter,
+    DatePickerComponent
   ],
   providers: [
     provideNativeDateAdapter(),
@@ -55,10 +54,8 @@ export class Events {
 
   searchEvent = '';
 
-  dateRange: DateRange = {
-    start: null,
-    end: null,
-  };
+  startDate: Date | null = null;
+  endDate: Date | null = null;
 
   ngOnInit() {
     this.refresh();
@@ -71,8 +68,8 @@ export class Events {
           page: pageEvent.pageIndex,
           pageSize: pageEvent.pageSize,
           title: this.searchEvent,
-          startDate: this.dateRange.start ?? undefined,
-          endDate: this.dateRange.end ?? undefined
+          startDate: this.startDate ?? undefined,
+          endDate: this.endDate ?? undefined
         }
       )
       .pipe(
@@ -91,15 +88,25 @@ export class Events {
   }
 
   applyDateFilter() {
-    if (this.dateRange.start && this.dateRange.end) {
+    if (this.isValidDate()) {
       this.pageIndex = 0;
       this.refresh();
     }
+    else {
+      this.events$ = this.emptyEventPage();
+    }
+  }
+
+  isValidDate(): boolean {
+    if (this.startDate && this.endDate)
+      return this.startDate <= this.endDate;
+    
+    return true;
   }
 
   clearFilters() {
-    this.dateRange.start = null;
-    this.dateRange.end = null;
+    this.startDate = null;
+    this.endDate = null;
     this.searchEvent = '';
     this.pageIndex = 0;
     this.refresh();
