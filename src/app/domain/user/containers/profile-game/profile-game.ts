@@ -85,7 +85,14 @@ export class ProfileGame implements OnInit {
 
   initForms() {
     this.profileForm = this.fb.group({
-      name: ['', [Validators.required, Validators.minLength(3)]],
+      name: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(3),
+          Validators.pattern(/^[ \p{L}]+$/u),
+        ],
+      ],
       email: ['', [Validators.required, Validators.email]],
       phone: ['', [Validators.required]],
       cpf: ['', [Validators.required, cpfValidator()]],
@@ -211,7 +218,12 @@ export class ProfileGame implements OnInit {
 
   tooltipText = computed(() => {
     const missing = Math.max(0, this.nextLevelScore() - this.currentScore());
-    return `Faltam ${missing} pontos para o próximo nível`;
+
+    const isSingular = missing <= 1;
+    const suffix = isSingular ? 'ponto' : 'pontos';
+    const verb = isSingular ? 'Falta' : 'Faltam';
+
+    return `${verb} ${missing} ${suffix} para o próximo nível`;
   });
 
   donationsGrouped = computed(() => {
@@ -258,7 +270,16 @@ export class ProfileGame implements OnInit {
   loadSubscription() {
     this.userService.getRecurringSubscription().subscribe({
       next: (res) => {
-        this.subscription.set(res?.data || null);
+        const data = res?.data || null;
+
+        if (data && data.startDate) {
+          const dateObj = new Date(data.startDate);
+          dateObj.setHours(dateObj.getHours() - 3);
+
+          data.startDate = dateObj.toISOString();
+        }
+
+        this.subscription.set(data);
       },
       error: () => {
         this.subscription.set(null);

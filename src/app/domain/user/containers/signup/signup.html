@@ -30,7 +30,7 @@
           <form
             [formGroup]="form"
             (ngSubmit)="onSubmit()"
-            class="flex flex-col gap-2 w-full"
+            class="flex flex-col md:gap-2 gap-5  w-full"
           >
             <div>
               <mat-form-field appearance="outline" class="w-full">
@@ -42,7 +42,7 @@
                   type="text"
                 />
                 @if(formHelper.getErrorMessage(form, 'name')) {
-                <mat-error
+                <mat-error class="text-sm"
                   >{{ formHelper.getErrorMessage(form, 'name') }}</mat-error
                 >
                 }
@@ -59,7 +59,7 @@
                   mask="000.000.000-00"
                 />
                 @if(formHelper.getErrorMessage(form, 'document')) {
-                <mat-error
+                <mat-error class="text-sm"
                   >{{ formHelper.getErrorMessage(form, 'document') }}</mat-error
                 >
                 }
@@ -76,7 +76,7 @@
                   type="email"
                 />
                 @if(formHelper.getErrorMessage(form, 'email')) {
-                <mat-error
+                <mat-error class="text-sm"
                   >{{ formHelper.getErrorMessage(form, 'email') }}</mat-error
                 >
                 }
@@ -94,7 +94,7 @@
                   type="tel"
                 />
                 @if(formHelper.getErrorMessage(form, 'phone')) {
-                <mat-error
+                <mat-error class="text-sm"
                   >{{ formHelper.getErrorMessage(form, 'phone') }}</mat-error
                 >
                 }
@@ -123,7 +123,7 @@
                   >
                 </button>
                 @if(formHelper.getErrorMessage(form, 'password')) {
-                <mat-error
+                <mat-error class="text-sm"
                   >{{ formHelper.getErrorMessage(form, 'password') }}</mat-error
                 >
                 }
