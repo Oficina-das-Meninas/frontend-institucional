@@ -136,7 +136,6 @@ export class Volunteer {
 
     try {
       this.whatsappService.openWhatsapp(message);
-      this.toastService.show('Mensagem pronta para envio no WhatsApp', 'success');
     } catch (error) {
       this.toastService.show('Não foi possível abrir o WhatsApp. Verifique sua conexão.', 'error');
     }
