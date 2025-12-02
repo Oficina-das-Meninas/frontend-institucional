@@ -76,6 +76,9 @@
               </mat-form-field>
             }
           </div>
+          @if (volunteerForm.get('availability')?.invalid && volunteerForm.get('availability')?.touched) {
+            <mat-error class="block mt-2">Selecione pelo menos um dia de disponibilidade</mat-error>
+          }
         </div>
 
       </div>
