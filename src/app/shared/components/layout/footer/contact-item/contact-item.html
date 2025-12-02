@@ -1,12 +1,19 @@
-@if (
-  link
-) {<a [href]="link" target="_blank" class="flex gap-1 link">
-  <mat-icon fontSet="material-symbols-rounded" class="!min-w-fit !text-[var(--mat-sys-primary)] ">{{ icon }}</mat-icon>
-  <p class="break-all">{{ text }}</p>
-</a>
+@if (link) {
+  <a [href]="link" target="_blank" class="flex gap-1 link">
+    @if (useCustomIcon) {
+      <ng-content select="[icon]"></ng-content>
+    } @else {
+      <mat-icon fontSet="material-symbols-rounded" class="!min-w-fit !text-[var(--mat-sys-primary)]">{{ icon }}</mat-icon>
+    }
+    <p class="break-normal">{{ text }}</p>
+  </a>
 } @else {
   <div class="flex gap-1">
-  <mat-icon fontSet="material-symbols-rounded" class=" !min-w-fit !text-[var(--mat-sys-primary)]">{{ icon }}</mat-icon>
-  <p class="break-all">{{ text }}</p>
+    @if (useCustomIcon) {
+      <ng-content select="[icon]"></ng-content>
+    } @else {
+      <mat-icon fontSet="material-symbols-rounded" class="!min-w-fit !text-[var(--mat-sys-primary)]">{{ icon }}</mat-icon>
+    }
+    <p class="break-normal">{{ text }}</p>
   </div>
 }

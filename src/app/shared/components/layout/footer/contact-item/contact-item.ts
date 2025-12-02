@@ -12,4 +12,5 @@ export class ContactItemComponent {
   @Input() icon: string = '';
   @Input() text: string = '';
   @Input() link: string = '';
+  @Input() useCustomIcon: boolean = false;
 }
