@@ -9,6 +9,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
 import { ToastService } from '../../../../shared/services/toast';
+import { WhatsappService } from '../../../../shared/services/whatsapp';
 import { cpfValidator } from '../../../../shared/validators/document.validator';
 
 @Component({
@@ -34,8 +35,7 @@ export class Volunteer {
   private formBuilder = inject(FormBuilder);
   formHelperService = inject(FormHelperService);
   private toastService = inject(ToastService);
-
-  private readonly ongPhoneNumber = '551633226232';
+  private whatsappService = inject(WhatsappService);
 
   readonly days = [
     { key: 'monday', label: 'Segunda-feira' },
@@ -131,18 +131,11 @@ export class Volunteer {
   private openWhatsApp(message: string): void {
     if (!message || typeof message !== 'string') {
       this.toastService.show('Mensagem inválida para envio', 'error');
+      return;
     }
 
     try {
-      const encodedMessage = encodeURIComponent(message);
-      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-      if (isMobile) {
-        window.location.href = `whatsapp://send?phone=${this.ongPhoneNumber}&text=${encodedMessage}`;
-      } else {
-        window.open(`https://web.whatsapp.com/send?phone=${this.ongPhoneNumber}&text=${encodedMessage}`, '_blank');
-      }
-      this.toastService.show('Mensagem pronta para envio no WhatsApp', 'success');
+      this.whatsappService.openWhatsapp(message);
     } catch (error) {
       this.toastService.show('Não foi possível abrir o WhatsApp. Verifique sua conexão.', 'error');
     }
