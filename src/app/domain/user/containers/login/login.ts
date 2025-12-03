@@ -65,6 +65,9 @@ export class Login {
         next: () => {
           this.router.navigate(['/perfil']);
         },
+        error: () => {
+          this.loadingRequest.set(false);
+        },
       })
       .add(() => {
         setTimeout(() => {
