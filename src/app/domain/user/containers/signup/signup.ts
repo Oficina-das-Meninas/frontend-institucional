@@ -49,7 +49,8 @@ export class SignUp {
     this.form = new FormGroup({
       name: new FormControl<string>(null!, [
         Validators.required,
-        Validators.maxLength(255),
+        Validators.maxLength(120),
+        Validators.pattern(/^[ \p{L}]+$/u)
       ]),
       document: new FormControl<string>(null!, [
         Validators.required,

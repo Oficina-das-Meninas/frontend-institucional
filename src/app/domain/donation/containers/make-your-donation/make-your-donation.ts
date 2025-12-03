@@ -89,7 +89,10 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
 
   constructor() {
     this.form = new FormGroup({
-      name: new FormControl<string>(null!, [Validators.required]),
+      name: new FormControl<string>(null!, [
+        Validators.required,
+        Validators.pattern(/^[ \p{L}]+$/u),
+      ]),
       email: new FormControl<string>(null!, [
         Validators.required,
         Validators.email,

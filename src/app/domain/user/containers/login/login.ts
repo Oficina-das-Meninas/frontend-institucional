@@ -1,19 +1,20 @@
+import { CommonModule } from '@angular/common';
 import { Component, inject, signal } from '@angular/core';
-import { Logo } from '../../../../shared/components/logo/logo';
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
-import { MatIconModule } from '@angular/material/icon';
-import { MatButtonModule } from '@angular/material/button';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
+import { MatButtonModule } from '@angular/material/button';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { Router, RouterLink } from '@angular/router';
-import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
-import { CommonModule } from '@angular/common';
+import { finalize } from 'rxjs';
+import { Logo } from '../../../../shared/components/logo/logo';
 import { AuthService } from '../../../../shared/services/auth/auth';
+import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
 
 @Component({
   selector: 'app-login',
@@ -59,11 +60,20 @@ export class Login {
     this.loadingRequest.set(true);
     const { email, password } = this.form.getRawValue();
 
+    this.authService.clearInvalidSession().pipe(
+      finalize(() => this.performLogin(email, password))
+    ).subscribe();
+  }
+
+  private performLogin(email: string, password: string) {
     this.authService
       .login({ email, password })
       .subscribe({
         next: () => {
           this.router.navigate(['/perfil']);
+        },
+        error: () => {
+          this.loadingRequest.set(false);
         },
       })
       .add(() => {

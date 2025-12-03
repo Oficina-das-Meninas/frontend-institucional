@@ -8,6 +8,8 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { NgxMaskDirective, provideNgxMask } from 'ngx-mask';
 import { FormHelperService } from '../../../../shared/services/form/form-helper-service';
+import { ToastService } from '../../../../shared/services/toast';
+import { WhatsappService } from '../../../../shared/services/whatsapp';
 import { cpfValidator } from '../../../../shared/validators/document.validator';
 
 @Component({
@@ -32,8 +34,8 @@ export class Volunteer {
 
   private formBuilder = inject(FormBuilder);
   formHelperService = inject(FormHelperService);
-
-  private readonly ongPhoneNumber = '551633226232';
+  private toastService = inject(ToastService);
+  private whatsappService = inject(WhatsappService);
 
   readonly days = [
     { key: 'monday', label: 'Segunda-feira' },
@@ -55,7 +57,7 @@ export class Volunteer {
   ngOnInit() {
     this.volunteerForm = this.formBuilder.group({
       name: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(50)]],
-      cpf: ['', [Validators.required, Validators.maxLength(14)], cpfValidator()],
+      cpf: ['', [Validators.required, Validators.maxLength(14), cpfValidator()]],
       proposal: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(500)]],
       availability: this.formBuilder.group(
         {
@@ -76,9 +78,16 @@ export class Volunteer {
 
   onSubmit(): void {
     if (this.volunteerForm.valid) {
-      const message = this.buildMessage();
-      this.openWhatsApp(message);
+      try {
+        const message = this.buildMessage();
+        this.openWhatsApp(message);
+      } catch (error) {
+        const errorMessage = error instanceof Error ? error.message : 'Erro ao processar voluntariado';
+        this.toastService.show(errorMessage, 'error');
+        this.formHelperService.validateAllFormFields(this.volunteerForm);
+      }
     } else {
+      this.toastService.show('Por favor, preencha todos os campos obrigatórios', 'error');
       this.formHelperService.validateAllFormFields(this.volunteerForm);
     }
   }
@@ -92,6 +101,14 @@ export class Volunteer {
 
   private buildMessage(): string {
     const { name, cpf, proposal, availability } = this.volunteerForm.value;
+
+    if (!name || !cpf || !proposal) {
+      this.toastService.show('Dados do formulário incompletos', 'error');
+    }
+
+    if (!availability || typeof availability !== 'object') {
+      this.toastService.show('Dados de disponibilidade inválidos', 'error');
+    }
 
     const selectedDays = this.days
       .map(day => {
@@ -112,13 +129,15 @@ export class Volunteer {
   }
 
   private openWhatsApp(message: string): void {
-    const encodedMessage = encodeURIComponent(message);
-    const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+    if (!message || typeof message !== 'string') {
+      this.toastService.show('Mensagem inválida para envio', 'error');
+      return;
+    }
 
-    if (isMobile) {
-      window.location.href = `whatsapp://send?phone=${this.ongPhoneNumber}&text=${encodedMessage}`;
-    } else {
-      window.open(`https://web.whatsapp.com/send?phone=${this.ongPhoneNumber}&text=${encodedMessage}`, '_blank');
+    try {
+      this.whatsappService.openWhatsapp(message);
+    } catch (error) {
+      this.toastService.show('Não foi possível abrir o WhatsApp. Verifique sua conexão.', 'error');
     }
   }
 

@@ -1,15 +1,15 @@
-import { inject, Injectable, signal } from '@angular/core';
-import { environment } from '../../../../environments/environment';
 import { HttpClient, HttpParams } from '@angular/common/http';
+import { inject, Injectable, signal } from '@angular/core';
 import { catchError, map, Observable, of, tap } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
-import { ApiResponse } from '../../../shared/models/api-response';
 import {
   CreateUserRequest,
   LoginRequest,
   LoginResponse,
   UserResponse,
 } from '../../../domain/user/model/user-models';
+import { ApiResponse } from '../../../shared/models/api-response';
 
 @Injectable({
   providedIn: 'root',
@@ -41,6 +41,12 @@ export class AuthService {
           this.userName.set(null);
         })
       );
+  }
+
+  clearInvalidSession(): Observable<void> {
+    return this.logout().pipe(
+      catchError(() => of(void 0))
+    );
   }
 
   createUserAccount(
