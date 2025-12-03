@@ -11,6 +11,9 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { DonationPlanCard } from '../../components/donation-plan-card/donation-plan-card';
 import { Router, RouterLink } from '@angular/router';
+import { MatDialog } from '@angular/material/dialog';
+import { AuthService } from '../../../../shared/services/auth/auth';
+import { AlertDialogSubscription } from '../../../donation/components/alert-dialog-subscription/alert-dialog-subscription';
 
 @Component({
   selector: 'app-donation-plans',
@@ -30,7 +33,10 @@ export class DonationPlans {
   @ViewChild('btnCustomDonation')
   btnCustomDonation!: ElementRef<HTMLButtonElement>;
   inputValue = signal('');
+
   router = inject(Router);
+  dialog = inject(MatDialog);
+  authService = inject(AuthService);
 
   showCustomDonationInput = false;
 
@@ -38,8 +44,12 @@ export class DonationPlans {
     if (!this.showCustomDonationInput) {
       this.showInputValue();
     } else {
-      this.redirectToDonationPage();
+      this.validateAndRedirect();
     }
+  }
+
+  handlePlanClick(value: number) {
+    this.checkAuthAndRedirect(value);
   }
 
   formatCurrency(event: any) {
@@ -59,11 +69,30 @@ export class DonationPlans {
     this.inputValue.set(formatted);
   }
 
-  redirectToDonationPage() {
+  validateAndRedirect() {
     const rawValue = this.inputValue().replace(/\./g, '').replace(',', '.');
+    const numericValue = Number(rawValue);
 
+    if (numericValue > 0) {
+      this.checkAuthAndRedirect(numericValue);
+    }
+  }
+
+  checkAuthAndRedirect(value: number) {
+    this.authService.checkSession().subscribe((hasSession) => {
+      if (!hasSession) {
+        this.dialog.open(AlertDialogSubscription, {
+          autoFocus: false,
+        });
+      } else {
+        this.navigateToDonation(value);
+      }
+    });
+  }
+
+  navigateToDonation(value: number) {
     this.router.navigate(['/faca-sua-doacao'], {
-      queryParams: { valor: rawValue },
+      queryParams: { valor: value },
     });
   }
 
