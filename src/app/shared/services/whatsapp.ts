@@ -15,21 +15,15 @@ export class WhatsappService {
   }
 
   getWhatsappLink(message?: string): string {
-    const baseUrl = 'https://web.whatsapp.com/send';
-    const params = new URLSearchParams({
-      phone: this.ongPhoneNumber,
-      ...(message && { text: message }),
-    });
-    return `${baseUrl}?${params.toString()}`;
+    const encodedMessage = message ? encodeURIComponent(message) : "";
+    const baseUrl = 'https://wa.me/';
+    return `${baseUrl}${this.ongPhoneNumber}?text=${encodedMessage}`;
   }
 
   getMobileWhatsappLink(message?: string): string {
+    const encodedMessage = message ? encodeURIComponent(message) : "";
     const baseUrl = 'whatsapp://send';
-    const params = new URLSearchParams({
-      phone: this.ongPhoneNumber,
-      ...(message && { text: message }),
-    });
-    return `${baseUrl}?${params.toString()}`;
+    return `${baseUrl}?phone=${this.ongPhoneNumber}&text=${encodedMessage}`;
   }
 
   openWhatsapp(message?: string): void {

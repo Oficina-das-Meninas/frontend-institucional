@@ -10,6 +10,6 @@ import { WhatsappService } from '../../../../services/whatsapp';
 })
 export class ContactInfoComponent {
   whatsappService = inject(WhatsappService);
-  whatsappLink = this.whatsappService.getWhatsappLink();
+  openWhatsapp = () => this.whatsappService.openWhatsapp("Olá! Gostaria de saber mais informações.");
   whatsappNumber = this.whatsappService.getPhoneNumberFormatted();
 }
