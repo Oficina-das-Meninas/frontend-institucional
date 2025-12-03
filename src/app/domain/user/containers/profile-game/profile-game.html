@@ -50,7 +50,7 @@
                 >
                   <span class="material-icons text-yellow-500">star</span>
                   <span class="font-semibold text-yellow-700">
-                    {{ currentScore() }} {{ currentScore() <= 1 ? 'ponto' :
+                    {{ currentScore() }} {{ currentScore() === 1 ? 'ponto' :
                     'pontos' }}
                   </span>
                 </div>
@@ -225,7 +225,7 @@
                 (closed)="setStep(-1)"
                 class="border-b border-gray-100 last:border-0 shadow-none"
               >
-                <mat-expansion-panel-header class="h-auto py-6 px-6">
+                <!-- <mat-expansion-panel-header class="h-auto py-6 px-6">
                   <div
                     class="flex flex-col md:flex-row md:items-center w-full justify-between pr-4"
                   >
@@ -242,7 +242,7 @@
                     </mat-panel-description>
                     }
                   </div>
-                </mat-expansion-panel-header>
+                </mat-expansion-panel-header> -->
 
                 <div [formGroup]="profileForm" class="px-0 pb-2">
                   <mat-form-field appearance="outline" class="w-full">
@@ -398,10 +398,7 @@
                   </div>
                 </mat-expansion-panel-header>
 
-                <div
-                  [formGroup]="passwordForm"
-                  class="px-0 pb-2 flex flex-col"
-                >
+                <div [formGroup]="passwordForm" class="px-0 pb-2 flex flex-col">
                   <mat-form-field appearance="outline" class="w-full">
                     <mat-label>Senha atual</mat-label>
                     <input
@@ -456,8 +453,7 @@
                       <span
                         class="mr-2 h-4 w-4 border-2 border-primary border-t-transparent rounded-full inline-block animate-spin"
                       ></span>
-                      }
-                      Alterar senha
+                      } Alterar senha
                     </button>
                   </div>
                 </div>

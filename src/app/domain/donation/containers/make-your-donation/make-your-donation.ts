@@ -172,11 +172,15 @@ export class MakeYourDonation implements AfterViewInit, OnInit {
             this.userAuthenticated = true;
             this.currentUser.set(response.data);
 
+            const cameFromPlans =
+              this.route.snapshot.queryParamMap.has('valor');
+
             this.form.patchValue({
               name: response.data.name,
               email: response.data.email,
               document: response.data.document,
               phone: response.data.phone,
+              frequency: cameFromPlans ? 'monthly' : 'once',
             });
           }
           this.checkingSession.set(false);
