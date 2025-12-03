@@ -9,14 +9,13 @@ import {
   provideBrowserGlobalErrorListeners,
   provideZonelessChangeDetection,
 } from '@angular/core';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 import { provideEnvironmentNgxMask } from 'ngx-mask';
-import { routes } from './app.routes';
-import { authInterceptor } from './shared/interceptors/auth-interceptor';
 import { lastValueFrom, of, switchMap } from 'rxjs';
-import { AuthService } from './shared/services/auth/auth';
-import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { routes } from './app.routes';
 import { errorInterceptor } from './shared/interceptors/error-interceptor';
+import { AuthService } from './shared/services/auth/auth';
 
 function initializeUser(authService: AuthService) {
   return () =>
@@ -46,7 +45,7 @@ export const appConfig: ApplicationConfig = {
     ),
     provideHttpClient(
       withFetch(),
-      withInterceptors([authInterceptor, errorInterceptor])
+      withInterceptors([errorInterceptor])
     ),
 
     {
